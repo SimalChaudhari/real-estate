@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectToMongoDB from './config/db.config';
-import propertyRoutes from './routes/property.routes';
 import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import propertyRoutes from './routes/property.routes';
 
 dotenv.config();
 
@@ -14,9 +15,9 @@ app.use(express.json());
 // Connect to the database
 connectToMongoDB();
 
-// Define routes
-app.use('/api/properties', propertyRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);  // Register user routes
+app.use('/api/properties', propertyRoutes);
 
 
 app.listen(PORT, () => {

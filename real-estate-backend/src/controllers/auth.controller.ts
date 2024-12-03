@@ -44,11 +44,10 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
             return;
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET as string, {
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, {
             expiresIn: '1h',
         });
 
-        // Exclude the password from the response
         const { password: _, ...userWithoutPassword } = user.toObject();
 
         res.status(200).json({ user: userWithoutPassword, token });

@@ -20,28 +20,29 @@ interface DecodedToken {
     id: string;
 }
 
-export const authenticateUser = async (req: Request, res: Response, next: NextFunction) => {
+export const authenticateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const token = req.header('Authorization')?.replace('Bearer ', '');
 
         if (!token) {
-            return res.status(401).json({ message: 'No token provided' });
+            res.status(401).json({ message: 'No token provided' });
+            return;
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
 
-        // Check if the decoded object has the required 'id' property
         if (!decoded || !decoded.id) {
-            return res.status(401).json({ message: 'Invalid token' });
+            res.status(401).json({ message: 'Invalid token' });
+            return;
         }
 
-        const user = await User.findById(decoded.id);
-
+        const user = await User.findById(decoded.id).select('-password');
         if (!user) {
-            return res.status(401).json({ message: 'Invalid token' });
+            res.status(401).json({ message: 'User not found' });
+            return;
         }
 
-        req.user = user;  // Attach user to req
+        req.user = { id: user._id.toString() }; // Attach only the user ID or relevant fields
         next();
     } catch (error) {
         res.status(401).json({ message: 'Unauthorized' });
