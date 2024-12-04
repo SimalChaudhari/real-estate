@@ -10,18 +10,15 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
-
 import { useBoolean } from 'src/hooks/use-boolean';
-
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
-
-import { signUp } from 'src/auth/context/jwt';
-import { useAuthContext } from 'src/auth/hooks';
+import { useDispatch } from 'react-redux';
+import { register } from 'src/store/action/authActions';
+import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -41,19 +38,17 @@ export const SignUpSchema = zod.object({
 // ----------------------------------------------------------------------
 
 export function JwtSignUpView() {
-  const { checkUserSession } = useAuthContext();
-
+  const dispatch = useDispatch(); // Initialize useDispatch
   const router = useRouter();
-
   const password = useBoolean();
 
   const [errorMsg, setErrorMsg] = useState('');
 
   const defaultValues = {
-    firstName: 'demo',
-    lastName: 'Friend',
-    email: 'hello@gmail.com',
-    password: '@demo1',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
@@ -68,18 +63,19 @@ export function JwtSignUpView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signUp({
-        email: data.email,
-        password: data.password,
+      const userData = {
         firstName: data.firstName,
         lastName: data.lastName,
-      });
-      await checkUserSession?.();
-
-      router.refresh();
+        email: data.email,
+        password: data.password,
+      };
+      const result = await dispatch(register(userData));
+      if (result) {
+        router.push(PATH_AFTER_LOGIN);
+      }
     } catch (error) {
-      console.error(error)
-      setErrorMsg(error && error.message ? error.message : error);
+      console.error(error);
+      setErrorMsg(error?.message || 'An unexpected error occurred. Please try again.');
     }
   });
 
@@ -132,7 +128,7 @@ export function JwtSignUpView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Create account..."
+        loadingIndicator="Creating account..."
       >
         Create account
       </LoadingButton>

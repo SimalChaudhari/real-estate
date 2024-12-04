@@ -5,7 +5,7 @@ import User from '../models/user';
 
 // Register function
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { name, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     try {
         const existingUser = await User.findOne({ email });
@@ -15,7 +15,7 @@ export const register = async (req: Request, res: Response, next: NextFunction):
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ name, email, password: hashedPassword });
+        const user = new User({ firstName, lastName, email, password: hashedPassword });
         await user.save();
 
         // Exclude the password from the response
@@ -50,7 +50,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 
         const { password: _, ...userWithoutPassword } = user.toObject();
 
-        res.status(200).json({ user: userWithoutPassword, token });
+        res.status(200).json({ user: userWithoutPassword, access_token: token });
     } catch (error) {
         next(error);
     }
