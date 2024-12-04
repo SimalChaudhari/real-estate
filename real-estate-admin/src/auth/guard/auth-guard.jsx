@@ -1,54 +1,60 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { checkUserSession } from 'src/store/authSlice'; // Redux action
-import { SplashScreen } from 'src/components/loading-screen';
+import { useState, useEffect, useCallback } from 'react';
+
 import { paths } from 'src/routes/paths';
+import { useRouter, usePathname, useSearchParams } from 'src/routes/hooks';
 import { CONFIG } from 'src/config-global';
-import { STORAGE_KEY } from 'src/utils/constant';
-import { isValidToken } from 'src/utils/jwt';
-import { getCookie } from 'src/utils/cookie';
+import { SplashScreen } from 'src/components/loading-screen';
+import { useSelector } from 'react-redux';
 
 export function AuthGuard({ children }) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
+  const router = useRouter();
+  const { loading, authenticated } = useSelector((state) => state.auth);
+  
+  const pathname = usePathname();
 
-  const { authenticated, loading } = useSelector((state) => state.auth);
+  const searchParams = useSearchParams();
+
   const [isChecking, setIsChecking] = useState(true);
 
-  const checkPermissions = useCallback(async () => {
-    if (loading) return; // Wait for loading to finish
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
 
-    const accessToken = sessionStorage.getItem(STORAGE_KEY) || getCookie(STORAGE_KEY);
-    if (accessToken && isValidToken(accessToken)) {
-      setIsChecking(false); // Token is valid, allow access
-    } else {
-      console.log('here')
-      if (!authenticated) {
-        const { method } = CONFIG.auth;
-        const signInPath = { jwt: paths.auth.jwt.signIn }[method];
-        const returnTo = encodeURIComponent(location.pathname);
-        navigate(`${signInPath}?returnTo=${returnTo}`, { replace: true });
-        return;
-      }
-      setIsChecking(false);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const checkPermissions = async () => {
+    if (loading) {
+      return;
     }
-  }, [authenticated, loading, location.pathname, navigate]);
+
+    if (!authenticated) {
+      const { method } = CONFIG.auth;
+
+      const signInPath = {
+        jwt: paths.auth.jwt.signIn,
+      }[method];
+
+      const href = `${signInPath}?${createQueryString('returnTo', pathname)}`;
+
+      router.replace(href);
+      return;
+    }
+
+    setIsChecking(false);
+  };
 
   useEffect(() => {
-    dispatch(checkUserSession()); // Dispatch session check on mount
-  }, [dispatch]);
-
-  useEffect(() => {
-    checkPermissions(); // Check permissions whenever state changes
-  }, [checkPermissions]);
+    checkPermissions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authenticated, loading]);
 
   if (isChecking) {
-    return <SplashScreen />; // Show loading until check completes
+    return <SplashScreen />;
   }
 
   return <>{children}</>;
 }
-
-export default AuthGuard;

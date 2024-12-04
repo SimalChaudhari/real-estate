@@ -7,12 +7,17 @@ import { Main, Content } from './main';
 import { HeaderBase } from '../core/header-base';
 import { LayoutSection } from '../core/layout-section';
 
-export function AuthSplitLayout({ sx, section, children }) {
+export function AuthSplitLayout({ sx, section = {}, children }) {
   const mobileNavOpen = useBoolean();
+
+  // Define a query for layout responsiveness
   const layoutQuery = 'md';
 
   return (
     <LayoutSection
+      /** **************************************
+       * Header Section
+       *************************************** */
       headerSection={
         <HeaderBase
           disableElevation
@@ -32,7 +37,7 @@ export function AuthSplitLayout({ sx, section, children }) {
           slots={{
             topArea: (
               <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
-                This is an info Alert.
+                This is an info alert.
               </Alert>
             ),
           }}
@@ -40,30 +45,35 @@ export function AuthSplitLayout({ sx, section, children }) {
           sx={{ position: { [layoutQuery]: 'fixed' } }}
         />
       }
-      footerSection={null} // Placeholder for potential future footer content
+
+      /** **************************************
+       * Footer Section (Currently set to null)
+       *************************************** */
+      footerSection={null}
+
+      /** **************************************
+       * Style & Custom CSS Vars
+       *************************************** */
       sx={sx}
       cssVars={{
-        '--layout-auth-content-width': '500px', // Sets a standard content width for the auth page
+        '--layout-auth-content-width': '420px',
       }}
     >
       <Main layoutQuery={layoutQuery}>
         <Section
-          title={section?.title || 'Welcome'}
+          title={section.title} // Provide fallback for missing section prop
           layoutQuery={layoutQuery}
-          imgUrl={section?.imgUrl}
+          imgUrl={section.imgUrl}
           method={CONFIG.auth.method}
-          subtitle={section?.subtitle || 'Sign in to continue'}
           methods={[
             {
-              label: 'Sign in with JWT',
+              label: 'Jwt',
               path: paths.auth.jwt.signIn,
               icon: `${CONFIG.site.basePath}/assets/icons/platforms/ic-jwt.svg`,
             },
           ]}
         />
-        <Content layoutQuery={layoutQuery}>
-          {children}
-        </Content>
+        <Content layoutQuery={layoutQuery}>{children}</Content>
       </Main>
     </LayoutSection>
   );

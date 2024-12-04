@@ -10,8 +10,9 @@ import { RHFCountrySelect } from './rhf-country-select';
 import { RHFSwitch, RHFMultiSwitch } from './rhf-switch';
 import { RHFSelect, RHFMultiSelect } from './rhf-select';
 import { RHFCheckbox, RHFMultiCheckbox } from './rhf-checkbox';
-import { RHFUpload, RHFUploadBox, RHFUploadAvatar } from './rhf-upload';
+import { RHFUpload, RHFUploadBox, RHFUploadAvatar, RHFAllFilesUpload, RHFSingleFileUpload } from './rhf-upload';
 import { RHFDatePicker, RHFMobileDateTimePicker } from './rhf-date-picker';
+import { RHFTextArea } from './rhf-text-area';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,8 @@ export const Field = {
   Editor: RHFEditor,
   Select: RHFSelect,
   Upload: RHFUpload,
+  AllUpload: RHFAllFilesUpload,
+  SingleFile : RHFSingleFileUpload,
   Switch: RHFSwitch,
   Slider: RHFSlider,
   Rating: RHFRating,
@@ -36,4 +39,5 @@ export const Field = {
   MultiCheckbox: RHFMultiCheckbox,
   CountrySelect: RHFCountrySelect,
   MobileDateTimePicker: RHFMobileDateTimePicker,
+  TextArea : RHFTextArea 
 };

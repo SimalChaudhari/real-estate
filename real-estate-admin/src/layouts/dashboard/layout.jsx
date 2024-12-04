@@ -21,12 +21,11 @@ import { _account } from '../config-nav-account';
 import { HeaderBase } from '../core/header-base';
 import { _workspaces } from '../config-nav-workspace';
 import { LayoutSection } from '../core/layout-section';
-import { useSelector } from 'react-redux';
-import { navData, navDataUser } from '../config-nav-dashboard';
+import { useNavData } from '../config-nav-dashboard';
 
 export function DashboardLayout({ sx, children, data }) {
   const theme = useTheme();
-  const { role } = useSelector((state) => state.auth);
+  // const navData = useNavData();
   const mobileNavOpen = useBoolean();
 
   const settings = useSettingsContext();
@@ -34,6 +33,8 @@ export function DashboardLayout({ sx, children, data }) {
   const navColorVars = useNavColorVars(theme, settings);
 
   const layoutQuery = 'lg';
+
+  const navData = useNavData();
 
   const isNavMini = settings.navLayout === 'mini';
 
@@ -44,7 +45,7 @@ export function DashboardLayout({ sx, children, data }) {
   return (
     <>
       <NavMobile
-        data={role === 'ADMIN' ? navData : navDataUser}
+        data={navData}
         open={mobileNavOpen.value}
         onClose={mobileNavOpen.onFalse}
         cssVars={navColorVars.section}
@@ -60,7 +61,8 @@ export function DashboardLayout({ sx, children, data }) {
             disableElevation={isNavVertical}
             onOpenNav={mobileNavOpen.onTrue}
             data={{
-              nav: role === 'ADMIN' ? navData : navDataUser,
+              nav: navData,
+              langs: allLangs,
               account: _account,
               workspaces: _workspaces,
             }}
@@ -77,7 +79,7 @@ export function DashboardLayout({ sx, children, data }) {
               ),
               bottomArea: isNavHorizontal ? (
                 <NavHorizontal
-                  data={role === 'ADMIN' ? navData : navDataUser}
+                  data={navData}
                   layoutQuery={layoutQuery}
                   cssVars={navColorVars.section}
                 />
@@ -132,7 +134,7 @@ export function DashboardLayout({ sx, children, data }) {
         sidebarSection={
           isNavHorizontal ? null : (
             <NavVertical
-              data={role === 'ADMIN' ? navData : navDataUser}
+              data={navData}
               isNavMini={isNavMini}
               layoutQuery={layoutQuery}
               cssVars={navColorVars.section}

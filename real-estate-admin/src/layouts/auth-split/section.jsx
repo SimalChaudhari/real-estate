@@ -17,8 +17,7 @@ export function Section({
   layoutQuery,
   methods,
   title = 'Manage the job',
-  imgUrl = '',
-  subtitle = 'More effectively with optimized workflows.',
+  imgUrl = `${CONFIG.site.basePath}/assets/illustrations/illustration-dashboard.webp`,
   ...other
 }) {
   const theme = useTheme();
@@ -29,19 +28,23 @@ export function Section({
         ...bgGradient({
           color: `0deg, ${varAlpha(
             theme.vars.palette.background.defaultChannel,
-            0
-          )}, ${varAlpha(theme.vars.palette.background.defaultChannel, 0)}`,
-          imgUrl: `${CONFIG.site.basePath}/assets/illustrations/login-page.jpg`,
+            0.92
+          )}, ${varAlpha(theme.vars.palette.background.defaultChannel, 0.92)}`,
+          imgUrl: `${CONFIG.site.basePath}/assets/background/background-3-blur.webp`,
         }),
-        px: 10,
+        px: 3,
         pb: 3,
         width: 1,
-        maxWidth: '50%',
+        maxWidth: {
+          xs: '50%', // For small screens, use a percentage width
+          sm: '50%', // For medium screens
+          md: '50%', // For larger screens
+        },
         display: 'none',
         position: 'relative',
         pt: 'var(--layout-header-desktop-height)',
         [theme.breakpoints.up(layoutQuery)]: {
-          gap: 2,
+          gap: 8,
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column',
@@ -52,16 +55,55 @@ export function Section({
       {...other}
     >
       <div>
-        <Typography variant="h2" sx={{ textAlign: 'center', color:'#FFF' }}>
+        <Typography variant="h3" sx={{ textAlign: 'center' }}>
           {title}
         </Typography>
+      </div>
 
-        {subtitle && (
-          <Typography variant="h4"  sx={{ color: 'text.secondary', textAlign: 'center', mt: 4}}>
-            {subtitle}
-          </Typography>
-        )}
-      </div>     
+      <Box
+        component="img"
+        alt="Dashboard illustration"
+        src={imgUrl}
+        sx={{ objectFit: 'cover' }}
+      />
+
+      {!!methods?.length && method && (
+        <Box component="ul" gap={2} display="flex">
+          {methods.map((option) => {
+            const selected = method === option.label.toLowerCase();
+
+            return (
+              <Box
+                key={option.label}
+                component="li"
+                sx={{
+                  ...(!selected && {
+                    cursor: 'not-allowed',
+                    filter: 'grayscale(1)',
+                  }),
+                }}
+              >
+                <Tooltip title={option.label} placement="top">
+                  <Link
+                    component={RouterLink}
+                    href={option.path}
+                    sx={{
+                      ...(!selected && { pointerEvents: 'none' }),
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      alt={option.label}
+                      src={option.icon}
+                      sx={{ width: 32, height: 32 }}
+                    />
+                  </Link>
+                </Tooltip>
+              </Box>
+            );
+          })}
+        </Box>
+      )}
     </Box>
   );
 }

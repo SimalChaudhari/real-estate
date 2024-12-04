@@ -13,13 +13,13 @@ export const signInWithPassword = async ({ email, password }) => {
 
     const res = await axios.post(endpoints.auth.signIn, params);
     
-    const { accessToken } = res.data;
+    const { token } = res.data;
 
-    if (!accessToken) {
+    if (!token) {
       throw new Error('Please check your email and password');
     }
 
-    setSession(accessToken);
+    setSession(token);
   } catch (error) {
     console.error('Error during sign in:', error);
     throw error;

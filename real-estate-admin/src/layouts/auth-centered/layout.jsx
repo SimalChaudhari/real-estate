@@ -69,7 +69,7 @@ export function AuthCenteredLayout({ sx, children }) {
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
-          backgroundImage: `url(${CONFIG.site.basePath}/assets/illustrations/login-page.jpg)`,
+          backgroundImage: `url(${CONFIG.site.basePath}/assets/background/background-3-blur.webp)`,
           [stylesMode.dark]: { opacity: 0.08 },
         },
         ...sx,

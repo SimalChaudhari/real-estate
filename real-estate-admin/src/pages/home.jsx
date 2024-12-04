@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 
 const metadata = {
-  title: 'DReaM',
+  title: 'ADMIN PANEL',
   description:
-    'The starting point for your next project with DReaM UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
+    'The starting point for your next project with Admin Panel UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
 };
 
 export default function Page() {

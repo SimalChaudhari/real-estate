@@ -7,19 +7,28 @@ import { useTheme } from '@mui/material/styles';
 import { RouterLink } from 'src/routes/components';
 
 import { logoClasses } from './classes';
-import { Typography } from '@mui/material';
+import pngLogo from './assets/tech.png'
+
+// ----------------------------------------------------------------------
 
 export const Logo = forwardRef(
-  ({ width = 80, height = 80, disableLink = false, className, href = '/', sx, ...other }, ref) => {
+  ({ width = 100, height = 80, disableLink = false, className, href = '/', sx, ...other }, ref) => {
     const theme = useTheme();
+
+    const gradientId = useId();
+
+    const PRIMARY_LIGHT = theme.vars.palette.primary.light;
+
+    const PRIMARY_MAIN = theme.vars.palette.primary.main;
+
+    const isDark = theme.palette.mode === 'dark';
 
     /*
      * OR using local (public folder)
      * const logo = ( <Box alt="logo" component="img" src={`${CONFIG.site.basePath}/logo/logo-single.svg`} width={width} height={height} /> );
      */
     const logo = (
-      // <img alt="logo" src={isDark ? '/logo/logo.png' : '/logo/logo.png'} />
-      <Typography variant="h5">DReaM</Typography>
+      <img alt="logo" src={isDark ? pngLogo : pngLogo} width={width} height={height}/>
     );
 
     return (
@@ -50,8 +59,6 @@ export const Logo = forwardRef(
             flexShrink: 0,
             display: 'inline-flex',
             verticalAlign: 'middle',
-            textDecoration: "none",
-            color: "#000",
             ...(disableLink && { pointerEvents: 'none' }),
             ...sx,
           }}

@@ -3,12 +3,28 @@ import { _mock } from './_mock';
 // ----------------------------------------------------------------------
 
 export const USER_STATUS_OPTIONS = [
-  { value: 'active', label: 'Active' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'banned', label: 'Banned' },
-  { value: 'rejected', label: 'Rejected' },
+  { value: 'Active', label: 'Active' },
+  { value: 'Suspended', label: 'Suspended' }
 ];
 
+export const CATEGORY_STATUS_OPTIONS = [
+  { value: 'Active', label: 'Active' },
+  { value: 'Inactive', label: 'Inactive' }
+];
+
+export const SUB_CATEGORY_STATUS_OPTIONS = [
+  { value: 'Active', label: 'Active' },
+  { value: 'Inactive', label: 'Inactive' }
+];
+export const FAQ_STATUS_OPTIONS = [
+  { value: 'Active', label: 'Active' },
+  { value: 'Inactive', label: 'Inactive' }
+];
+
+export const PRODUCT_STATUS_OPTIONS = [
+  { value: 'Active', label: 'Active' },
+  { value: 'Inactive', label: 'Inactive' }
+];
 export const _userAbout = {
   id: _mock.id(1),
   role: _mock.role(1),

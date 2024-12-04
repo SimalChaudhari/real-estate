@@ -22,13 +22,11 @@ export function AuthProvider({ children }) {
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
-        // const res = await axios.get(endpoints.auth.me);
+        const res = await axios.get(endpoints.auth.me);
 
-        // const { user } = res.data;
+        const { user } = res.data;
 
-        // setState({ user: { ...user, accessToken }, loading: false });
-        setState({ user: { role: 'ADMIN', accessToken }, loading: false });
-        
+        setState({ user: { ...user, accessToken }, loading: false });
       } else {
         setState({ user: null, loading: false });
       }
@@ -43,7 +41,9 @@ export function AuthProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
+  // ----------------------------------------------------------------------
+
+  const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
 
   const status = state.loading ? 'loading' : checkAuthenticated;
 
@@ -52,7 +52,7 @@ const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
       user: state.user
         ? {
             ...state.user,
-            role: state.user?.role ?? 'ADMIN',
+            role: state.user?.role ?? 'admin',
           }
         : null,
       checkUserSession,

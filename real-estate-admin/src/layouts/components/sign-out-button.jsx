@@ -1,52 +1,19 @@
-import { useCallback } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { Navigate } from 'react-router';
+import { logout } from 'src/store/action/authActions';
 
-import { useRouter } from 'src/routes/hooks';
+export function SignOutButton() {
 
-import { CONFIG } from 'src/config-global';
+  const dispatch = useDispatch();
 
-import { toast } from 'src/components/snackbar';
-
-import { useAuthContext } from 'src/auth/hooks';
-import { signOut as jwtSignOut } from 'src/auth/context/jwt/action';
-
-// ----------------------------------------------------------------------
-
-const signOut = jwtSignOut;
-
-export function SignOutButton({ onClose, ...other }) {
-  const router = useRouter();
-
-  const { checkUserSession } = useAuthContext();
-
-  const { logout: signOutAuth0 } = useAuth0();
-
-  const handleLogout = useCallback(async () => {
-    try {
-      await signOut();
-      await checkUserSession?.();
-
-      onClose?.();
-      router.refresh();
-    } catch (error) {
-      console.error(error);
-      toast.error('Unable to logout!');
+  const handleLogout = async () => {
+    const log = await dispatch(logout());
+    if (log) {
+      Navigate('/sign-in')
     }
-  }, [checkUserSession, onClose, router]);
-
-  const handleLogoutAuth0 = useCallback(async () => {
-    try {
-      await signOutAuth0();
-
-      onClose?.();
-      router.refresh();
-    } catch (error) {
-      console.error(error);
-      toast.error('Unable to logout!');
-    }
-  }, [onClose, router, signOutAuth0]);
+  };
 
   return (
     <Button
@@ -54,8 +21,7 @@ export function SignOutButton({ onClose, ...other }) {
       variant="soft"
       size="large"
       color="error"
-      onClick={CONFIG.auth.method === 'auth0' ? handleLogoutAuth0 : handleLogout}
-      {...other}
+      onClick={handleLogout}
     >
       Logout
     </Button>
