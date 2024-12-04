@@ -68,7 +68,10 @@ export function JwtSignInView() {
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {`Don't have an account?`}
           </Typography>
-          <Link component={RouterLink} href={paths.auth.jwt.signUp} variant="subtitle2">
+          <Link
+            component={RouterLink}
+            // href={paths.auth.jwt.signUp}
+            variant="subtitle2">
             Get started
           </Link>
         </Stack>

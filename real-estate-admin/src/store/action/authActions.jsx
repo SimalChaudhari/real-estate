@@ -4,7 +4,7 @@ import { AUTH_DATA } from "../constants/actionTypes";
 
 export const login = (email, password) => async (dispatch) => {
     try {
-        const response = await axiosInstance.post('auth/login', { email, password });
+        const response = await axiosInstance.post('auth/admin-login', { email, password });
         const token = response?.data?.access_token;
         localStorage.setItem('userData', JSON.stringify({ user: response?.data?.user }));
         localStorage.setItem('token', token); // Store encrypted name and value
