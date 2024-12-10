@@ -4,10 +4,15 @@ import { CONFIG } from 'src/config-global';
 import { DashboardLayout } from 'src/layouts/dashboard';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { AuthGuard } from 'src/auth/guard';
+import { PropertyEditView } from 'src/sections/Properties/view/property-edit';
+import { PropertyView } from 'src/sections/Properties/view/operation/property-view';
+import { PropertyCreateView } from 'src/sections/Properties/view/property-create';
 
 // Overview
 const IndexPage = lazy(() => import('src/pages/dashboard'));
 const UsersPage = lazy(() => import('src/pages/users'));
+const PropertiesPage = lazy(() => import('src/pages/properties'));
+
 
 // Error
 const Page500 = lazy(() => import('src/pages/error/500'));
@@ -35,6 +40,17 @@ export const dashboardRoutes = [
     element: CONFIG.auth.skip ? <>{layoutContent}</> : <AuthGuard>{layoutContent}</AuthGuard>,
     children: [
       { element: <UsersPage />, index: true },
+    ],
+  },
+
+  {
+    path: 'properties',
+    element: CONFIG.auth.skip ? <>{layoutContent}</> : <AuthGuard>{layoutContent}</AuthGuard>,
+    children: [
+      { element: <PropertiesPage />, index: true },
+      { path: 'create', element: <PropertyCreateView /> },
+      { path: 'edit/:id', element: <PropertyEditView /> },
+      { path: 'view/:id', element: <PropertyView /> },
     ],
   },
 

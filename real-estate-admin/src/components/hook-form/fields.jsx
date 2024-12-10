@@ -13,10 +13,13 @@ import { RHFCheckbox, RHFMultiCheckbox } from './rhf-checkbox';
 import { RHFUpload, RHFUploadBox, RHFUploadAvatar, RHFAllFilesUpload, RHFSingleFileUpload } from './rhf-upload';
 import { RHFDatePicker, RHFMobileDateTimePicker } from './rhf-date-picker';
 import { RHFTextArea } from './rhf-text-area';
+import { FieldGroup } from './rhf-group';
 
 // ----------------------------------------------------------------------
 
 export const Field = {
+
+  Group:FieldGroup,
   Code: RHFCode,
   Editor: RHFEditor,
   Select: RHFSelect,

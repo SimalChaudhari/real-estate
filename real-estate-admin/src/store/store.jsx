@@ -4,12 +4,14 @@ import { composeWithDevTools } from 'redux-devtools-extension'; // Import Redux 
 import userReducer from './reducer/userReducer';
 import authReducer from './reducer/authReducer';
 import addressReducer from './reducer/addressReducer';
+import propertyReducer from './reducer/propertyReducer';
 
 // Combine your reducers
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   address: addressReducer,
+  property: propertyReducer
 });
 
 // Create the Redux store with the combined reducer, middleware, and Redux DevTools

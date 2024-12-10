@@ -16,7 +16,6 @@ import { useSetState } from 'src/hooks/use-set-state';
 import { varAlpha } from 'src/theme/styles';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { Label } from 'src/components/label';
-import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
@@ -36,8 +35,7 @@ import {
 import { UserTableRow } from '../user-table-row';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { UserTableFiltersResult } from '../user-table-filters-result';
-import { useDispatch, useSelector } from 'react-redux';
-import { userList } from 'src/store/action/userActions';
+import { useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 import { UserForm } from './user-form'; // This will be the shared form for both add and edit
 import { getStatusOptions, TABLE_HEAD } from '../../../components/constants';
@@ -46,29 +44,22 @@ import { useFetchUserData } from '../components';
 
 export const _roles = [
   `Admin`,
-  `Customer`,
-  `Vendor`
+  `Customer`
 ];
 
 // ----------------------------------------------------------------------
 export function UserListView() {
   const table = useTable();
-  const router = useRouter();
   const confirm = useBoolean();
-  const dispatch = useDispatch();
-
   const { fetchData, fetchDeleteData } = useFetchUserData(); // Destructure fetchData from the custom hook
-
   const _userList = useSelector((state) => state.user?.user || []);
   const [tableData, setTableData] = useState(_userList);
   const [selectedUser, setSelectedUser] = useState(null); // Store selected user for editing
-
   const STATUS_OPTIONS = getStatusOptions(tableData);
-
   const [openDialog, setOpenDialog] = useState(false);
-  const handleOpenDialog = () => { 
+  const handleOpenDialog = () => {
     setSelectedUser(null); // Clear selected user when adding a new one
-    setOpenDialog(true); 
+    setOpenDialog(true);
   };
   const handleCloseDialog = () => { setOpenDialog(false) };
 
@@ -172,8 +163,8 @@ export function UserListView() {
             ))}
           </Tabs>
 
-          <UserTableToolbar filters={filters} onResetPage={table.onResetPage} options={{ roles: _roles }}  tableData={tableData}/>
-          
+          <UserTableToolbar filters={filters} onResetPage={table.onResetPage} options={{ roles: _roles }} tableData={tableData} />
+
           {canReset && (
             <UserTableFiltersResult
               filters={filters}

@@ -13,24 +13,7 @@ export enum Status {
     PENDING = "Pending"
 }
 
-// Listing Type Enum
-export enum ListingType {
-    BUY = "Buy",
-    RENT = "Rent",
-    PLOTS = "Plots"
-}
 
-// Property Type Enum
-export enum PropertyType {
-    APARTMENT = "Apartment",
-    VILLA = "Villa",
-    OFFICE = "Office",
-    HOUSE = "House",
-    COMMERCIAL = "Commercial",
-    LAND = "Land",
-    STUDIO = "Studio",
-    WAREHOUSE = "Warehouse"
-}
 
 // Property Interface
 export interface IProperty extends Document {
@@ -39,10 +22,8 @@ export interface IProperty extends Document {
     address: Types.ObjectId; // Reference to Address
     overview: Types.ObjectId; // Reference to Overview
     price: number;
-    property_type: PropertyType;
     status: Status;
     listed_by: Types.ObjectId;
-    listing_type: ListingType; // Enum type
     images: string[];
     features: IFeature[]; // Array of features
     created_at: Date;
@@ -55,21 +36,12 @@ const PropertySchema: Schema = new Schema({
     price: { type: Number, required: true },
     address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address', required: true }, // Reference
     overview: { type: mongoose.Schema.Types.ObjectId, ref: 'Overview', required: true }, // Reference
-    property_type: {
-        type: String,
-        enum: Object.values(PropertyType),
-        required: true
-    },
     status: {
         type: String,
         enum: Object.values(Status),
         default: Status.AVAILABLE
     },
-    listing_type: {
-        type: String,
-        enum: Object.values(ListingType),
-        required: true
-    },
+
     listed_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     images: [{ type: String }],
     features: [

@@ -7,7 +7,7 @@ export const userList = () => async (dispatch) => {
         const response = await axiosInstance.get('/users');
         dispatch({
             type: USER_LIST,
-            payload: response.data?.data, // Assuming response contains the customers data
+            payload: response.data?.users, // Assuming response contains the customers data
         });
         return true;
     } catch (error) {

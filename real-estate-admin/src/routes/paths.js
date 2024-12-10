@@ -23,6 +23,19 @@ export const paths = {
     edit: (id) => `/users/${id}/edit`,
   },
 
+  properties: {
+    root: `/properties`,
+    list: `/properties/list`,
+    create: `/properties/create`,
+    edit: (id) => `/edit/${id}`,
+    view: (id) => `/view/${id}`,
+  },
+
+  settings: {
+    root: `/setting`,
+  },
+
+
   logout: {
     root: `/logout`
   },

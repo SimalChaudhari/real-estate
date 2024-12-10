@@ -5,8 +5,11 @@ export interface IUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
+  mobile: number;
+  gender: 'Male' | 'Female';
+  status: 'Active' | 'Suspended';
   password: string;
-  role: 'admin' | 'customer'; // Define role with specific allowed values
+  role: 'Admin' | 'Customer'; // Define role with specific allowed values
   resetOtp?: string;
   resetOtpExpires?: Date;
 }
@@ -15,11 +18,19 @@ const UserSchema: Schema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
+  mobile: { type: Number, required: true, unique: true },
+  gender: { type: String, required: true, enum: ['Male', 'Female'] },
   password: { type: String, required: true },
   role: {
     type: String,
-    enum: ['admin', 'customer'], // Allowed values for role
-    default: 'customer', // Default role is customer
+    enum: ['Admin', 'Customer'], // Allowed values for role
+    default: 'Customer', // Default role is customer
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ['Active', 'Suspended'], // Allowed values for role
+    default: 'Active', // Default role is customer
     required: true,
   },
 

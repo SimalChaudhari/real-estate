@@ -9,16 +9,10 @@ const icon = (name) => (
 );
 const ICONS = {
   dashboard: icon('ic-dashboard'),
-  products: icon('ic-product'),
-  vendors: icon('ic-kanban'),
-  orders: icon('ic-order'),
+  users: icon('ic-user'),
+  property: icon('ic-product'),
   settings: icon('ic-lock'),
-  stocks: icon('ic-job'),
-  ledger: icon('ic-invoice'),
   logout: icon('ic-external'),
-  account: icon('ic-tour'),
-  analytics: icon('ic-analytics'),
-  receivables: icon('ic-ecommerce'),
 };
 
 export const useNavData = () => {
@@ -44,6 +38,23 @@ export const useNavData = () => {
       items: [
 
         { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
+      ],
+    },
+    {
+      subheader: 'Managements',
+      items: [
+
+        { title: 'Users', path: paths.users.root, icon: ICONS.users },
+        { title: 'Properties', path: paths.properties.root, icon: ICONS.property },
+      ],
+    },
+    {
+      subheader: 'Settings',
+      items: [
+
+        { title: 'profile', path: paths.settings.root, icon: ICONS.settings },
+        { title: 'logout', path: paths.settings.root, icon: ICONS.logout },
+
       ],
     },
 

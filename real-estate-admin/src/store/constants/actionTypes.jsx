@@ -2,6 +2,11 @@ export const AUTH_DATA = "AUTH_DATA";
 export const USER_LIST = "USER_LIST";
 export const ADDRESS_LIST = "ADDRESS_LIST";
 export const ADDRESS_BY_LIST = "ADDRESS_BY_LIST"
+export const PROPERTY_LIST = "PROPERTY_LIST"
+export const DASHBOARD_LENGTH = "DASHBOARD_LENGTH"
+export const MONTHLY_ORDER_LIST = "MONTHLY_ORDER_LIST"
+
+export const PROPERTY_GET_BY_LIST = "PROPERTY_GET_BY_LIST"
 
 
 

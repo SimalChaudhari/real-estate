@@ -5,7 +5,7 @@ import Overview from '../models/overview';
 
 export const createProperty = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { title, description, price, property_type, status, listing_type, listed_by, images, address, features,overview } = req.body;
+    const { title, description, price, property_type, status, listing_type, images, address, features, overview } = req.body;
 
     // Step 1: Create Address
     const newAddress = new Address(address);
@@ -26,7 +26,7 @@ export const createProperty = async (req: Request, res: Response, next: NextFunc
       features,
       status,
       listing_type,
-      listed_by,
+      listed_by: req.user?.id,
       images
     });
 
@@ -43,23 +43,23 @@ export const getProperties = async (req: Request, res: Response, next: NextFunct
     const properties = await Property.find()
       .populate('address')
       .populate('overview')
-      .populate('listed_by', 'name email');
+      .populate('listed_by', 'firstName lastName email mobile');
     res.status(200).json(properties);
   } catch (error) {
     next(error);
   }
 };
 
-export const getPropertyById = async (req: Request, res: Response, next: NextFunction) : Promise<void> => {
+export const getPropertyById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const property = await Property.findById(req.params.id)
       .populate('address')
       .populate('overview')
-      .populate('listed_by', 'name email');
-    if (!property){
-       res.status(404).json({ message: 'Property not found' });
-       return
-    } 
+      .populate('listed_by', 'firstName lastName email mobile');
+    if (!property) {
+      res.status(404).json({ message: 'Property not found' });
+      return
+    }
     res.status(200).json(property);
   } catch (error) {
     next(error);
@@ -74,16 +74,16 @@ export const updateProperty = async (req: Request, res: Response, next: NextFunc
     if (address) {
       const property = await Property.findById(req.params.id);
       if (property && property.address) {
-          await Address.findByIdAndUpdate(property.address, address, { new: true, runValidators: true });
+        await Address.findByIdAndUpdate(property.address, address, { new: true, runValidators: true });
       }
-  }
+    }
 
-      // Update Overview if provided in the request body
-      if (overview) {
-        const property = await Property.findById(req.params.id);
-        if (property && property.overview) {
-            await Overview.findByIdAndUpdate(property.overview, overview, { new: true, runValidators: true });
-        }
+    // Update Overview if provided in the request body
+    if (overview) {
+      const property = await Property.findById(req.params.id);
+      if (property && property.overview) {
+        await Overview.findByIdAndUpdate(property.overview, overview, { new: true, runValidators: true });
+      }
     }
 
     // Update Property details
