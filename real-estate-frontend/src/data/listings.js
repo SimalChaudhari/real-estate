@@ -4,7 +4,8 @@ module.exports = [
     id: 1,
     image: "/images/listings/g1-h1.jpg",
     title: "Equestrian Family Home",
-    city:'New York',location: "New York City, CA, USA",
+    city:'New York',
+    location: "New York City, CA, USA",
     bed: "1",
     bath: "2",
     sqft: 1200,
@@ -16,7 +17,6 @@ module.exports = [
     lat: 40.7279707552121,
         long: -74.07152705896405,
     features:[
-      
       "Air Conditioning",
       "Lawn",
       "TV Cable",
@@ -44,12 +44,10 @@ module.exports = [
     price: "$82,000",
     propertyType:'Houses',yearBuilding:2017,
     forRent: true,
-   
     tags: ["house", "villa", "apartments"],
     features:[
       "Attic",
       "Basketball court",
-      
       "TV Cable",
       "Dryer",
       "Outdoor Shower",
