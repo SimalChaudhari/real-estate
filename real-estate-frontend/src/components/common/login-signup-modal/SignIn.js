@@ -75,13 +75,13 @@ const SignIn = () => {
       // Save token and user data if needed
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
-      toast.success("Reset Password Successfull!");
+      toast.success("Login Successfull!");
 
       // Redirect user or perform additional actions
       // alert("Login successful!");
       setSuccess(true);
     } catch (error) {
-      toast.error("Reset Password failed. Please try again.");
+      toast.error("Login Failed. Please Try Again.");
       console.error("Error during login:", error.message);
       setErrors({ apiError: error.message || "An error occurred. Please try again." });
     } finally {
