@@ -59,49 +59,61 @@ const MainMenu = () => {
       <li className="visible_list dropitem">
         <a className="list-item" href="#">
           <span className={topMenu == "home" ? "title menuActive" : "title"}>
-            Home
+            <Link className={`${handleActive('/')}`} href="/">
+              Home
+            </Link>
           </span>
-          <span className="arrow"></span>
+          {/*
+            <span className="arrow"></span>
+            */}
         </a>
         {/* Level Two*/}
-        <ul className="sub-menu">
-          {homeItems.map((item, index) => (
-            <li key={index}>
-              <Link className={`${handleActive(item.href)}`} href={item.href}>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {/*
+          <ul className="sub-menu">
+            {homeItems.map((item, index) => (
+              <li key={index}>
+                <Link className={`${handleActive(item.href)}`} href={item.href}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        */}
       </li>
       {/* End homeItems */}
 
       <li className="megamenu_style dropitem">
         <a className="list-item" href="#">
           <span className={topMenu == "listing" ? "title menuActive" : "title"}>
-            Listing
+            <Link className={`${handleActive('/list-v1')}`} href="/list-v1">
+              Listing
+            </Link>
           </span>
-          <span className="arrow"></span>
+          {/*
+            <span className="arrow"></span>
+            */}
         </a>
-        <ul className="row dropdown-megamenu sub-menu">
-          {listingItems.map((item, index) => (
-            <li className="col mega_menu_list" key={index}>
-              <h4 className="title">{item.title}</h4>
-              <ul className="sub-menu">
-                {item.submenu.map((submenuItem, subIndex) => (
-                  <li key={subIndex}>
-                    <Link
-                      className={`${handleActive(submenuItem.href)}`}
-                      href={submenuItem.href}
-                    >
-                      {submenuItem.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
+        {/*
+          <ul className="row dropdown-megamenu sub-menu">
+            {listingItems.map((item, index) => (
+              <li className="col mega_menu_list" key={index}>
+                <h4 className="title">{item.title}</h4>
+                <ul className="sub-menu">
+                  {item.submenu.map((submenuItem, subIndex) => (
+                    <li key={subIndex}>
+                      <Link
+                        className={`${handleActive(submenuItem.href)}`}
+                        href={submenuItem.href}
+                      >
+                        {submenuItem.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+          */}
       </li>
       {/* End listings */}
 

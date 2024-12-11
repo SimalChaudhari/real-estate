@@ -12,7 +12,7 @@ export const metadata = {
 
 const MapV1 = () => {
   return (
-    <>
+    <div>
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -25,7 +25,7 @@ const MapV1 = () => {
       {/* <!-- Advance Feature Modal Start --> */}
      
       {/* Property Filtering */}
-    </>
+    </div>
   );
 };
 

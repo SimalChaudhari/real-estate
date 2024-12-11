@@ -6,8 +6,51 @@ import ListingSidebar from "../../sidebar";
 import TopFilterBar from "./TopFilterBar";
 import FeaturedListings from "./FeatuerdListings";
 import PaginationTwo from "../../PaginationTwo";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchListingsFailure, fetchListingsStart, fetchListingsSuccess } from "@/app/features/listingsSlice";
+import { GetList } from "@/BackendApi/Listing/ListingApi";
 
 export default function PropertyFilteringList() {
+
+  
+  const [listings2, setListings2] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const listingsData = useSelector((state) => state.listings?.listings);
+
+  useEffect(() => {
+    // If listingsData exists, update local state
+    if (listingsData?.length > 0) {
+      setFilteredData(listingsData); // Initialize the filtered data with Redux data
+      setSortedFilteredData(listingsData); // Sort the filtered data initially
+    }
+  }, [listingsData]); // Add listingsData as a dependency
+  
+  useEffect(() => {
+    const fetchListings = async () => {
+      dispatch(fetchListingsStart());
+      try {
+        const data = await GetList(); // Call the GetList function
+        if (data.success) {
+          setListings2(data.data || []); // Update local state
+          console.log('Fetched Listings:', data.data); // Debugging
+          dispatch(fetchListingsSuccess(data.data || [])); // Dispatch to Redux
+        } else {
+          console.error("Error in fetching data:", data.message);
+        }
+        setLoading(false);
+      } catch (error) {
+        dispatch(fetchListingsFailure(error.message));
+        console.error("Error fetching listings:", error.message);
+        setLoading(false);
+      }
+    };
+  
+    fetchListings();
+  }, [dispatch]);
+  
+
+
   const [filteredData, setFilteredData] = useState([]);
 
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
@@ -127,8 +170,9 @@ export default function PropertyFilteringList() {
     setSearchQuery,
   };
 
+
   useEffect(() => {
-    const refItems = listings.filter((elm) => {
+    const refItems = listingsData.filter((elm) => {
       if (listingStatus == "All") {
         return true;
       } else if (listingStatus == "Buy") {
@@ -257,7 +301,7 @@ export default function PropertyFilteringList() {
     }
   }, [filteredData, currentSortingOption]);
   return (
-    <>
+    <div>
       <section className="pt0 pb90 bgc-f7">
         <div className="container">
           <div className="row gx-xl-5">
@@ -322,6 +366,6 @@ export default function PropertyFilteringList() {
         </div>
         {/* End .container */}
       </section>
-    </>
+    </div>
   );
 }

@@ -156,7 +156,7 @@ const Home_V1 = () => {
             </div>
             <div className="col-lg-3">
               <div className="text-start text-lg-end mb-3">
-                <Link className="ud-btn2" href="/grid-full-3-col">
+                <Link className="ud-btn2" href="/grid-default">
                   See All Properties
                   <i className="fal fa-arrow-right-long" />
                 </Link>
@@ -196,10 +196,10 @@ const Home_V1 = () => {
 
             <div className="col-lg-3">
               <div className="text-start text-lg-end mb-3">
-                <a className="ud-btn2" href="#">
+                <Link className="ud-btn2" href="/grid-default">
                   See All Cities
                   <i className="fal fa-arrow-right-long" />
-                </a>
+                </Link>
               </div>
             </div>
             {/* End col-lg-3 */}

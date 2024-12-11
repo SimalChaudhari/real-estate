@@ -11,7 +11,7 @@ export const metadata = {
 
 const ListV1 = () => {
   return (
-    <>
+    <div>
       {/* Main Header Nav */}
       <DefaultHeader />
       {/* End Main Header Nav */}
@@ -57,7 +57,7 @@ const ListV1 = () => {
         <Footer />
       </section>
       {/* End Our Footer */}
-    </>
+    </div>
   );
 };
 

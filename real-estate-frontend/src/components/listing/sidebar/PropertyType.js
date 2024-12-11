@@ -15,7 +15,7 @@ const PropertyType = ({filterFunctions}) => {
   ];
 
   return (
-    <>
+    <div>
     <label className="custom_checkbox"  >
           All
           <input type="checkbox"
@@ -34,7 +34,7 @@ const PropertyType = ({filterFunctions}) => {
           <span className="checkmark" />
         </label>
       ))}
-    </>
+    </div>
   );
 };
 

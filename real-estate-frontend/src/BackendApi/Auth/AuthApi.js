@@ -1,4 +1,5 @@
-import axiosInstance from '../../Config/Config'; // Adjust the path if needed
+import axiosInstance from '../../Config/Config';
+import { toast } from 'react-toastify'; // Adjust the path if needed
 
 /**
  * Register a new user by sending contact information.
@@ -10,8 +11,10 @@ export const authRegister = async (contact) => {
         const response = await axiosInstance.post('/api/auth/register', contact);
 
         if (!response?.data?.success) {
+            toast.error(response?.data?.message, "Registration failed.");
             throw new Error(response?.data?.message || 'Registration failed.');
         }
+        toast.success("Registration Successfull!");
 
         return {
             success: true,
@@ -40,6 +43,7 @@ export const authLogin = async (loginCredentials) => {
         if (!token || !user) {
             throw new Error('Invalid response structure from the server');
         }
+        toast.success("Login Successfull!");
 
         return {
             success: true,
@@ -49,6 +53,7 @@ export const authLogin = async (loginCredentials) => {
         };
     } catch (error) {
         const errorMessage = error?.response?.data?.message || error.message || 'An error occurred during login';
+        toast.error(errorMessage, "Login Failed. Please Try Again.");
         console.error('Error during login:', errorMessage);
         throw new Error(errorMessage); // Throwing meaningful error
     }
