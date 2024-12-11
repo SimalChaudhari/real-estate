@@ -6,6 +6,8 @@ import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 // import propertyRoutes from './routes/property.routes';
 import propertyListingRoutes from './routes/properties.routes';
+import agentRoutes from './routes/agent.routes';
+import locationRoutes from './routes/location.routes';
 
 dotenv.config();
 
@@ -29,7 +31,10 @@ connectToMongoDB();
 // Route registration
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/location', locationRoutes);
 app.use('/api/properties-listing', propertyListingRoutes);
+app.use('/api/agent', agentRoutes);
+
 
 // Catch invalid routes
 app.use((req: Request, res: Response, next: NextFunction) => {

@@ -1,34 +1,51 @@
 import { Request, Response, NextFunction } from 'express';
-import Listing from '../models/properties';
-import { deleteImage, uploadFile } from '../services/firebase.service';
+import Listing from '../../models/properties';
+import { deleteImage, uploadFile } from '../../services/firebase.service';
+import city from '../../models/city';
+import state from '../../models/state';
 
 export const createListing = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { images, ...listingData } = req.body;
+        const { images, tags, features, ...listingData } = req.body;
+
+        // Parse tags and features if they are received as strings
+        const parsedTags = Array.isArray(tags) ? tags : tags.split(',').map((tag: string) => tag.trim());
+        const parsedFeatures = Array.isArray(features) ? features : features.split(',').map((feature: string) => feature.trim());
+
+
         // Assert req.files is an array of files
         const files = req.files as Express.Multer.File[];
-        // Upload images to Firebase
-        const uploadedImages = await Promise.all(
-            files.map(async (file) => {
-                const filePath = `listings/${Date.now()}_${file.originalname}`;
-                return await uploadFile(filePath, file.buffer);
-            })
-        );
+
+        const uploadedImages: string[] = [];
+
+        // Upload images sequentially to Firebase
+        for (const file of files) {
+            const filePath = `listings/${Date.now()}_${file.originalname}`;
+            const uploadedImage = await uploadFile(filePath, file.buffer);
+            uploadedImages.push(uploadedImage);
+        }
+
         // Create a new listing with uploaded image URLs
         const newListing = new Listing({
             ...listingData,
             images: uploadedImages, // Use the uploaded image URLs
+            tags: parsedTags, // Use the uploaded image URLs
+            features: parsedFeatures, // Use the uploaded image URLs
+
         });
+
         const savedListing = await newListing.save();
+
         res.status(201).json(savedListing);
     } catch (error) {
         next(error);
     }
 };
 
+
 export const updateListing = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { images, ...updateData } = req.body;
+        const { tags, features, images, ...updateData } = req.body;
 
         // Find the existing listing
         const listing = await Listing.findById(req.params.id);
@@ -37,29 +54,30 @@ export const updateListing = async (req: Request, res: Response, next: NextFunct
             return;
         }
 
-        let uploadedImages: string[] = [];
+        let uploadedImages: string[] = listing.images; // Default to existing images
         const imageErrors: string[] = [];
 
-        // Handle image uploads and deletions only if new images are provided
+        // Handle image uploads only if new images are provided
         if (req.files && Array.isArray(req.files) && req.files.length > 0) {
             try {
+                const newImages: string[] = [];
                 // Upload new images
                 for (const file of req.files as Express.Multer.File[]) {
                     const filePath = `listings/${Date.now()}_${file.originalname}`;
                     const uploadedImage = await uploadFile(filePath, file.buffer);
-                    uploadedImages.push(uploadedImage);
+                    newImages.push(uploadedImage);
                 }
 
-                // Delete old images if new images are uploaded
-                if (listing.images && listing.images.length > 0) {
-                    for (const url of listing.images) {
-                        try {
-                            await deleteImage(url);
-                        } catch (error: any) {
-                            imageErrors.push(`Failed to delete image: ${url}. Error: ${error.message || 'Unknown error'}`);
-                        }
+                // Delete old images if new images were successfully uploaded
+                for (const url of listing.images) {
+                    try {
+                        await deleteImage(url);
+                    } catch (error: any) {
+                        imageErrors.push(`Failed to delete image: ${url}. Error: ${error.message || 'Unknown error'}`);
                     }
                 }
+
+                uploadedImages = newImages; // Replace with new images
             } catch (uploadError: any) {
                 res.status(500).json({
                     message: 'Error occurred while uploading or deleting images',
@@ -69,12 +87,20 @@ export const updateListing = async (req: Request, res: Response, next: NextFunct
             }
         }
 
+        // Parse tags and features if they are strings
+        const parsedTags = tags ? (Array.isArray(tags) ? tags : tags.split(',').map((tag: string) => tag.trim())) : listing.tags;
+        const parsedFeatures = features
+            ? (Array.isArray(features) ? features : features.split(',').map((feature: string) => feature.trim()))
+            : listing.features;
+
         // Update the listing in the database
         const updatedListing = await Listing.findByIdAndUpdate(
             req.params.id,
             {
                 ...updateData,
-                ...(uploadedImages.length > 0 && { images: uploadedImages }), // Only update images if new ones are uploaded
+                tags: parsedTags,
+                features: parsedFeatures,
+                images: uploadedImages, // Updated images
             },
             { new: true, runValidators: true }
         );
@@ -88,7 +114,6 @@ export const updateListing = async (req: Request, res: Response, next: NextFunct
         next(error); // Pass any unhandled errors to Express error handler
     }
 };
-
 
 
 export const deleteListing = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -128,7 +153,10 @@ export const deleteListing = async (req: Request, res: Response, next: NextFunct
 
 export const getListings = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const listings = await Listing.find();
+        const listings = await Listing.find()
+            .populate('city', 'name')
+            .populate('location', 'name');
+
         res.status(200).json(listings);
     } catch (error) {
         next(error);
@@ -137,7 +165,9 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
 
 export const getListingById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const listing = await Listing.findById(req.params.id);
+        const listing = await Listing.findById(req.params.id)
+            .populate('city')
+            .populate('location');
         if (!listing) {
             res.status(404).json({ message: 'Listing not found' });
             return;

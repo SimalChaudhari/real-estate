@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
+import User from '../../models/user';
 import crypto from 'crypto';
-import { decrypt, encrypt } from '../utils/secret';
+import { decrypt, encrypt } from '../../utils/secret';
 
 // Login Admin
 

@@ -36,8 +36,10 @@ export enum PropertyType {
 export interface IListing extends Document {
   images: string[];
   title: string;
-  city: string;
-  location: string;
+  city: mongoose.Types.ObjectId; // Reference to City
+  location: mongoose.Types.ObjectId; // Reference to State
+  address: string;
+  description: string;
   bed: string;
   bath: string;
   sqft: number;
@@ -56,8 +58,10 @@ export interface IListing extends Document {
 const ListingSchema: Schema = new Schema({
   images: [{ type: String }],
   title: { type: String, required: true },
-  city: { type: String, required: true },
-  location: { type: String, required: true },
+  city: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: true },
+  location: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true },
+  address: { type: String, required: true },
+  description: { type: String},
   bed: { type: String, required: true },
   bath: { type: String, required: true },
   sqft: { type: Number, required: true },

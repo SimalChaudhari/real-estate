@@ -55,3 +55,4 @@ export const deleteImage = async (fileUrl: string): Promise<void> => {
     throw new Error(`Failed to delete file: ${error.message}`);
   }
 };
+
