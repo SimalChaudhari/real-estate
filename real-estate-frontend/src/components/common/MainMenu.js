@@ -85,7 +85,7 @@ const MainMenu = () => {
       <li className="megamenu_style dropitem">
         <a className="list-item" href="#">
           <span className={topMenu == "listing" ? "title menuActive" : "title"}>
-            <Link className={`${handleActive('/grid-default')}`} href="/grid-default">
+            <Link className={`${handleActive('/list-v1')}`} href="/list-v1">
               Listing
             </Link>
           </span>
