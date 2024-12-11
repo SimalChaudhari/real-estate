@@ -6,9 +6,9 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 
-const PopularListings = ({data = listings }) => {
+const PopularListings = ({ data = listings }) => {
   return (
-    <>
+    <div>
       <Swiper
         spaceBetween={30}
         slidesPerView={1}
@@ -54,7 +54,10 @@ const PopularListings = ({data = listings }) => {
                 </div>
                 <div className="list-content">
                   <h6 className="list-title">
+                    {/*
                     <Link href={`/single-v2/${listing.id}`}>{listing.title}</Link>
+                    */}
+                    <Link href={`/single-v3/${listing.id}`}>{listing.title}</Link>
                   </h6>
                   <p className="list-text">{listing.location}</p>
                   <div className="list-meta d-flex align-items-center">
@@ -89,7 +92,7 @@ const PopularListings = ({data = listings }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
 

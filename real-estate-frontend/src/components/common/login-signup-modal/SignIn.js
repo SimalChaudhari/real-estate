@@ -4,18 +4,11 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "@/app/features/authSlice";
-import { toast } from 'react-toastify';
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
+  const router = useRouter(); 
   const dispatch = useDispatch(); // Use dispatch from react-redux
-
-  // Access Redux store data using useSelector
-  const authState = useSelector((state) => state.auth); // Assuming the auth slice is named "auth"
-
-  // Log Redux state
-  React.useEffect(() => {
-    console.log("Redux Auth State Updated:", authState); // Log the updated state
-  }, [authState]);
 
   // State to store user input
   const [formData, setFormData] = useState({
@@ -64,6 +57,7 @@ const SignIn = () => {
     try {
       const response = await authLogin(formData); // Call the API with the form data
 
+      router.push('/');
       // Dispatch the loginSuccess action to store the user and token in Redux
       dispatch(
         loginSuccess({
@@ -71,17 +65,15 @@ const SignIn = () => {
           token: response.token,
         })
       );
-      
+
       // Save token and user data if needed
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
-      toast.success("Login Successfull!");
 
       // Redirect user or perform additional actions
       // alert("Login successful!");
       setSuccess(true);
     } catch (error) {
-      toast.error("Login Failed. Please Try Again.");
       console.error("Error during login:", error.message);
       setErrors({ apiError: error.message || "An error occurred. Please try again." });
     } finally {
@@ -91,18 +83,6 @@ const SignIn = () => {
 
   return (
     <form className="form-style1" onSubmit={handleSubmit}>
-    {success && (
-      <div className="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Login Successful!</strong> Welcome back.
-        <button
-          type="button"
-          className="btn-close m-2"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-          onClick={() => setSuccess(false)} // Close alert
-        ></button>
-      </div>
-    )}
       <div className="mb25">
         <label className={`form-label fw600 ${errors.email ? "text-danger" : "dark-color"}`}>Email</label>
         <input
@@ -147,10 +127,17 @@ const SignIn = () => {
       {/* End  Lost your password? */}
 
       <div className="d-grid mb20">
-        <button className="ud-btn btn-thm" type="submit">
-          Sign in <i className="fal fa-arrow-right-long" />
+        <button
+          className="ud-btn btn-thm"
+          type="submit"
+          data-bs-dismiss={success ? "modal" : undefined} // Dismiss modal only on success
+          aria-label={success ? "Close" : undefined} // Add aria-label when modal can be dismissed
+          disabled={loading} // Disable button during loading
+        >
+          {loading ? "Signing in..." : "Sign in"} <i className="fal fa-arrow-right-long" />
         </button>
       </div>
+
       {/* End submit */}
 
       <div className="hr_content mb20">
@@ -173,12 +160,14 @@ const SignIn = () => {
           <i className="fab fa-apple" /> Continue Apple
         </button>
       </div>
-      <p className="dark-color text-center mb0 mt10">
-        Not signed up?{" "}
-        <Link className="dark-color fw600" href="/register">
-          Create an account.
-        </Link>
-      </p>
+      {/*
+        */}
+        <p className="dark-color text-center mb0 mt10 mobile-menu">
+          Not signed up?{" "}
+          <Link className="dark-color fw600" href="/register">
+            Create an account.
+          </Link>
+        </p>
     </form>
   );
 };

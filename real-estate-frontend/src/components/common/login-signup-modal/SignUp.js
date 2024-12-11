@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { authRegister } from "@/BackendApi/Auth/AuthApi";
+import { toast } from 'react-toastify';
 
+import { useRouter } from "next/navigation";
 const SignUp = () => {
+  const router = useRouter(); 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -67,7 +70,10 @@ const SignUp = () => {
         password: "",
         gender: "",
       }); // Reset form
+      toast.success("Registration Successfull!");
+      router.push('/');
     } catch (error) {
+      toast.error(error.message || "Registration Failed. Please Try Again.");
       console.error("Error during registration:", error.message);
       setErrors({ apiError: error.message || "An error occurred during registration." });
     } finally {
@@ -81,7 +87,8 @@ const SignUp = () => {
   return (
     <form className="form-style1" onSubmit={handleSubmit}>
       <div className="row">
-        <div className="col-lg-6 col-md-6">
+        {/*<div className="col-lg-6 col-md-6"> */}
+        <div className="col-lg-12 col-md-6 ">
           <div className="mb25">
 
             <label className={`form-label fw600 ${errors.firstName ? "text-danger" : "dark-color"}`}>First Name *</label>
@@ -92,14 +99,15 @@ const SignUp = () => {
               placeholder="Enter First Name"
               value={formData.firstName}
               onChange={handleInputChange}
-              // required
+            // required
             />
             {errors.firstName && <small className="text-danger">{errors.firstName}</small>}
           </div>
           {/* End First Name */}
 
         </div>
-        <div className="col-lg-6 col-md-6">
+        {/*<div className="col-lg-6 col-md-6"> */}
+        <div className="col-lg-12 col-md-6 ">
           <div className="mb25">
             <label className={`form-label fw600 ${errors.lastName ? "text-danger" : "dark-color"}`}>Last Name</label>
             <input
@@ -118,7 +126,8 @@ const SignUp = () => {
       </div>
 
       <div className="row">
-        <div className="col-lg-6 col-md-6">
+        {/*<div className="col-lg-6 col-md-6"> */}
+        <div className="col-lg-12 col-md-6 ">
           <div className="mb25">
             <label className={`form-label fw600 ${errors.email ? "text-danger" : "dark-color"}`}>Email</label>
             <input
@@ -134,7 +143,8 @@ const SignUp = () => {
           </div>
           {/* End Email */}
         </div>
-        <div className="col-lg-6 col-md-6">
+        {/*<div className="col-lg-6 col-md-6"> */}
+        <div className="col-lg-12 col-md-6 ">
           <div className="mb25">
             <label className={`form-label fw600 ${errors.mobile ? "text-danger" : "dark-color"}`}>Mobile</label>
             <input
@@ -153,7 +163,8 @@ const SignUp = () => {
       </div>
 
       <div className="row">
-        <div className="col-lg-6 col-md-6">
+        {/*<div className="col-lg-6 col-md-6"> */}
+        <div className="col-lg-12 col-md-6 ">
           <div className="mb25">
             <label className={`form-label fw600 ${errors.gender ? "text-danger" : "dark-color"}`}>Gender</label>
             <select
@@ -172,7 +183,8 @@ const SignUp = () => {
           </div>
           {/* End Gender */}
         </div>
-        <div className="col-lg-6 col-md-6">
+        {/*<div className="col-lg-6 col-md-6"> */}
+        <div className="col-lg-12 col-md-6 ">
           <div className="mb20">
             <label className={`form-label fw600 ${errors.password ? "text-danger" : "dark-color"}`}>Password</label>
             <input
@@ -196,9 +208,17 @@ const SignUp = () => {
 
 
 
-      <div className="d-grid mb20 col-lg-4">
-        <button className="ud-btn btn-thm" type="submit">
-          Create account <i className="fal fa-arrow-right-long" />
+      {/*
+        <div className="d-grid mb20 col-lg-4">
+        */}
+      <div className="d-grid mb20 col-lg-12">
+        <button className="ud-btn btn-thm"
+          type="submit"
+          data-bs-dismiss={success ? "modal" : undefined} // Dismiss modal only on success
+          aria-label={success ? "Close" : undefined} // Add aria-label when modal can be dismissed
+          disabled={loading}
+        >
+        {loading ? "Loading..." : "Create account"} <i className="fal fa-arrow-right-long" />
         </button>
       </div>
       <div className="hr_content mb20">
@@ -207,28 +227,33 @@ const SignUp = () => {
       </div>
 
       <div className="row">
-        <div className="d-grid mb10 col-lg-4">
+        {/*<div className="d-grid mb10 col-lg-4">*/}
+        <div className="d-grid mb10 col-lg-12">
           <button className="ud-btn btn-white" type="button">
             <i className="fab fa-google" /> Continue Google
           </button>
         </div>
-        <div className="d-grid mb10 col-lg-4">
+        {/*<div className="d-grid mb10 col-lg-4">*/}
+        <div className="d-grid mb10 col-lg-12">
           <button className="ud-btn btn-fb" type="button">
             <i className="fab fa-facebook-f" /> Continue Facebook
           </button>
         </div>
-        <div className="d-grid mb20 col-lg-4">
+        {/*<div className="d-grid mb20 col-lg-4">*/}
+        <div className="d-grid mb20 col-lg-12">
           <button className="ud-btn btn-apple" type="button">
             <i className="fab fa-apple" /> Continue Apple
           </button>
         </div>
       </div>
-      <p className="dark-color text-center mb0 mt10">
-        Already Have an Account?{" "}
-        <Link className="dark-color fw600" href="/login">
-          Login
-        </Link>
-      </p>
+      {/*
+        */}
+        <p className="dark-color text-center mb0 mt10 mobile-menu">
+          Already Have an Account?{" "}
+          <Link className="dark-color fw600" href="/login">
+            Login
+          </Link>
+        </p>
     </form>
   );
 };

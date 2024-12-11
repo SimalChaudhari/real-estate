@@ -9,7 +9,7 @@ import "swiper/swiper-bundle.min.css";
 
 const PropertiesByCities = () => {
   return (
-    <>
+    <div>
       <Swiper
         spaceBetween={30}
         modules={[Navigation]}
@@ -53,7 +53,7 @@ const PropertiesByCities = () => {
                     <p className="text">{city.propertyCount} Properties</p>
                   </div>
                   <div className="bottom-area">
-                    <Link className="ud-btn2" href="/grid-full-1-col-v1">
+                    <Link className="ud-btn2" href="/grid-default">
                       See All Cities
                       <i className="fal fa-arrow-right-long" />
                     </Link>
@@ -77,7 +77,7 @@ const PropertiesByCities = () => {
         {/* End Next */}
       </div>
       {/* End .col for navigation  */}
-    </>
+    </div>
   );
 };
 

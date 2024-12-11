@@ -58,7 +58,7 @@ export default function PopulerProperty() {
             <div className="col-lg-12">
               <PopularListings data={pageData} />
               <div className="d-grid d-md-block text-center mt30 mt0-md">
-                <Link href="/grid-full-4-col" className="ud-btn btn-thm">
+                <Link href="/grid-default" className="ud-btn btn-thm">
                   See All Properties<i className="fal fa-arrow-right-long"></i>
                 </Link>
               </div>
