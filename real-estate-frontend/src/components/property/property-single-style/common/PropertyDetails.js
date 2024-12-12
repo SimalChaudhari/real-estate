@@ -1,49 +1,62 @@
-import React from "react";
+"use client";
 
-const PropertyDetails = () => {
+import React from "react";
+import { useSelector } from "react-redux";
+
+const PropertyDetails = ({ id }) => {
+  
+  const listingsData = useSelector((state) => state.listings?.listings);
+  // Check for static or dynamic data
+  const transformedListingsData =
+    listingsData.find((elm) => elm._id === id) ||
+    listingsData[0];
+
+    console.log("transformedListingsData :", transformedListingsData);
+    
+
   const columns = [
     [
-      {
-        label: "Property ID",
-        value: "RT48",
-      },
+      // {
+      //   label: "Property ID",
+      //   value: "RT48",
+      // },
       {
         label: "Price",
-        value: "$252,000",
+        value: transformedListingsData?.price || "N/A",
       },
       {
         label: "Property Size",
-        value: "1500 Sq Ft",
+        value: `${transformedListingsData?.sqft || "N/A"} Sq Ft`,
       },
       {
         label: "Bathrooms",
-        value: "3",
+        value: transformedListingsData?.bath || "N/A",
       },
       {
         label: "Bedrooms",
-        value: "2",
+        value: transformedListingsData?.bed || "N/A",
       },
     ],
     [
-      {
-        label: "Garage",
-        value: "2",
-      },
-      {
-        label: "Garage Size",
-        value: "200 SqFt",
-      },
+      // {
+      //   label: "Garage",
+      //   value: "2",
+      // },
+      // {
+      //   label: "Garage Size",
+      //   value: "200 SqFt",
+      // },
       {
         label: "Year Built",
-        value: "2022",
+        value: transformedListingsData?.yearBuilding || "N/A",
       },
       {
         label: "Property Type",
-        value: "Apartment",
+        value: transformedListingsData?.propertyType || "N/A",
       },
       {
         label: "Property Status",
-        value: "For Sale",
+        value: transformedListingsData?.status || "N/A",
       },
     ],
   ];

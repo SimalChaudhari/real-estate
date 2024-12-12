@@ -1,5 +1,5 @@
 "use client";
-import { GetList } from "@/BackendApi/Listing/ListingApi";
+import { GetList } from "@/services/listing/listingApi";
 import listings from "@/data/listings";
 import Image from "next/image";
 import Link from "next/link";

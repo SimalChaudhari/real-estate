@@ -1,7 +1,7 @@
 "use client"; // Mark this as a client component
 import React, { useState } from "react";
 import Link from "next/link";
-import { authRegister } from "@/BackendApi/Auth/AuthApi";
+import { authRegister } from "@/services/auth/authApi";
 import { toast } from 'react-toastify';
 
 import { useRouter } from "next/navigation";

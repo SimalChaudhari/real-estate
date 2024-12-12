@@ -73,7 +73,7 @@ const AdvanceFilterModal = () => {
           {/* End .row */}
 
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-12">
               <div className="widget-wrapper">
                 <h6 className="list-title">Type</h6>
                 <div className="form-style2 input-group">
@@ -91,18 +91,20 @@ const AdvanceFilterModal = () => {
             </div>
             {/* End .col-6 */}
 
-            <div className="col-sm-6">
-              <div className="widget-wrapper">
-                <h6 className="list-title">Property ID</h6>
-                <div className="form-style2">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="RT04949213"
-                  />
+            {/*
+              <div className="col-sm-6">
+                <div className="widget-wrapper">
+                  <h6 className="list-title">Property ID</h6>
+                  <div className="form-style2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="RT04949213"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            */}
             {/* End .col-6 */}
           </div>
           {/* End .row */}

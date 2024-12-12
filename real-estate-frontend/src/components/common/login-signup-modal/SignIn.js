@@ -1,5 +1,5 @@
 "use client";
-import { authLogin } from "@/BackendApi/Auth/AuthApi";
+import { authLogin } from "@/services/auth/authApi";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

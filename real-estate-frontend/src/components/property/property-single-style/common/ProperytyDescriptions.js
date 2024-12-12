@@ -1,16 +1,27 @@
-import React from "react";
+"use client";
 
-const ProperytyDescriptions = () => {
+import React from "react";
+import { useSelector } from "react-redux";
+
+const ProperytyDescriptions = ({ id }) => {
+
+  const listingsData = useSelector((state) => state.listings?.listings);
+  // Check for static or dynamic data
+  const transformedListingsData =
+    listingsData.find((elm) => elm._id === id) ||
+    listingsData[0];
+
+  const fullDescription = transformedListingsData?.description;
+  const truncatedDescription = fullDescription?.split(" ").slice(0, 82).join(" ");
+  const truncatedDescription2 = fullDescription?.split(" ").slice(82).join(" ");
+
+  if (!transformedListingsData) {
+    return <div>No property found.</div>; // Handle case where no property matches
+  }
   return (
-    <>
+    <div>
       <p className="text mb10">
-        This 3-bed with a loft, 2-bath home in the gated community of The
-        Hideout has it all. From the open floor plan to the abundance of light
-        from the windows, this home is perfect for entertaining. The living room
-        and dining room have vaulted ceilings and a beautiful fireplace. You
-        will love spending time on the deck taking in the beautiful views. In
-        the kitchen, you&apos;ll find stainless steel appliances and a tile
-        backsplash, as well as a breakfast bar.
+        {truncatedDescription}
       </p>
       <div className="agent-single-accordion">
         <div className="accordion accordion-flush" id="accordionFlushExample">
@@ -24,12 +35,8 @@ const ProperytyDescriptions = () => {
             >
               <div className="accordion-body p-0">
                 <p className="text">
-                  Placeholder content for this accordion, which is intended to
-                  demonstrate the class. This is the first item&apos;s accordion
-                  body you get groundbreaking performance and amazing battery
-                  life. Add to that a stunning Liquid Retina XDR display, the
-                  best camera and audio ever in a Mac notebook, and all the
-                  ports you need.
+
+                  {truncatedDescription2}
                 </p>
               </div>
             </div>
@@ -48,7 +55,7 @@ const ProperytyDescriptions = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

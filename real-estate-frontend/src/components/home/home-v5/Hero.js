@@ -74,7 +74,8 @@ const Hero = () => {
                         </p>
                         <div className="slider-btn-block">
                           <Link
-                            href="/map-v4"
+                            // href="/map-v4"
+                            href="/list-v1"
                             className="ud-btn btn-white slider-btn"
                           >
                             View Details

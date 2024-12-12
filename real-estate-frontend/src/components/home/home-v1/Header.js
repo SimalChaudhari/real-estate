@@ -90,7 +90,7 @@ const Header = () => {
                       role="button"
                       onClick={handleLogout}
                     >
-                      <i className="far fa-user-circle fz16 me-2" />{" "}
+                      <i className="icon fz18 fa-sharp-duotone fa-solid fa-arrow-right-from-bracket fz16 me-2" />{" "}
                       <span className="d-none d-xl-block">Logout</span>
                     </a>
                   ) : (

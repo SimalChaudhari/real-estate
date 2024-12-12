@@ -1,5 +1,5 @@
 /**
- * @type {import("prettier").Config}
+ * @type {import("prettier").config}
  * Need to restart IDE when changing configuration
  * Open the command palette (Ctrl + Shift + P) and execute the command > Reload Window.
  */

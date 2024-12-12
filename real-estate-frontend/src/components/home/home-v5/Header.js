@@ -6,9 +6,13 @@ import LoginSignupModal from "@/components/common/login-signup-modal";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/app/features/authSlice";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
+  const authState = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const changeBackground = () => {
     if (window.scrollY >= 10) {
@@ -25,12 +29,20 @@ const Header = () => {
     };
   }, []);
 
+  const handleLogout = () => {
+    // Clear Redux state and local storage
+    dispatch(logout());
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    alert("You have been logged out.");
+  };
+
+
   return (
     <>
       <header
-        className={`header-nav nav-homepage-style main-menu  ${
-          navbar ? "sticky slideInDown animated" : ""
-        }`}
+        className={`header-nav nav-homepage-style main-menu  ${navbar ? "sticky slideInDown animated" : ""
+          }`}
       >
         <nav className="posr">
           <div className="container posr menu_bdrt1">
@@ -65,6 +77,29 @@ const Header = () => {
 
               <div className="col-auto">
                 <div className="d-flex align-items-center">
+                  {authState.isAuthenticated ? (
+                    <a
+                      className="login-info d-flex align-items-center"
+                      role="button"
+                      onClick={handleLogout}
+                    >
+                      <i className="icon fz18 fa-sharp-duotone fa-solid fa-arrow-right-from-bracket fz16 me-2" />{" "}
+                      <span className="d-none d-xl-block">Logout</span>
+                    </a>
+                  ) : (
+
+                    <a
+                      href="#"
+                      className="login-info d-flex align-items-center"
+                      data-bs-toggle="modal"
+                      data-bs-target="#loginSignupModal"
+                      role="button"
+                    >
+                      <i className="far fa-user-circle fz16 me-2" />{" "}
+                      <span className="d-none d-xl-block">Login / Register</span>
+                    </a>
+                  )}
+                  {/*
                   <a
                     href="#"
                     className="login-info d-flex align-items-center"
@@ -75,6 +110,7 @@ const Header = () => {
                     <i className="far fa-user-circle fz16 me-2" />{" "}
                     <span className="d-none d-xl-block">Login / Register</span>
                   </a>
+                  */}
                   <Link
                     className="ud-btn btn-white add-property bdrs12 mx-2 mx-xl-4 border-0"
                     href="/dashboard-add-property"

@@ -6,6 +6,7 @@ import Image from "next/image";
 import "photoswipe/dist/photoswipe.css";
 import listings from "@/data/listings";
 import Map from "./Map";
+import { useSelector } from "react-redux";
 
 const images = [
   "/images/listings/listing-single-6-1.jpg",
@@ -17,6 +18,24 @@ const images = [
 const PropertyGallery = ({ id }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const data = listings.filter((elm) => elm.id == id)[0] || listings[0];
+
+  const listingsData = useSelector((state) => state.listings?.listings);
+  // Check for static or dynamic data
+  const transformedListingsData =
+    listingsData.find((elm) => elm._id === id) ||
+    listingsData[0];
+
+    const addressDetails = {
+      address: transformedListingsData?.address || "N/A",
+      city: transformedListingsData?.city || "N/A",
+      state: transformedListingsData?.location || "N/A", // Assuming "location" represents state/county
+      zipCode: transformedListingsData?.zip_code || "N/A",
+      country: "N/A", // Update this if a country field exists in your data
+    };
+
+  if (!transformedListingsData) {
+    return <div>No property found.</div>; // Handle case where no property matches
+  }
 
   return (
     <>
@@ -105,7 +124,7 @@ const PropertyGallery = ({ id }) => {
                           modules={[FreeMode, Navigation, Thumbs]}
                           className="mySwiper2"
                         >
-                          {images.map((item, i) => (
+                          {transformedListingsData.images.map((item, i) => (
                             <SwiperSlide key={i}>
                               <Image
                                 height={736}
@@ -113,6 +132,7 @@ const PropertyGallery = ({ id }) => {
                                 src={item}
                                 alt="gallery"
                                 className="w-100 h-auto bdrs12"
+                                // style={{width: "500px", height: "400px"}}
                               />
                             </SwiperSlide>
                           ))}
@@ -130,7 +150,7 @@ const PropertyGallery = ({ id }) => {
                               modules={[FreeMode, Navigation, Thumbs]}
                               className="mySwiper mt20"
                             >
-                              {images.map((item, i) => (
+                              {transformedListingsData.images.map((item, i) => (
                                 <SwiperSlide key={i}>
                                   <Image
                                     height={90}
@@ -157,21 +177,34 @@ const PropertyGallery = ({ id }) => {
                 role="tabpanel"
                 aria-labelledby="pills-profile-tab"
               >
-                <Map />
+                <Map id={id} />
               </div>
               {/* End map type listing */}
 
+              {/*
+                */}
               <div
                 className="tab-pane fade"
                 id="pills-contact"
                 role="tabpanel"
                 aria-labelledby="pills-contact-tab"
               >
-                <iframe
-                  className="h510 w-100"
-                  src="https://www.google.com/maps/embed?pb=!4v1553797194458!6m8!1m7!1sR4K_5Z2wRHTk9el8KLTh9Q!2m2!1d36.82551718071267!2d-76.34864590837246!3f305.15097!4f0!5f0.7820865974627469"
-                  allowFullScreen
-                />
+              <iframe
+              className="position-relative bdrs12 mt30 h510 w-100"
+              loading="lazy"
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                addressDetails.address
+              )}&t=m&z=14&output=embed&iwloc=near`}
+              title={addressDetails.address}
+              aria-label={addressDetails.address}
+            />
+              {/*
+              <iframe
+                className="h510 w-100"
+                src="https://www.google.com/maps/embed?pb=!4v1553797194458!6m8!1m7!1sR4K_5Z2wRHTk9el8KLTh9Q!2m2!1d36.82551718071267!2d-76.34864590837246!3f305.15097!4f0!5f0.7820865974627469"
+                allowFullScreen
+              />
+              */}
               </div>
               {/* End map locatoin fnder */}
             </div>

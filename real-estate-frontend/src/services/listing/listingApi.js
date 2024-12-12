@@ -1,4 +1,4 @@
-import axiosInstance from '../../Config/Config';
+import axiosInstance from '../../config/config.js';
 import { toast } from 'react-toastify';
 
 /**
@@ -10,10 +10,10 @@ export const GetList = async () => {
         const response = await axiosInstance.get('/api/properties-listing/get');
 
         // Clear existing toasts
-        toast.dismiss();
+        // toast.dismiss();
 
         // Show success toast notification
-        toast.success("Properties listing fetched successfully!");
+        // toast.success("Properties listing fetched successfully!");
 
         // Return success response
         return {
@@ -52,10 +52,10 @@ export const GetById = async (id) => {
         const response = await axiosInstance.get(`/api/properties-listing/${id}`);
 
         // Clear existing toasts
-        toast.dismiss();
+        // toast.dismiss();
 
         // Show success toast notification
-        toast.success("Property details fetched successfully!");
+        // toast.success("Property details fetched successfully!");
 
         // Return success response
         return {

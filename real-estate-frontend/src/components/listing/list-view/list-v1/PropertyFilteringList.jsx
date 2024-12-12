@@ -8,7 +8,7 @@ import FeaturedListings from "./FeatuerdListings";
 import PaginationTwo from "../../PaginationTwo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchListingsFailure, fetchListingsStart, fetchListingsSuccess } from "@/app/features/listingsSlice";
-import { GetList } from "@/BackendApi/Listing/ListingApi";
+import { GetList } from "@/services/listing/listingApi";
 
 export default function PropertyFilteringList() {
 
