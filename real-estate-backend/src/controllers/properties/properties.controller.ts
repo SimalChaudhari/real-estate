@@ -154,9 +154,14 @@ export const deleteListing = async (req: Request, res: Response, next: NextFunct
 export const getListings = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const listings = await Listing.find()
-            .populate('city', 'name')
-            .populate('location', 'name');
-
+            .populate({
+                path: 'city',
+                select: 'name -_id', // Include `name` and exclude `_id`
+            })
+            .populate({
+                path: 'location',
+                select: 'name -_id', // Include `name` and exclude `_id`
+            })
         res.status(200).json(listings);
     } catch (error) {
         next(error);
@@ -166,8 +171,14 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
 export const getListingById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const listing = await Listing.findById(req.params.id)
-            .populate('city')
-            .populate('location');
+            .populate({
+                path: 'city',
+                select: 'name -_id', // Include `name` and exclude `_id`
+            })
+            .populate({
+                path: 'location',
+                select: 'name -_id', // Include `name` and exclude `_id`
+            })
         if (!listing) {
             res.status(404).json({ message: 'Listing not found' });
             return;

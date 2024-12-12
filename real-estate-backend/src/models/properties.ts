@@ -32,60 +32,83 @@ export enum PropertyType {
   OFFICE = "Office",
 }
 
+
+// Property Status Enum
+export enum Status {
+  AVAILABLE = "Available",
+  SOLD = "Sold",
+  PENDING = "Pending"
+}
+
+
 // Define an interface for the property data
 export interface IListing extends Document {
-  images: string[];
+  //description
   title: string;
+  description: string;
+  status: string;
+  price: string;
+  images: string[];
+
+  //address
   city: mongoose.Types.ObjectId; // Reference to City
   location: mongoose.Types.ObjectId; // Reference to State
   address: string;
-  description: string;
+  zip_code: string;
+  lat: number;
+  long: number;
+
+  //listing
   bed: string;
   bath: string;
   sqft: number;
-  price: string;
   forRent: boolean;
   tags: Tags[];
   propertyType: PropertyType;
   yearBuilding: number;
   featured: boolean;
-  lat: number;
-  long: number;
   features: Features[];
 }
 
 // Define the Mongoose schema
 const ListingSchema: Schema = new Schema({
-  images: [{ type: String }],
+  // description
   title: { type: String, required: true },
+  description: { type: String },
+  status: { type: String,enum: Object.values(Status),default: Status.AVAILABLE},// new
+  price: { type: String, required: true }, 
+  images: [{ type: String }],
+  // address
+  address: { type: String, required: true },
   city: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: true },
   location: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true },
-  address: { type: String, required: true },
-  description: { type: String},
+  zip_code:{ type: String, required: true },
+  lat: { type: Number, required: true },
+  long: { type: Number, required: true },
+
+  // listing Details
   bed: { type: String, required: true },
   bath: { type: String, required: true },
   sqft: { type: Number, required: true },
-  price: { type: String, required: true },
   forRent: { type: Boolean, required: true },
   tags: {
-    type: [String],
-    enum: Object.values(Tags), // Enum for tags
-    required: true,
-  },
+  type: [String],
+  enum: Object.values(Tags), // Enum for tags
+  required: true,
+},
   propertyType: {
-    type: String,
-    enum: Object.values(PropertyType), // Enum for property types
-    required: true,
-  },
+  type: String,
+  enum: Object.values(PropertyType), // Enum for property types
+  required: true,
+},
   yearBuilding: { type: Number, required: true },
   featured: { type: Boolean, default: false },
-  lat: { type: Number, required: true },
-  long: { type: Number, required: true },
+
   features: {
-    type: [String],
-    enum: Object.values(Features), // Enum for features
-    required: true,
-  },
+  type: [String],
+  enum: Object.values(Features), // Enum for features
+  required: true,
+},
 });
 
 // Export the model
