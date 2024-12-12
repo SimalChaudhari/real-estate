@@ -181,32 +181,32 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
 
 export const getListingById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const listing = await Listing.findById(req.params.id)
-        .populate({
-          path: 'city',
-          select: 'name -_id', // Include `name` and exclude `_id`
-        })
-        .populate({
-          path: 'location',
-          select: 'name -_id', // Include `name` and exclude `_id`
-        });
-  
-      if (!listing) {
-        res.status(404).json({ message: 'Listing not found' });
-        return;
-      }
-  
-      // Transform the response to flatten city and location
-      const listingObj = listing.toObject();
-      const transformedListing = {
-        ...listingObj,
-        city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
-        location: typeof listingObj.location === 'object' && 'name' in listingObj.location ? listingObj.location.name : null,
-      };
-  
-      res.status(200).json(transformedListing);
+        const listing = await Listing.findById(req.params.id)
+            .populate({
+                path: 'city',
+                select: 'name -_id', // Include `name` and exclude `_id`
+            })
+            .populate({
+                path: 'location',
+                select: 'name -_id', // Include `name` and exclude `_id`
+            });
+
+        if (!listing) {
+            res.status(404).json({ message: 'Listing not found' });
+            return;
+        }
+
+        // Transform the response to flatten city and location
+        const listingObj = listing.toObject();
+        const transformedListing = {
+            ...listingObj,
+            city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
+            location: typeof listingObj.location === 'object' && 'name' in listingObj.location ? listingObj.location.name : null,
+        };
+
+        res.status(200).json(transformedListing);
     } catch (error) {
-      next(error);
+        next(error);
     }
-  };
-  
+};
+
