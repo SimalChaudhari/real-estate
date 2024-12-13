@@ -16,9 +16,9 @@ const SidebarDashboard = () => {
           text: "Dashboard",
         },
         {
-          href: "/dashboard-message",
-          icon: "flaticon-chat-1",
-          text: "Message",
+          href: "/dashboard-user",
+          icon: "flaticon-user-1",
+          text: "Users",
         },
       ],
     },

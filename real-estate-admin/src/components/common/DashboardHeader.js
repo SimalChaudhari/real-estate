@@ -113,8 +113,8 @@ const DashboardHeader = () => {
                 <div className="text-center text-lg-end header_right_widgets">
                   <ul className="mb0 d-flex justify-content-center justify-content-sm-end p-0">
                     <li className="d-none d-sm-block">
-                      <Link className="text-center mr15" href="/login">
-                        <span className="flaticon-email" />
+                      <Link className="text-center mr15" href="#">
+                        <span className="flaticon-user" />
                       </Link>
                     </li>
                     {/* End email box */}

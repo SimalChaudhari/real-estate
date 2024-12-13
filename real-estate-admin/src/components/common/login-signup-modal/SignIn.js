@@ -77,6 +77,7 @@ const SignIn = () => {
           <i className="fal fa-arrow-right-long" />
         </button>
       </div>
+      {/* 
       {error && <p className="text-danger">{error}</p>}
       <div className="hr_content mb20">
         <hr />
@@ -97,12 +98,14 @@ const SignIn = () => {
           <i className="fab fa-apple" /> Continue Apple
         </button>
       </div>
+    
       <p className="dark-color text-center mb0 mt10">
         Not signed up?{" "}
         <Link className="dark-color fw600" href="/register">
           Create an account.
         </Link>
       </p>
+      */}
     </form>
   );
 };

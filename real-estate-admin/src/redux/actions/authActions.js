@@ -1,4 +1,4 @@
-
+import Cookies from "js-cookie";
 import axiosInstance from '@/config/axiosInstance';
 import { toast } from 'react-toastify'; // Adjust the path if needed
 
@@ -25,22 +25,25 @@ export const authRegister = async (contact) => {
 
 export const authLogin = (data) => async (dispatch) => {
     try {
-        const response = await axiosInstance.post('/api/auth/login', data);
-        // Validate response structure
-        const token = response?.data?.access_token;
-        const user = response?.data?.user;
-        localStorage.setItem('user', JSON.stringify({ user:user }));
-        localStorage.setItem('token', token); // Store encrypted name and value
-        // Dispatch the authentication action
-        dispatch({
-            type: "AUTH_DATA",
-            payload: { user: user },
-        });
-
+      const response = await axiosInstance.post("/api/auth/login", data);
+  
+      // Validate response structure
+      const token = response?.data?.access_token;
+      const user = response?.data?.user;
+  
+      if (token && user) {
+        // Store token and user in cookies
+        Cookies.set("token", token, { path: "/", secure: true, sameSite: "Strict", httpOnly: false });
+        Cookies.set("user", JSON.stringify(user), { path: "/", secure: true, sameSite: "Strict", httpOnly: false });
+  
+      } else {
+        throw new Error("Invalid login response");
+      }
+      return true
     } catch (error) {
-        const errorMessage = error?.response?.data?.message || error.message || 'An error occurred during login';
-        toast.error(errorMessage, "Login Failed. Please Try Again.");
-        console.error('Error during login:', errorMessage);
-        throw new Error(errorMessage); // Throwing meaningful error
+      const errorMessage = error?.response?.data?.message || error.message || "An error occurred during login";
+      toast.error(errorMessage, "Login Failed. Please Try Again.");
+      console.error("Error during login:", errorMessage);
+      throw new Error(errorMessage); // Throwing meaningful error
     }
-};
+  };

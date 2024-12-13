@@ -1,3 +1,4 @@
+"use client";
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
@@ -7,11 +8,10 @@ import RecentActivities from "@/components/property/dashboard/dashboard-home/Rec
 import TopStateBlock from "@/components/property/dashboard/dashboard-home/TopStateBlock";
 import PropertyViews from "@/components/property/dashboard/dashboard-home/property-view";
 
-export const metadata = {
-  title: "Dashboard Home || Homez - Real Estate NextJS Template",
-};
 
 const DashboardHome = () => {
+
+
   return (
     <div>
       {/* Main Header Nav */}

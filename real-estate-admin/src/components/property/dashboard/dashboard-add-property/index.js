@@ -4,8 +4,13 @@ import UploadMedia from "./upload-media";
 import LocationField from "./LocationField";
 import DetailsFiled from "./details-field";
 import Amenities from "./Amenities";
-
+// import { cookies } from "next/headers";
 const AddPropertyTabContent = () => {
+
+  // const userCookie = cookies().get("user");
+  // const user = userCookie ? JSON.parse(userCookie.value) : null;
+  // console.log("🚀 ~ AddPropertyTabContent ~ user:", user)
+
   return (
     <>
       <nav>
