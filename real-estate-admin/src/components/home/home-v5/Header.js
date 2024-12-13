@@ -1,6 +1,5 @@
 "use client";
 
-import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
 import Image from "next/image";
@@ -55,9 +54,7 @@ const Header = () => {
                       />
                     </Link>
                   </div>
-                  {/* End Logo */}
-
-                  <MainMenu />
+        
                   {/* End Main Menu */}
                 </div>
               </div>

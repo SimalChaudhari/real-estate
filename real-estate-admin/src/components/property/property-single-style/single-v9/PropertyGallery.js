@@ -10,7 +10,7 @@ import ScheduleForm from "../single-v2/ScheduleForm";
 const PropertyGallery = ({ id }) => {
   const data = listings.filter((elm) => elm.id == id)[0] || listings[0];
   return (
-    <div>
+    <>
       <div className="ps-widget bdrs12  mb30 overflow-hidden mb30 mt30 position-relative">
         <div className="ps-v4-hero-tab position-relative ">
           <ul
@@ -141,7 +141,7 @@ const PropertyGallery = ({ id }) => {
         </div>
         {/* End ps-v4-hero-tab content */}
       </div>
-    </div>
+    </>
   );
 };
 

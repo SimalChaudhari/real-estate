@@ -2,10 +2,9 @@ module.exports = [
   {
 
     id: 1,
-    image: "/images/listings/g1-h1.jpg",
+    image: "/images/listings/g1-1.jpg",
     title: "Equestrian Family Home",
-    city:'New York',
-    location: "New York City, CA, USA",
+    city:'New York',location: "New York City, CA, USA",
     bed: "1",
     bath: "2",
     sqft: 1200,
@@ -17,6 +16,7 @@ module.exports = [
     lat: 40.7279707552121,
         long: -74.07152705896405,
     features:[
+      
       "Air Conditioning",
       "Lawn",
       "TV Cable",
@@ -32,7 +32,7 @@ module.exports = [
   {
 
     id: 2,
-    image: "/images/listings/g1-h2.jpg",
+    image: "/images/listings/g1-2.jpg",
     title: "Luxury villa in Rego Park",
     city:'Los Angeles',location: "Los Angeles City, CA, USA",
 
@@ -44,10 +44,12 @@ module.exports = [
     price: "$82,000",
     propertyType:'Houses',yearBuilding:2017,
     forRent: true,
+   
     tags: ["house", "villa", "apartments"],
     features:[
       "Attic",
       "Basketball court",
+      
       "TV Cable",
       "Dryer",
       "Outdoor Shower",
@@ -60,7 +62,7 @@ module.exports = [
   },
   {
     id: 3,
-    image: "/images/listings/g1-h3.jpg",
+    image: "/images/listings/g1-3.jpg",
     title: "Equestrian Family Home",
     city:'Texas',location: "Texas City, CA, USA",
 
@@ -89,7 +91,7 @@ module.exports = [
   },
   {
     id: 4,
-    image: "/images/listings/g1-h4.jpg",
+    image: "/images/listings/g1-4.jpg",
     title: "Luxury villa in Rego Park",
     city:'New Jersey',location: "New Jersey City, CA, USA",
     lat: 39.62158564223682,
@@ -119,7 +121,7 @@ module.exports = [
   },
   {
     id: 5,
-    image: "/images/listings/g1-h1.jpg",
+    image: "/images/listings/g1-1.jpg",
     title: "Equestrian Family Home",
     city:'San Diego',location: "San Diego City, CA, USA",
 
@@ -148,7 +150,7 @@ module.exports = [
   },
   {
     id: 6,
-    image: "/images/listings/g1-h2.jpg",
+    image: "/images/listings/g1-2.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,
@@ -177,7 +179,7 @@ module.exports = [
   },
   {
     id: 7,
-    image: "/images/listings/g1-h3.jpg",
+    image: "/images/listings/g1-3.jpg",
     title: "Equestrian Family Home",
     city:'San Francisco',location: "San Francisco City, CA, USA",
     lat: 32.740991655365605,
@@ -204,7 +206,7 @@ module.exports = [
   },
   {
     id: 8,
-    image: "/images/listings/g1-h4.jpg",
+    image: "/images/listings/g1-4.jpg",
     title: "Luxury villa in Rego Park",
     city:'New York',location: "New York City, CA, USA",
     lat: 40.7279707552121,
@@ -231,7 +233,7 @@ module.exports = [
   },
   {
     id: 9,
-    image: "/images/listings/g4-h9.jpg",
+    image: "/images/listings/g4-9.jpg",
     title: "Luxury villa in Rego Park",
     city:'Los Angeles',location: "Los Angeles City, CA, USA",
     lat: 32.740991655365605,
@@ -257,7 +259,7 @@ module.exports = [
   },
   {
     id: 10,
-    image: "/images/listings/g4-h10.jpg",
+    image: "/images/listings/g4-10.jpg",
     title: "Luxury villa in Rego Park",
     city:'New Jersey',location: "New Jersey City, CA, USA",
     lat: 39.62158564223682,
@@ -285,7 +287,7 @@ module.exports = [
   },
   {
     id: 11,
-    image: "/images/listings/g4-h11.jpg",
+    image: "/images/listings/g4-11.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,
@@ -312,7 +314,7 @@ module.exports = [
   },
   {
     id: 12,
-    image: "/images/listings/g4-h12.jpg",
+    image: "/images/listings/g4-12.jpg",
     title: "Luxury villa in Rego Park",
     city:'San Diego',location: "San Diego City, CA, USA",
     lat: 32.740991655365605,
@@ -340,7 +342,7 @@ module.exports = [
   },
   {
     id: 13,
-    image: "/images/listings/xl-h5.jpg",
+    image: "/images/listings/xl-5.jpg",
     title: "Luxury villa in Rego Park",
     city:'San Francisco',location: "San Francisco City, CA, USA",
     
@@ -368,7 +370,7 @@ module.exports = [
   },
   {
     id: 14,
-    image: "/images/listings/xl-h7.jpg",
+    image: "/images/listings/xl-7.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,
@@ -395,7 +397,7 @@ module.exports = [
   },
   {
     id: 15,
-    image: "/images/listings/xl-h6.jpg",
+    image: "/images/listings/xl-6.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,
@@ -424,7 +426,7 @@ module.exports = [
   },
   {
     id: 16,
-    image: "/images/listings/xl-h5.jpg",
+    image: "/images/listings/xl-5.jpg",
     title: "Luxury villa in Rego Park",
     city:'New York',location: "New York City, CA, USA",
     lat: 40.7279707552121,
@@ -452,7 +454,7 @@ module.exports = [
   },
   {
     id: 17,
-    image: "/images/listings/map-h-h1.jpg",
+    image: "/images/listings/map-h-1.jpg",
     title: "Luxury villa in Rego Park",
     city:'Texas',location: "Texas City, CA, USA",
 
@@ -481,7 +483,7 @@ module.exports = [
   },
   {
     id: 18,
-    image: "/images/listings/map-h-h2.jpg",
+    image: "/images/listings/map-h-2.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,
@@ -509,7 +511,7 @@ module.exports = [
   },
   {
     id: 19,
-    image: "/images/listings/map-h-h3.jpg",
+    image: "/images/listings/map-h-3.jpg",
     title: "Luxury villa in Rego Park",
     city:'Los Angeles',location: "Los Angeles City, CA, USA",
     lat: 32.740991655365605,
@@ -537,7 +539,7 @@ module.exports = [
   },
   {
     id: 20,
-    image: "/images/listings/map-h-h4.jpg",
+    image: "/images/listings/map-h-4.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,
@@ -565,7 +567,7 @@ module.exports = [
   },
   {
     id: 21,
-    image: "/images/listings/map-h-h5.jpg",
+    image: "/images/listings/map-h-5.jpg",
     title: "Luxury villa in Rego Park",
     city:'New York',location: "New York City, CA, USA",
     lat: 40.7279707552121,
@@ -593,7 +595,7 @@ module.exports = [
   },
   {
     id: 22,
-    image: "/images/listings/map-h-h6.jpg",
+    image: "/images/listings/map-h-6.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,
@@ -622,7 +624,7 @@ module.exports = [
   },
   {
     id: 23,
-    image: "/images/listings/map-h-h7.jpg",
+    image: "/images/listings/map-h-7.jpg",
     title: "Luxury villa in Rego Park",
     city:'New Jersey',location: "New Jersey City, CA, USA",
     lat: 39.62158564223682,
@@ -652,7 +654,7 @@ module.exports = [
   },
   {
     id: 24,
-    image: "/images/listings/map-h-h8.jpg",
+    image: "/images/listings/map-h-8.jpg",
     title: "Luxury villa in Rego Park",
     city:'Los Angeles',location: "Los Angeles City, CA, USA",
     lat: 32.740991655365605,
@@ -680,7 +682,7 @@ module.exports = [
   },
   {
     id: 25,
-    image: "/images/listings/map-h-h9.jpg",
+    image: "/images/listings/map-h-9.jpg",
     title: "Luxury villa in Rego Park",
     city:'California',location: "California City, CA, USA",
     lat: 32.740991655365605,

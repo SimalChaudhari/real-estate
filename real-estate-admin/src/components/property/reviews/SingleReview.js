@@ -30,7 +30,7 @@ const reviews = [
 
 const SingleReview = () => {
   return (
-    <div>
+    <>
       {reviews.map((review, index) => (
         <div className="col-md-12" key={index}>
           <div className="mbp_first position-relative d-flex align-items-center justify-content-start mt30 mb30-sm">
@@ -64,7 +64,7 @@ const SingleReview = () => {
           <p className="text mt20 mb20">{review.text}</p>
           <ul className="mb20 ps-0">
             {review.images.map((image, i) => (
-              <li className="list-inline-item mb5-xs" key={i}>&nbsp;
+              <li className="list-inline-item mb5-xs" key={i}>
                 <Image
                   width={110}
                   height={90}
@@ -97,7 +97,7 @@ const SingleReview = () => {
           </a>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

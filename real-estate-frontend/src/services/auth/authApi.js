@@ -1,5 +1,5 @@
 
-import axiosInstance from '../../config/config.js';
+import axiosInstance from '@/config/axiosInstance';
 import { toast } from 'react-toastify'; // Adjust the path if needed
 
 /**

@@ -7,13 +7,13 @@ import "../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
 import { DM_Sans, Poppins } from "next/font/google";
 import { useEffect } from "react";
-import StoreProvider from "./StoreProvider";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
-}
+}import { Provider } from 'react-redux';
+import store from "@/redux/store";
+import { ToastContainer } from "react-toastify";
+
 
 // DM_Sans font
 const dmSans = DM_Sans({
@@ -29,7 +29,6 @@ const poppins = Poppins({
   variable: "--title-font-family",
 });
 
-
 export default function RootLayout({ children }) {
   useEffect(() => {
     Aos.init({
@@ -44,15 +43,13 @@ export default function RootLayout({ children }) {
         className={`body  ${poppins.variable} ${dmSans.variable}`}
         cz-shortcut-listen="false"
       >
-        <div className="wrapper ovh">
-          <ScrollToTop />
-          <StoreProvider>
-            <ToastContainer />
-            {children}
-          </StoreProvider>
-          <ScrollToTop />
+        <div className="wrapper ovh">  
+        <Provider store={store}>
+              <ToastContainer />
+              {children}
+          </Provider>
         </div>
-
+        <ScrollToTop />
       </body>
     </html>
   );

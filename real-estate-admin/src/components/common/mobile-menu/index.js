@@ -4,20 +4,8 @@ import Image from "next/image";
 import ContactInfo from "./ContactInfo";
 import Social from "./Social";
 import ProSidebarContent from "./ProSidebarContent";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/app/features/authSlice";
 
 const MobileMenu = () => {
-  const authState = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    // Clear Redux state and local storage
-    dispatch(logout());
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    alert("You have been logged out.");
-  };
   return (
     <div className="mobilie_header_nav stylehome1">
       <div className="mobile-menu">
@@ -46,20 +34,9 @@ const MobileMenu = () => {
                   alt="logo"
                 />
               </Link>
-              {authState.isAuthenticated ? (
-                <a
-                  className="login-info d-flex align-items-center"
-                  role="button"
-                  onClick={handleLogout}
-                >
-                  <span className="icon fz18 fa-sharp-duotone fa-solid fa-arrow-right-from-bracket" />
-                </a>
-              ) : (
-
-                <Link href="/login">
-                  <span className="icon fz18 far fa-user-circle" />
-                </Link>
-              )}
+              <Link href="/login">
+                <span className="icon fz18 far fa-user-circle" />
+              </Link>
             </div>
           </div>
         </div>

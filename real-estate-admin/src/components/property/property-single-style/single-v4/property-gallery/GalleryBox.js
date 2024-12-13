@@ -15,7 +15,7 @@ const GalleryBox = ({id}) => {
   ];
 
   return (
-    <div>
+    <>
       <Swiper
         className="overflow-visible"
         spaceBetween={30}
@@ -55,7 +55,7 @@ const GalleryBox = ({id}) => {
         {/* End Next */}
       </div>
       {/* End .col for navigation  */}
-    </div>
+    </>
   );
 };
 

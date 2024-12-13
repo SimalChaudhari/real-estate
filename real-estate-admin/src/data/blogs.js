@@ -1,7 +1,7 @@
 export const blogs = [
   {
     id: 1,
-    image: "/images/blog/blog-b1.jpg",
+    image: "/images/blog/blog-1.jpg",
     date: {
       month: "July",
       day: "28",
@@ -11,7 +11,7 @@ export const blogs = [
   },
   {
     id: 2,
-    image: "/images/blog/blog-b2.jpg",
+    image: "/images/blog/blog-2.jpg",
 
     date: {
       month: "July",
@@ -22,7 +22,7 @@ export const blogs = [
   },
   {
     id: 3,
-    image: "/images/blog/blog-b3.jpg",
+    image: "/images/blog/blog-3.jpg",
     date: {
       month: "July",
       day: "28",

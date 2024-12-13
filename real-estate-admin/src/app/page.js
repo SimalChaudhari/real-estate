@@ -1,14 +1,15 @@
-import Home_V1 from "./(home)/home-v5/page";
+// import Home_V5 from "./(home)/home-v5/page";
+import Login from "./(pages)/login/page";
 import Wrapper from "./layout-wrapper/wrapper";
 
 export const metadata = {
-  title: "Home v1 || Homez - Real Estate NextJS Template",
+  title: "Login - Real Estate",
 };
 
 export default function MainRoot() {
   return (
     <Wrapper>
-      <Home_V1 />
+      <Login />
     </Wrapper>
   );
 }

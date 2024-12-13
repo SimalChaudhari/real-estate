@@ -3,7 +3,7 @@ import FilterContent from "./FilterContent";
 
 const Hero = () => {
   return (
-    <div>
+    <>
       <div className="inner-banner-style1 text-center">
         <FilterContent />
       </div>
@@ -22,7 +22,7 @@ const Hero = () => {
         </div>
       </div>
       {/* <!-- Advance Feature Modal End --> */}
-    </div>
+    </>
   );
 };
 

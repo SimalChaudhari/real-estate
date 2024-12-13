@@ -5,7 +5,7 @@ import RealMapView from "./RealMapView";
 
 const PropertyGallery = ({id}) => {
   return (
-    <div>
+    <>
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -106,7 +106,7 @@ const PropertyGallery = ({id}) => {
         </div>
         {/* End tab-content */}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,17 +1,14 @@
+"use client";
 import SignIn from "@/components/common/login-signup-modal/SignIn";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export const metadata = {
-  title: "Login  || Homez - Real Estate NextJS Template",
-};
-
 const Login = () => {
   return (
     <div>
       {/* Our Compare Area */}
-      <section className="our-compare pt60 pb60">
+      <section className="our-compare pt30 pb25">
         <Image
           width={1012}
           height={519}

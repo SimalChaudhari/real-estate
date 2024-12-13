@@ -19,26 +19,6 @@ const FeaturedListings = ({ data, colstyle }) => {
             }
           >
             <div className="list-thumb">
-            {listing.images && listing.images.length > 0 ? (
-              <Image
-                width={382}
-                height={248}
-                className="w-100 h-100 cover"
-                src={listing.images[0]} // Use the first image from the array
-                alt={listing.title || "listing"} // Add a fallback for the alt text
-              />
-            ) : (
-              <div
-                style={{
-                  width: "382px",
-                  height: "248px",
-                  background: "#ccc",
-                }}
-              >
-                No Image Available
-              </div>
-            )}
-            {/*
               <Image
                 width={382}
                 height={248}
@@ -47,7 +27,6 @@ const FeaturedListings = ({ data, colstyle }) => {
                 src={listing.image}
                 alt="listings"
               />
-              */}
               <div className="sale-sticker-wrap">
                 {!listing.forRent && (
                   <div className="list-tag fz12">

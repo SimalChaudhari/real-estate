@@ -1,6 +1,5 @@
 "use client";
 
-import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import Image from "next/image";
 import Link from "next/link";
@@ -71,7 +70,7 @@ const DashboardHeader = () => {
   ];
 
   return (
-    <div>
+    <>
       <header className="header-nav nav-homepage-style light-header position-fixed menu-home4 main-menu">
         <nav className="posr">
           <div className="container-fluid pr30 pr15-xs pl30 posr menu_bdrt1">
@@ -108,11 +107,6 @@ const DashboardHeader = () => {
                 </div>
               </div>
               {/* End .col-auto */}
-
-              <div className="d-none d-lg-block col-lg-auto">
-                <MainMenu />
-                {/* End Main Menu */}
-              </div>
               {/* End d-none d-lg-block */}
 
               <div className="col-6 col-lg-auto">
@@ -193,7 +187,7 @@ const DashboardHeader = () => {
         <SidebarPanel />
       </div>
       {/* Sidebar Panel End */}
-    </div>
+    </>
   );
 };
 
