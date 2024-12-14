@@ -27,5 +27,6 @@ export function middleware(req) {
 export const config = {
     matcher: [
         "/:path*", // Apply middleware to all routes
+        "/dashboard-user-view/:id*", // Allow dynamic routes for user view
       ],
 };

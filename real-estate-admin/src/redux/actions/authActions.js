@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'; // Adjust the path if needed
 
 export const authRegister = async (contact) => {
     try {
-        const response = await axiosInstance.post('/api/auth/register', contact);
+        const response = await axiosInstance.post('/auth/register', contact);
 
         if (!response?.data?.success) {
             toast.error(response?.data?.message, "Registration failed.");
@@ -25,7 +25,7 @@ export const authRegister = async (contact) => {
 
 export const authLogin = (data) => async (dispatch) => {
     try {
-      const response = await axiosInstance.post("/api/auth/login", data);
+      const response = await axiosInstance.post("/auth/login", data);
   
       // Validate response structure
       const token = response?.data?.access_token;
