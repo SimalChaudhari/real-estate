@@ -35,31 +35,11 @@ const SidebarDashboard = () => {
           icon: "flaticon-home",
           text: "My Properties",
         },
-        {
-          href: "/dashboard-my-favourites",
-          icon: "flaticon-like",
-          text: "My Favorites",
-        },
-        {
-          href: "/dashboard-saved-search",
-          icon: "flaticon-search-2",
-          text: "Saved Search",
-        },
-        {
-          href: "/dashboard-reviews",
-          icon: "flaticon-review",
-          text: "Reviews",
-        },
       ],
     },
     {
       title: "MANAGE ACCOUNT",
       items: [
-        {
-          href: "/dashboard-my-package",
-          icon: "flaticon-protection",
-          text: "My Package",
-        },
         {
           href: "/dashboard-my-profile",
           icon: "flaticon-user",

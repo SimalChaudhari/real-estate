@@ -42,11 +42,11 @@ const UserCreateForm = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-      // Add a dummy password field
-  const data = {
-    ...values,
-    password: "DummyPassword123!", // Your predefined dummy password
-  };
+    // Add a dummy password field
+    const data = {
+      ...values,
+      password: "DummyPassword123!", // Your predefined dummy password
+    };
     const success = await dispatch(createUser(data));
     if (success) {
       console.log("User created successfully!");
@@ -182,19 +182,9 @@ const UserCreateForm = () => {
 
           <div className="row m20">
             <div className="col-sm-12 d-flex justify-content-end">
-              <button
-                type="submit"
-                className="btn"
-                disabled={isSubmitting}
-                style={{
-                  backgroundColor: "black",
-                  color: "white",
-                  border: "none",
-                  padding: "10px 20px",
-                  fontSize: "16px",
-                }}
-              >
-                {isSubmitting ? "Saving..." : "Save User"}
+              <button disabled={isSubmitting} type="submit" className="ud-btn btn-dark">
+                {isSubmitting ? "Creating..." : "Create User"}
+                <i className="fal fa-arrow-right-long" />
               </button>
             </div>
           </div>

@@ -201,20 +201,10 @@ const UserEditForm = ({ userId }) => {
 
           <div className="row m20">
             <div className="col-sm-12 d-flex justify-content-end">
-              <button
-                type="submit"
-                className="btn"
-                disabled={isSubmitting}
-                style={{
-                  backgroundColor: "black",
-                  color: "white",
-                  border: "none",
-                  padding: "10px 20px",
-                  fontSize: "16px",
-                }}
-              >
-                {isSubmitting ? "Updating..." : "Update User"}
-              </button>
+            <button   disabled={isSubmitting} type="submit" className="ud-btn btn-dark">
+            {isSubmitting ? "Updating..." : "Update User"}
+              <i className="fal fa-arrow-right-long" />
+            </button>
             </div>
           </div>
         </Form>

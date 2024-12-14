@@ -63,9 +63,6 @@ const DashboardUser = () => {
         
                   <div className="packages_table table-responsive">
                     <UserDataTable />
-                    <div className="mt30">
-                      <Pagination />
-                    </div>
                   </div>
                 </div>
               </div>

@@ -4,7 +4,9 @@ import User from '../../models/user';
 // Get all users
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const users = await User.find().select('-password'); // Exclude password
+        // const users = await User.find().select('-password'); // Exclude password
+        const users = await User.find({ role: { $ne: "Admin" } }).select("-password");
+
         res.status(200).json({ users });
     } catch (error) {
         next(error);

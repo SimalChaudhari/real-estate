@@ -1,58 +1,68 @@
 "use client";
 import Link from "next/link";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { useFetchData } from "./fetch-data";
 import { useSelector } from 'react-redux';
+import Pagination from "../../Pagination";
 
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case "Active":
-        return "pending-style style1";
-      case "Inactive":
-        return "pending-style style2";
-      case "Processing":
-        return "pending-style style3";
-      default:
-        return "";
-    }
-  };
+const getStatusStyle = (status) => {
+  switch (status) {
+    case "Active":
+      return "pending-style style1";
+    case "Inactive":
+      return "pending-style style2";
+    case "Processing":
+      return "pending-style style3";
+    default:
+      return "";
+  }
+};
 
 
 const UserDataTable = () => {
 
-    const [showDialog, setShowDialog] = useState(false);
-    const [selectedUser, setSelectedUser] = useState(null);
-  
-    const {fetchData,fetchDeleteData} = useFetchData()
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2); // Adjust items per page as needed
+  const { fetchData, fetchDeleteData } = useFetchData()
 
-    const userData = useSelector((state) => state.user?.userData || []);
- 
-    useEffect(()=>{
-     fetchData()
-    },[])
-  
-    const handleDeleteClick = (user) => {
-      setSelectedUser(user);
-      setShowDialog(true);
-    };
-  
-    const confirmDelete = () => {
-      // setUserData(userData.filter((user) => user._id !== selectedUser._id));
-      fetchDeleteData(selectedUser)
-      setShowDialog(false);
-      setSelectedUser(null);
-    };
-  
-    const cancelDelete = () => {
-      setShowDialog(false);
-      setSelectedUser(null);
-    };
+  const userData = useSelector((state) => state.user?.userData || []);
+
+  const totalItems = userData.length // Total user count from Redux
+
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  useEffect(() => {
+    fetchData()
+  }, []); // Empty dependency array ensures it runs only once
+
+    // Calculate users for the current page
+    const indexOfLastUser = currentPage * itemsPerPage;
+    const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+    const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
+
+  const handleDeleteClick = (user) => {
+    setSelectedUser(user);
+    setShowDialog(true);
+  };
+
+  const confirmDelete = () => {
+    // setUserData(userData.filter((user) => user._id !== selectedUser._id));
+    fetchDeleteData(selectedUser)
+    setShowDialog(false);
+    setSelectedUser(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDialog(false);
+    setSelectedUser(null);
+  };
 
   return (
 
     <div>
-    {showDialog && (
+      {showDialog && (
         <div className="confirmation-dialog">
           <div className="dialog-content">
             <h4>Are you sure?</h4>
@@ -68,94 +78,102 @@ const UserDataTable = () => {
           </div>
         </div>
       )}
-    
-    <table className="table-style3 table at-savesearch">
-      <thead className="t-head">
-        <tr>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Mobile</th>
-          <th scope="col">Gender</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody className="t-body">
-        {userData.map((user) => (
-          <tr key={user._id}>
-            <th scope="row">
-              <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
-                <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
-                  <div className="h6 list-title">
-                    <Link href={`/single-v1/${user._id}`}>{user.firstName}</Link>
+
+      <table className="table-style3 table at-savesearch">
+        <thead className="t-head">
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody className="t-body">
+        {currentUsers.map((user) => (
+            <tr key={user._id}>
+              <th scope="row">
+                <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
+                  <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
+                    <div className="h6 list-title">
+                      <Link href={`/single-v1/${user._id}`}>{user.firstName}</Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </th>
-            <td className="vam">{user.lastName}</td>
-            <td className="vam">{user.email}</td>
-            <td className="vam">{user.mobile}</td>
-            <td className="vam">{user.gender}</td>
-           
-            <td className="vam">
-              <span className={getStatusStyle(user.status)}>
-                {user.status}
-              </span>
-            </td>
-            <td className="vam">
-              <div className="d-flex">
-                <button
-                  className="icon"
-                  style={{ border: "none" }}
-                  data-tooltip-id={`edit-${user._id}`}
-                >
-                <Link href={`/dashboard-user-update/${user._id}`}><span className="fas fa-pen fa" /></Link>
-                </button>
+              </th>
+              <td className="vam">{user.lastName}</td>
+              <td className="vam">{user.email}</td>
+              <td className="vam">{user.mobile}</td>
+              <td className="vam">{user.gender}</td>
 
-                <button
-                className="icon"
-                style={{ border: "none" }}
-                data-tooltip-id={`view-${user._id}`}
-              >
-              <Link href={`/dashboard-user-view/${user._id}`}>
-              <span className="fas fa-eye fa" />
-            </Link>
-              </button>
+              <td className="vam">
+                <span className={getStatusStyle(user.status)}>
+                  {user.status}
+                </span>
+              </td>
+              <td className="vam">
+                <div className="d-flex">
+                  <button
+                    className="icon"
+                    style={{ border: "none" }}
+                    data-tooltip-id={`edit-${user._id}`}
+                  >
+                    <Link href={`/dashboard-user-update/${user._id}`}><span className="fas fa-pen fa" /></Link>
+                  </button>
 
-                <button
-                onClick={() => handleDeleteClick(user._id)}
-                  className="icon"
-                  style={{ border: "none" }}
-                  data-tooltip-id={`delete-${user._id}`}
-                >
-                  <span className="flaticon-bin" />
-                </button>
+                  <button
+                    className="icon"
+                    style={{ border: "none" }}
+                    data-tooltip-id={`view-${user._id}`}
+                  >
+                    <Link href={`/dashboard-user-view/${user._id}`}>
+                      <span className="fas fa-eye fa" />
+                    </Link>
+                  </button>
 
-                <ReactTooltip 
-                  id={`edit-${user.id}`}
-                  place="top"
-                  content="Edit"
-                />
+                  <button
+                    onClick={() => handleDeleteClick(user._id)}
+                    className="icon"
+                    style={{ border: "none" }}
+                    data-tooltip-id={`delete-${user._id}`}
+                  >
+                    <span className="flaticon-bin" />
+                  </button>
 
-                <ReactTooltip 
-                id={`view-${user._id}`}
-                place="top"
-                content="View"
-              />
-                <ReactTooltip
-                  id={`delete-${user._id}`}
-                  place="top"
-                  content="Delete"
-                />
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                  <ReactTooltip
+                    id={`edit-${user.id}`}
+                    place="top"
+                    content="Edit"
+                  />
 
-        <style jsx>{`
+                  <ReactTooltip
+                    id={`view-${user._id}`}
+                    place="top"
+                    content="View"
+                  />
+                  <ReactTooltip
+                    id={`delete-${user._id}`}
+                    place="top"
+                    content="Delete"
+                  />
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="mt30">
+        <Pagination
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <style jsx>{`
         .confirmation-dialog {
           position: fixed;
           top: 0;
