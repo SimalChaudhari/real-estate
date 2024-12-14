@@ -117,82 +117,120 @@ const MainMenu = () => {
       </li>
       {/* End listings */}
 
+
       <li className="visible_list dropitem">
         <a className="list-item" href="#">
-          <span
-            className={topMenu == "property" ? "title menuActive" : "title"}
-          >
-            Property
+          <span className={topMenu == "home" ? "title menuActive" : "title"}>
+            <Link className={`${handleActive('/about')}`} href="/about">
+              About
+            </Link>
           </span>
-          <span className="arrow"></span>
         </a>
-        <ul className="sub-menu">
-          {propertyItems.map((item, index) => (
-            <li key={index} className="dropitem">
-              <a href="#">
-                <span
-                  className={
-                    submenu == item.label ? "title menuActive" : "title"
-                  }
-                >
-                  {item.label}
-                </span>
-                <span className="arrow"></span>
-              </a>
-              <ul className="sub-menu">
-                {item.subMenuItems.map((subMenuItem, subIndex) => (
-                  <li key={subIndex}>
-                    <Link
-                      className={`${handleActive(subMenuItem.href)}`}
-                      href={subMenuItem.href}
-                    >
-                      {subMenuItem.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
       </li>
+
+
+      <li className="visible_list dropitem">
+        <a className="list-item" href="#">
+          <span className={topMenu == "home" ? "title menuActive" : "title"}>
+            <Link className={`${handleActive('/contact')}`} href="/contact">
+              Contact Us
+            </Link>
+          </span>
+        </a>
+      </li>
+
+      <li className="visible_list dropitem">
+        <a className="list-item" href="#">
+          <span className={topMenu == "home" ? "title menuActive" : "title"}>
+            <Link className={`${handleActive('/faq')}`} href="/faq">
+              Faq
+            </Link>
+          </span>
+        </a>
+      </li>
+
+      {/*
+        <li className="visible_list dropitem">
+          <a className="list-item" href="#">
+            <span
+              className={topMenu == "property" ? "title menuActive" : "title"}
+            >
+              Property
+            </span>
+            <span className="arrow"></span>
+          </a>
+          <ul className="sub-menu">
+            {propertyItems.map((item, index) => (
+              <li key={index} className="dropitem">
+                <a href="#">
+                  <span
+                    className={
+                      submenu == item.label ? "title menuActive" : "title"
+                    }
+                  >
+                    {item.label}
+                  </span>
+                  <span className="arrow"></span>
+                </a>
+                <ul className="sub-menu">
+                  {item.subMenuItems.map((subMenuItem, subIndex) => (
+                    <li key={subIndex}>
+                      <Link
+                        className={`${handleActive(subMenuItem.href)}`}
+                        href={subMenuItem.href}
+                      >
+                        {subMenuItem.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </li>
+        */}
       {/* End property Items */}
 
-      <li className="visible_list dropitem">
-        <a className="list-item" href="#">
-          <span className={topMenu == "blog" ? "title menuActive" : "title"}>
-            Blog
-          </span>
-          <span className="arrow"></span>
-        </a>
-        <ul className="sub-menu">
-          {blogItems.map((item, index) => (
-            <li key={index}>
-              <Link className={`${handleActive(item.href)}`} href={item.href}>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </li>
+      {/*
+        <li className="visible_list dropitem">
+          <a className="list-item" href="#">
+            <span className={topMenu == "blog" ? "title menuActive" : "title"}>
+              Blog
+            </span>
+            <span className="arrow"></span>
+          </a>
+          <ul className="sub-menu">
+            {blogItems.map((item, index) => (
+              <li key={index}>
+                <Link className={`${handleActive(item.href)}`} href={item.href}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </li>
+        */}
       {/* End blog Items */}
 
-      <li className="visible_list dropitem">
-        <a className="list-item" href="#">
-          <span className={topMenu == "pages" ? "title menuActive" : "title"}>
-            Pages
-          </span>
-          <span className="arrow"></span>
-        </a>
-        <ul className="sub-menu">
-          {pageItems.map((item, index) => (
-            <li key={index}>
-              <Link className={`${handleActive(item.href)}`} href={item.href}>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </li>
+      {/*
+        <li className="visible_list dropitem">
+          <a className="list-item" href="#">
+            <span className={topMenu == "pages" ? "title menuActive" : "title"}>
+              Pages
+            </span>
+            <span className="arrow"></span>
+          </a>
+          <ul className="sub-menu">
+            {pageItems.map((item, index) => (
+              <li key={index}>
+                <Link className={`${handleActive(item.href)}`} href={item.href}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </li>
+        */}
       {/* End pages Items */}
     </ul>
   );

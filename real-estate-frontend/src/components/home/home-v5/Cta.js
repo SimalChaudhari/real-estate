@@ -14,14 +14,21 @@ const Cta = () => {
                 provides an awesome solution!
               </h1>
               <div className="d-block d-sm-flex justify-content-center">
+              {/*
                 <Link
-                  href="/dashboard-add-property"
+                href="/dashboard-add-property"
+                 */}
+                <Link
+                  href="/list-v1"
                   className="ud-btn btn-thm me-0 me-sm-4"
                 >
                   Submit Property
                   <i className="fal fa-arrow-right-long" />
                 </Link>
-                <Link href="/grid-default" className="ud-btn btn-white">
+                {/*
+                  <Link href="/grid-default" className="ud-btn btn-white">
+                   */}
+                <Link href="/list-v1" className="ud-btn btn-white">
                   Browse Properties
                   <i className="fal fa-arrow-right-long" />
                 </Link>

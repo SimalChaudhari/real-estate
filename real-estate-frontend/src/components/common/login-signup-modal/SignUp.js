@@ -1,11 +1,13 @@
 "use client"; // Mark this as a client component
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { authRegister } from "@/services/auth/authApi";
 import { toast } from 'react-toastify';
 
 import { useRouter } from "next/navigation";
+// import { useSelector } from "react-redux";
 const SignUp = () => {
+  // const authState = useSelector((state) => state.auth);
   const router = useRouter(); 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -15,6 +17,14 @@ const SignUp = () => {
     gender: "",
     password: "",
   });
+
+
+  // Redirect if already logged in
+  // useEffect(() => {
+  //   if (authState.isAuthenticated) {
+  //     router.push("/"); // Redirect to dashboard if authState.isAuthenticated exists
+  //   }
+  // }, [authState.isAuthenticated, router]);
 
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");

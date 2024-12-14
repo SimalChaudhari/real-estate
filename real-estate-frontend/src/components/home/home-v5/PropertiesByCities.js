@@ -40,7 +40,10 @@ const PropertiesByCities = () => {
       >
         {cities.slice(23, 29).map((city) => (
           <SwiperSlide key={city.id}>
+            {/*
             <Link href="/map-v4" className="item">
+            */}
+            <Link href="/list-v1" className="item">
               <div className="apartment-style1 mb30">
                 <div className="apartment-img">
                   <Image

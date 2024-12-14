@@ -11,6 +11,7 @@ import { useMemo, useState } from "react";
 import listings from "@/data/listings";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const option = {
   zoomControl: true,
@@ -191,7 +192,21 @@ const containerStyle = {
   width: "100%",
   height: "100%",
 };
-export default function ListingMap1() {
+export default function ListingMap1({ id }) {
+
+  const listingsData = useSelector((state) => state.listings?.listings);
+  // Check for static or dynamic data
+  const transformedListingsData =
+    listingsData.find((elm) => elm._id === id) ||
+    listingsData[0];
+  const addressDetails = {
+    address: transformedListingsData?.address || "N/A",
+    city: transformedListingsData?.city || "N/A",
+    state: transformedListingsData?.location || "N/A", // Assuming "location" represents state/county
+    zipCode: transformedListingsData?.zip_code || "N/A",
+    country: "N/A", // Update this if a country field exists in your data
+  };
+
   const [getLocation, setLocation] = useState(null);
 
   const { isLoaded } = useLoadScript({
@@ -225,7 +240,7 @@ export default function ListingMap1() {
         >
           <MarkerClusterer>
             {(clusterer) =>
-              listings.slice(0, 6).map((marker) => (
+              listingsData.slice(0, 6).map((marker) => (
                 <Marker
                   key={marker.id}
                   position={{
@@ -249,13 +264,35 @@ export default function ListingMap1() {
               <div>
                 <div className="listing-style1">
                   <div className="list-thumb">
-                    <Image
-                      width={382}
-                      height={248}
-                      className="w-100 h-100 cover"
-                      src={getLocation.image}
-                      alt="listings"
-                    />
+
+                    {getLocation.images && getLocation.images.length > 0 ? (
+                      <Image
+                        width={382}
+                        height={248}
+                        className="w-100 h-100 cover"
+                        src={getLocation.images[0]} // Use the first image from the array
+                        alt={getLocation.title || "listing"} // Add a fallback for the alt text
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: "382px",
+                          height: "248px",
+                          background: "#ccc",
+                        }}
+                      >
+                        No Image Available
+                      </div>
+                    )}
+                    {/*
+                      <Image
+                        width={382}
+                        height={248}
+                        className="w-100 h-100 cover"
+                        src={getLocation.image}
+                        alt="listings"
+                      />
+                    */}
                     <div className="sale-sticker-wrap">
                       {!getLocation.forRent && (
                         <div className="list-tag fz12">
@@ -271,9 +308,13 @@ export default function ListingMap1() {
                   </div>
                   <div className="list-content">
                     <h6 className="list-title">
-                      <Link href={`/single-v1/${getLocation.id}`}>
+                      {/*
+                        */}
+                      <Link href={`/single-v6/${getLocation._id}`}>
                         {getLocation.title}
                       </Link>
+                      {/*
+                          */}
                     </h6>
                     <p className="list-text">{getLocation.location}</p>
                     <div className="list-meta d-flex align-items-center">

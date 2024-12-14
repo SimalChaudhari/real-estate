@@ -7,7 +7,7 @@ import Select from "react-select";
 
 const Location = ({ filterFunctions }) => {
   const listingsData = useSelector((state) => state.listings?.listings);
-  
+
   // const locationOptions = [
   //   { value: "All Cities", label: "All Cities" },
   //   { value: "California", label: "California" },

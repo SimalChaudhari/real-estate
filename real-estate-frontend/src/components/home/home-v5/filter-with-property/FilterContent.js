@@ -1,14 +1,32 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Slider, { Range } from "rc-slider";
 
 import LookingFor from "./LookingFor";
 import Location from "./Location";
+import { useDispatch } from "react-redux";
+import { fetchLocationFailure, fetchLocationsStart, fetchLocationsSuccess } from "@/app/features/locationsSlice";
+import { GetLocationList } from "@/services/listing/locationApi";
 
 const FilterContent = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("buy");
+
+  useEffect(() => {
+    // Fetch locations on component mount
+    const fetchLocations = async () => {
+      dispatch(fetchLocationsStart());
+      const response = await GetLocationList();
+      if (response.success) {
+        dispatch(fetchLocationsSuccess(response.data));
+      } else {
+        dispatch(fetchLocationFailure(response.message));
+      }
+    };
+    fetchLocations();
+  }, [dispatch]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -96,7 +114,7 @@ const FilterContent = () => {
                         data-bs-auto-close="outside"
                         style={{ fontSize: "13px" }}
                       >
-                        ${price[0]} - ${price[1]}{" "}
+                        ₹{price[0]} - ₹{price[1]}{" "}
                         <i className="fas fa-caret-down" />
                       </div>
                       <div className="dropdown-menu">
@@ -111,9 +129,9 @@ const FilterContent = () => {
                               id="slider"
                             />
                             <div className="d-flex align-items-center">
-                              <span id="slider-range-value1">${price[0]}</span>
+                              <span id="slider-range-value1">₹{price[0]}</span>
                               <i className="fa-sharp fa-solid fa-minus mx-2 dark-color icon" />
-                              <span id="slider-range-value2">${price[1]}</span>
+                              <span id="slider-range-value2">₹{price[1]}</span>
                             </div>
                           </div>
                         </div>
@@ -136,7 +154,8 @@ const FilterContent = () => {
                     <button
                       className="advance-search-icon ud-btn btn-thm ms-4"
                       type="button"
-                      onClick={() => router.push("/grid-full-3-col")}
+                      // onClick={() => router.push("/grid-full-3-col")}
+                      onClick={() => router.push("/list-v1")}
                     >
                       <span className="flaticon-search" />
                     </button>

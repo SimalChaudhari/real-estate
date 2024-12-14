@@ -12,7 +12,7 @@ import SquareFeet from "./SquareFeet";
 import YearBuilt from "./YearBuilt";
 import OtherFeatures from "./OtherFeatures";
 
-const ListingSidebar = ({filterFunctions}) => {
+const ListingSidebar = ({ filterFunctions }) => {
   return (
     <div className="list-sidebar-style1">
       <div className="widget-wrapper">
@@ -35,7 +35,7 @@ const ListingSidebar = ({filterFunctions}) => {
           <PropertyType filterFunctions={filterFunctions} />
         </div>
       </div>
-      
+
       {/* End .widget-wrapper */}
 
       <div className="widget-wrapper">
@@ -58,7 +58,7 @@ const ListingSidebar = ({filterFunctions}) => {
       <div className="widget-wrapper">
         <h6 className="list-title">Bathrooms</h6>
         <div className="d-flex">
-          <Bathroom filterFunctions={filterFunctions}  />
+          <Bathroom filterFunctions={filterFunctions} />
         </div>
       </div>
       {/* End .widget-wrapper */}
@@ -73,46 +73,48 @@ const ListingSidebar = ({filterFunctions}) => {
 
       <div className="widget-wrapper">
         <h6 className="list-title">Square Feet</h6>
-        <SquareFeet filterFunctions={filterFunctions}/>
+        <SquareFeet filterFunctions={filterFunctions} />
       </div>
       {/* End .widget-wrapper */}
 
       <div className="widget-wrapper">
         <h6 className="list-title">Year Built</h6>
-        <YearBuilt filterFunctions={filterFunctions}/>
+        <YearBuilt filterFunctions={filterFunctions} />
       </div>
       {/* End .widget-wrapper */}
 
-      <div className="widget-wrapper">
-        <div className="feature-accordion">
-          <div className="accordion" id="accordionExample">
-            <div className="accordion-item border-none">
-              <h2 className="accordion-header" id="headingOne">
-                <button
-                  className="accordion-button border-none p-0 after-none feature-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
+      {/*
+        <div className="widget-wrapper">
+          <div className="feature-accordion">
+            <div className="accordion" id="accordionExample">
+              <div className="accordion-item border-none">
+                <h2 className="accordion-header" id="headingOne">
+                  <button
+                    className="accordion-button border-none p-0 after-none feature-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
+                  >
+                    <span className="flaticon-settings" /> Other Features
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  className="accordion-collapse collapse"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
                 >
-                  <span className="flaticon-settings" /> Other Features
-                </button>
-              </h2>
-              <div
-                id="collapseOne"
-                className="accordion-collapse collapse"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body p-0 mt15">
-                  <OtherFeatures filterFunctions={filterFunctions} />
+                  <div className="accordion-body p-0 mt15">
+                    <OtherFeatures filterFunctions={filterFunctions} />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        */}
       {/* End .widget-wrapper */}
 
       <div className="widget-wrapper mb20">
@@ -126,7 +128,7 @@ const ListingSidebar = ({filterFunctions}) => {
       {/* End .widget-wrapper */}
 
       <div className="reset-area d-flex align-items-center justify-content-between">
-        <div onClick={()=>filterFunctions.resetFilter()} className="reset-button cursor" href="#">
+        <div onClick={() => filterFunctions.resetFilter()} className="reset-button cursor" href="#">
           <span className="flaticon-turn-back" />
           <u>Reset all filters</u>
         </div>
