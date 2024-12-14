@@ -3,10 +3,10 @@ import axios from 'axios';
 // Use your environment variable or fallback to localhost
 // const baseURL =  'http://localhost:5000/api';
 
-const baseURL = 'https://real-estate-nine-livid.vercel.app/api'
+// const baseURL = 'https://real-estate-nine-livid.vercel.app/api'
 
 const axiosInstance = axios.create({
-    baseURL: baseURL,
+    baseURL: 'https://real-estate-nine-livid.vercel.app/api',
     headers: {
         'Content-Type': 'application/json',
     },

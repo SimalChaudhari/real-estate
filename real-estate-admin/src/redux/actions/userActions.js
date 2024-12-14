@@ -1,5 +1,13 @@
-import axiosInstance from "@/config/axiosInstance";
 
+import axios from "axios";
+
+
+const axiosInstance = axios.create({
+  baseURL: 'https://real-estate-nine-livid.vercel.app/api',
+  headers: {
+      'Content-Type': 'application/json',
+  },
+});
 export const userList = () => async (dispatch) => {
     try {
         const response = await axiosInstance.get('/users');
