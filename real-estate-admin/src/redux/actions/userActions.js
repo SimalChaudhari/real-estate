@@ -1,6 +1,6 @@
 
 // import { USER_LIST } from "../constants/actionTypes";
-import axiosInstance from './../../config/axiosInstance';
+import axiosInstance from '../../config/axiosInstance';
 
 export const userList = () => async (dispatch) => {
     try {
