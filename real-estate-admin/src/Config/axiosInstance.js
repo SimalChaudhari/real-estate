@@ -6,7 +6,7 @@ import axios from 'axios';
 const baseURL = 'https://real-estate-nine-livid.vercel.app/api'
 
 const axiosInstance = axios.create({
-    baseURL,
+    baseURL: baseURL,
     headers: {
         'Content-Type': 'application/json',
     },
