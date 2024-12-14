@@ -10,7 +10,6 @@ import agentRoutes from './routes/agent.routes';
 import locationRoutes from './routes/location.routes';
 
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT;
 
