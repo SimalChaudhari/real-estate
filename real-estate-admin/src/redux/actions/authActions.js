@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { toast } from 'react-toastify'; // Adjust the path if needed
-import axiosInstance from './../../../../real-estate-frontend/src/config/axiosInstance';
+import axiosInstance from './../../config/axiosInstance';
 
 export const authRegister = async (contact) => {
     try {
