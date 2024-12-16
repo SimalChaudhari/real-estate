@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Listing from '../../models/properties';
 import { deleteImage, uploadFile } from '../../services/firebase.service';
-import city from '../../models/city';
-import state from '../../models/state';
 
 export const createListing = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -150,7 +148,6 @@ export const deleteListing = async (req: Request, res: Response, next: NextFunct
         next(error);
     }
 };
-
 export const getListings = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const listings = await Listing.find()
@@ -159,17 +156,47 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
                 select: 'name -_id',
             })
             .populate({
-                path: 'location',
+                path: 'state',
                 select: 'name -_id',
             });
 
-        // Transform the data to flatten `city` and `location` fields
+        // Transform the data to include the desired address and location structure
         const transformedListings = listings.map((listing) => {
             const listingObj = listing.toObject();
+
             return {
                 ...listingObj,
-                city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
-                location: typeof listingObj.location === 'object' && 'name' in listingObj.location ? listingObj.location.name : null,
+
+                price: {
+                    rent: listingObj.rent_price,
+                    sale: listingObj.sale_price
+                },
+
+                address: {
+                    street_address: listingObj.street_address || null,
+                    city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
+                    state: typeof listingObj.state === 'object' && 'name' in listingObj.state ? listingObj.state.name : null,
+                    zip_code: listingObj.zip_code || null,
+                },
+                location: {
+                    lat: listingObj.lat,
+                    log: listingObj.long
+                }, // Combine lat and long into a location array
+
+                availability: {
+                    forRent: listingObj.forRent,
+                    start_date: listingObj.start_date
+                },
+                rent_price: undefined,
+                sale_price: undefined,
+                start_date: undefined,
+                forRent: undefined,
+                street_address: undefined, // Remove redundant top-level fields
+                city: undefined,
+                state: undefined,
+                zip_code: undefined,
+                lat: undefined,
+                long: undefined,
             };
         });
 
@@ -179,6 +206,8 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
+
+
 export const getListingById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const listing = await Listing.findById(req.params.id)
@@ -187,7 +216,7 @@ export const getListingById = async (req: Request, res: Response, next: NextFunc
                 select: 'name -_id', // Include `name` and exclude `_id`
             })
             .populate({
-                path: 'location',
+                path: 'state',
                 select: 'name -_id', // Include `name` and exclude `_id`
             });
 
@@ -196,12 +225,44 @@ export const getListingById = async (req: Request, res: Response, next: NextFunc
             return;
         }
 
-        // Transform the response to flatten city and location
+        // Transform the response to include logical groupings
         const listingObj = listing.toObject();
         const transformedListing = {
             ...listingObj,
-            city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
-            location: typeof listingObj.location === 'object' && 'name' in listingObj.location ? listingObj.location.name : null,
+
+            price: {
+                rent: listingObj.rent_price,
+                sale: listingObj.sale_price,
+            },
+
+            address: {
+                street_address: listingObj.street_address || null,
+                city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
+                state: typeof listingObj.state === 'object' && 'name' in listingObj.state ? listingObj.state.name : null,
+                zip_code: listingObj.zip_code || null,
+            },
+
+            location: {
+                lat: listingObj.lat,
+                log: listingObj.long,
+            },
+
+            availability: {
+                forRent: listingObj.forRent,
+                start_date: listingObj.start_date,
+            },
+
+            // Remove redundant fields
+            rent_price: undefined,
+            sale_price: undefined,
+            start_date: undefined,
+            forRent: undefined,
+            street_address: undefined,
+            city: undefined,
+            state: undefined,
+            zip_code: undefined,
+            lat: undefined,
+            long: undefined,
         };
 
         res.status(200).json(transformedListing);
@@ -209,4 +270,5 @@ export const getListingById = async (req: Request, res: Response, next: NextFunc
         next(error);
     }
 };
+
 

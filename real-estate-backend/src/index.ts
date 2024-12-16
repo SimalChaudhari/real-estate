@@ -36,18 +36,18 @@ app.use('/api/agent', agentRoutes);
 
 
 // // Catch invalid routes
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   res.status(404).json({ message: 'Route not found' });
-// });
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(404).json({ message: 'Route not found' });
+});
 
 // // Global error handler
-// app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-//   const statusCode = err.status || 500;
-//   res.status(statusCode).json({
-//     message: err.message || 'Internal Server Error',
-//     stack: err.stack, // Always include the stack trace
-//   });
-// });
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const statusCode = err.status || 500;
+  res.status(statusCode).json({
+    message: err.message || 'Internal Server Error',
+    stack: err.stack, // Always include the stack trace
+  });
+});
 
 // Start the server
 app.listen(PORT, () => {

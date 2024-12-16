@@ -47,18 +47,18 @@ export interface IListing extends Document {
   title: string;
   description: string;
   status: string;
-  price: string;
+  rent_price: string;
+  sale_price: string;
   images: string[];
 
   //address
   // city: mongoose.Types.ObjectId; // Reference to City
   // location: mongoose.Types.ObjectId; // Reference to State
-
+  street_address: string;
   city: mongoose.Types.ObjectId | { name: string }; // Include the populated type
-  location: mongoose.Types.ObjectId | { name: string }; // Include the populated type
-
-  address: string;
+  state: mongoose.Types.ObjectId | { name: string }; // Include the populated type
   zip_code: string;
+
   lat: number;
   long: number;
 
@@ -67,6 +67,7 @@ export interface IListing extends Document {
   bath: string;
   sqft: number;
   forRent: boolean;
+  start_date:Date;
   tags: Tags[];
   propertyType: PropertyType;
   yearBuilding: number;
@@ -80,12 +81,14 @@ const ListingSchema: Schema = new Schema({
   title: { type: String, required: true },
   description: { type: String },
   status: { type: String, enum: Object.values(Status), default: Status.AVAILABLE },// new
-  price: { type: String, required: true },
+  rent_price: { type: String, required: true },
+  sale_price: { type: String, required: true },
+
   images: [{ type: String }],
   // address
-  address: { type: String, required: true },
+  street_address: { type: String, required: true },
   city: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: true },
-  location: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true },
+  state: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true },
   zip_code: { type: String, required: true },
   lat: { type: Number, required: true },
   long: { type: Number, required: true },
@@ -95,6 +98,8 @@ const ListingSchema: Schema = new Schema({
   bath: { type: String, required: true },
   sqft: { type: Number, required: true },
   forRent: { type: Boolean, required: true },
+  start_date: { type: Date, required: true },
+
   tags: {
     type: [String],
     enum: Object.values(Tags), // Enum for tags
