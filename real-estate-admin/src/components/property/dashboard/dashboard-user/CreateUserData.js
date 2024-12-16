@@ -49,7 +49,7 @@ const UserCreateForm = () => {
     };
     const success = await dispatch(createUser(data));
     if (success) {
-      console.log("User created successfully!");
+    // toast.success("User created successfully!");
       router.push("/dashboard-user");
       resetForm(); // Reset form fields
     } else {

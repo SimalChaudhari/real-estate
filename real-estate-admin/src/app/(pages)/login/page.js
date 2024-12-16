@@ -8,7 +8,7 @@ const Login = () => {
   return (
     <div>
       {/* Our Compare Area */}
-      <section className="our-compare pt30 pb25">
+      <section className="our-compare">
         <Image
           width={1012}
           height={519}

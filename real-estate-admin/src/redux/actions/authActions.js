@@ -1,14 +1,13 @@
-
-import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from 'react-toastify'; // Adjust the path if needed
+import axiosInstance from "../basic/config/axiosInstance";
 
-const axiosInstance = axios.create({
-  baseURL: 'https://real-estate-nine-livid.vercel.app/api',
-  headers: {
-      'Content-Type': 'application/json',
-  },
-});
+// const axiosInstance = axios.create({
+//   baseURL: 'https://real-estate-nine-livid.vercel.app/api',
+//   headers: {
+//       'Content-Type': 'application/json',
+//   },
+// });
 
 export const authRegister = async (contact) => {
     try {

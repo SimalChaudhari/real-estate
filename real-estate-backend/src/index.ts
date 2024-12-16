@@ -8,6 +8,7 @@ import userRoutes from './routes/user.routes';
 import propertyListingRoutes from './routes/properties.routes';
 import agentRoutes from './routes/agent.routes';
 import locationRoutes from './routes/location.routes';
+import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api/location', locationRoutes);
 app.use('/api/properties-listing', propertyListingRoutes);
 app.use('/api/agent', agentRoutes);
 
+app.use(errorHandler);
 
 // // Catch invalid routes
 app.use((req: Request, res: Response, next: NextFunction) => {

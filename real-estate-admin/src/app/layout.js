@@ -5,6 +5,7 @@ import "../../node_modules/react-modal-video/scss/modal-video.scss";
 import "aos/dist/aos.css";
 import "../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
+import "react-toastify/dist/ReactToastify.css";
 import { DM_Sans, Poppins } from "next/font/google";
 import { useEffect } from "react";
 

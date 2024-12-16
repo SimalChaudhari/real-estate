@@ -46,11 +46,13 @@ export const register = async (req: Request, res: Response, next: NextFunction):
   const { role, firstName, lastName, mobile, gender, email, password } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ $or: [{ email }, { mobile }] });
     if (existingUser) {
-      res.status(400).json({ message: 'User already exists' });
+      const conflictField = existingUser.email === email ? 'email' : 'mobile number';
+      res.status(400).json({ message: `User with this ${conflictField} already exists` });
       return;
     }
+    
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ role, firstName, lastName,mobile, gender, email, password: hashedPassword });

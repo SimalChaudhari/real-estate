@@ -10,7 +10,7 @@ const PropertyViews = () => {
         <div className="d-sm-flex align-items-center justify-content-between">
           <h4 className="title fz17 mb20">Property Views</h4>
           <ul
-            className="nav nav-tabs border-bottom-0 mb30"
+            className="nav nav-tabs border-bottom-0 mb10"
             id="myTab"
             role="tablist"
           >
