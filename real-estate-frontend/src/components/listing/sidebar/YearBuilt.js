@@ -16,7 +16,8 @@ const YearBuilt = ({ filterFunctions }) => {
               )
             }
             className="form-control filterInput"
-            placeholder={2019}
+            // placeholder={2019}
+            placeholder={'Enter Year'}
             id="minFeet2"
           />
         </div>
@@ -31,7 +32,8 @@ const YearBuilt = ({ filterFunctions }) => {
               ])
             }
             className="form-control filterInput"
-            placeholder={2022}
+            // placeholder={2022}
+            placeholder={'Enter Year'}
             id="maxFeet2"
           />
         </div>

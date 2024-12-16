@@ -136,10 +136,10 @@ const PropertyAddress = ({ id }) => {
           className="position-relative bdrs12 mt30 h250"
           loading="lazy"
           src={`https://maps.google.com/maps?q=${encodeURIComponent(
-            addressDetails.address
+            addressDetails.street_address
           )}&t=m&z=14&output=embed&iwloc=near`}
-          title={addressDetails.address}
-          aria-label={addressDetails.address}
+          title={addressDetails.street_address}
+          aria-label={addressDetails.street_address}
         />
       </div>
 

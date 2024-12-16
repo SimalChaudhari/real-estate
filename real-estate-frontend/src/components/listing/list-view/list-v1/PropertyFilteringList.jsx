@@ -174,9 +174,9 @@ export default function PropertyFilteringList() {
       if (listingStatus == "All") {
         return true;
       } else if (listingStatus == "Buy") {
-        return !elm.forRent;
+        return !elm.availability.forRent;
       } else if (listingStatus == "Rent") {
-        return elm.forRent;
+        return elm.availability.forRent;
       }
     });
 
@@ -200,9 +200,12 @@ export default function PropertyFilteringList() {
       ...filteredArrays,
       refItems.filter(
         (el) =>
-          // el.city
-          //   .toLocaleLowerCase()
-          //   .includes(searchQuery.toLocaleLowerCase()) ||
+          el.address.city
+            .toLocaleLowerCase()
+            .includes(searchQuery.toLocaleLowerCase()) ||
+            el.address.state
+              .toLocaleLowerCase()
+              .includes(searchQuery.toLocaleLowerCase()) ||
           // el.location
           //   .toLocaleLowerCase()
           //   .includes(searchQuery.toLocaleLowerCase()) ||
@@ -216,30 +219,42 @@ export default function PropertyFilteringList() {
       ),
     ];
 
-    filteredArrays = [
-      ...filteredArrays,
-      !categories.length
-        ? [...refItems]
-        : refItems.filter((elm) =>
-          categories.every((elem) => elm.features.includes(elem))
-        ),
-    ];
+    // filteredArrays = [
+    //   ...filteredArrays,
+    //   !categories.length
+    //     ? [...refItems]
+    //     : refItems.filter((elm) =>
+    //       categories.every((elem) => elm.features.includes(elem))
+    //     ),
+    // ];
 
     if (location != "All Cities") {
       filteredArrays = [
         ...filteredArrays,
-        refItems.filter((el) => el.city == location),
+        refItems.filter((el) => el.address.city == location),
       ];
     }
 
+    // if (priceRange.length > 0) {
+    //   const filtered = refItems.filter(
+    //     (elm) =>
+    //       // Number(elm.price.split("₹")[1].split(",").join("")) >=
+    //       //   priceRange[0] &&
+    //       // Number(elm.price.split("₹")[1].split(",").join("")) <= priceRange[1]
+    //       Number(elm.price) >= priceRange[0] &&
+    //       Number(elm.price) <= priceRange[1]
+    //   );
+    //   filteredArrays = [...filteredArrays, filtered];
+    // }
+    
     if (priceRange.length > 0) {
       const filtered = refItems.filter(
         (elm) =>
           // Number(elm.price.split("₹")[1].split(",").join("")) >=
           //   priceRange[0] &&
           // Number(elm.price.split("₹")[1].split(",").join("")) <= priceRange[1]
-          Number(elm.price) >= priceRange[0] &&
-          Number(elm.price) <= priceRange[1]
+          Number(elm.price.rent) >= priceRange[0] &&
+          Number(elm.price.rent) <= priceRange[1]
       );
       filteredArrays = [...filteredArrays, filtered];
     }
