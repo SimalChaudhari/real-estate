@@ -1,20 +1,29 @@
 "use client";
 import { authLogin } from "@/services/auth/authApi";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "@/app/features/authSlice";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const SignIn = () => {
   const router = useRouter(); 
   const dispatch = useDispatch(); // Use dispatch from react-redux
+    // const authState = useSelector((state) => state.auth);
 
   // State to store user input
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  // Redirect if already logged in
+  // useEffect(() => {
+  //   if (authState.isAuthenticated) {
+  //     router.push("/"); // Redirect to dashboard if authState.isAuthenticated exists
+  //   }
+  // }, [authState.isAuthenticated, router]);
 
   // State to handle errors and loading
   const [errors, setErrors] = useState({});
@@ -66,6 +75,10 @@ const SignIn = () => {
         })
       );
 
+      // Save token and user data in cookies
+      Cookies.set("token", response.token, { expires: 7 }); // Expires in 7 days
+      Cookies.set("user", JSON.stringify(response.user), { expires: 7 });
+      
       // Save token and user data if needed
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));

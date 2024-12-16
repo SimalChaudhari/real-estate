@@ -8,6 +8,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/app/features/authSlice";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -34,6 +35,11 @@ const Header = () => {
     dispatch(logout());
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+
+    // Clear cookies
+    Cookies.remove("user");
+    Cookies.remove("token");
+
     alert("You have been logged out.");
   };
 
@@ -111,36 +117,41 @@ const Header = () => {
                     <span className="d-none d-xl-block">Login / Register</span>
                   </a>
                   */}
-                  <Link
-                    className="ud-btn btn-white add-property bdrs12 mx-2 mx-xl-4 border-0"
-                    href="/dashboard-add-property"
-                  >
-                    Add Property
-                    <i className="fal fa-arrow-right-long" />
-                  </Link>
-                  <a
-                    className="sidemenu-btn filter-btn-right"
-                    href="#"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#SidebarPanel"
-                    aria-controls="SidebarPanelLabel"
-                  >
-                    <Image
-                      width={25}
-                      height={9}
-                      className="img-1"
-                      src="/images/icon/nav-icon-white.svg"
-                      alt="humberger menu"
-                    />
 
-                    <Image
-                      width={25}
-                      height={9}
-                      className="img-2"
-                      src="/images/icon/nav-icon-dark.svg"
-                      alt="humberger menu"
-                    />
-                  </a>
+                  {/*
+                    <Link
+                      className="ud-btn btn-white add-property bdrs12 mx-2 mx-xl-4 border-0"
+                      href="/dashboard-add-property"
+                    >
+                      Add Property
+                      <i className="fal fa-arrow-right-long" />
+                    </Link>
+                    */}
+                  {/*
+                    <a
+                      className="sidemenu-btn filter-btn-right"
+                      href="#"
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#SidebarPanel"
+                      aria-controls="SidebarPanelLabel"
+                    >
+                      <Image
+                        width={25}
+                        height={9}
+                        className="img-1"
+                        src="/images/icon/nav-icon-white.svg"
+                        alt="humberger menu"
+                      />
+  
+                      <Image
+                        width={25}
+                        height={9}
+                        className="img-2"
+                        src="/images/icon/nav-icon-dark.svg"
+                        alt="humberger menu"
+                      />
+                    </a>
+                    */}
                 </div>
               </div>
               {/* End .col-auto */}

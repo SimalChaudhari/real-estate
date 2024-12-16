@@ -25,6 +25,10 @@ const PropertyGallery = ({ id }) => {
     listingsData.find((elm) => elm._id === id) ||
     listingsData[0];
 
+    console.log('====================================');
+    console.log("transformedListingsData :", transformedListingsData);
+    console.log('====================================')
+
     const addressDetails = {
       address: transformedListingsData?.address || "N/A",
       city: transformedListingsData?.city || "N/A",
@@ -38,7 +42,7 @@ const PropertyGallery = ({ id }) => {
   }
 
   return (
-    <>
+    <div>
       <div className="row">
         <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
           <div className="ps-v4-hero-tab position-relative">
@@ -75,20 +79,22 @@ const PropertyGallery = ({ id }) => {
                   <span className="flaticon-map text-white fz20" />
                 </button>
               </li>
-              <li className="nav-item" role="presentation">
-                <button
-                  className="nav-link"
-                  id="pills-contact-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-contact"
-                  type="button"
-                  role="tab"
-                  aria-controls="pills-contact"
-                  aria-selected="false"
-                >
-                  <span className="flaticon-maps-1 text-white fz20" />
-                </button>
-              </li>
+              {/*
+                <li className="nav-item" role="presentation">
+                  <button
+                    className="nav-link"
+                    id="pills-contact-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-contact"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-contact"
+                    aria-selected="false"
+                  >
+                    <span className="flaticon-maps-1 text-white fz20" />
+                  </button>
+                </li>
+              */}
             </ul>
           </div>
           {/* End .ps-v4-hero-tab */}
@@ -189,16 +195,16 @@ const PropertyGallery = ({ id }) => {
                 role="tabpanel"
                 aria-labelledby="pills-contact-tab"
               >
-              <iframe
-              className="position-relative bdrs12 mt30 h510 w-100"
-              loading="lazy"
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                addressDetails.address
-              )}&t=m&z=14&output=embed&iwloc=near`}
-              title={addressDetails.address}
-              aria-label={addressDetails.address}
-            />
               {/*
+                <iframe
+                className="position-relative bdrs12 mt30 h510 w-100"
+                loading="lazy"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                  addressDetails.address
+                )}&t=m&z=14&output=embed&iwloc=near`}
+                title={addressDetails.address}
+                aria-label={addressDetails.address}
+              />
               <iframe
                 className="h510 w-100"
                 src="https://www.google.com/maps/embed?pb=!4v1553797194458!6m8!1m7!1sR4K_5Z2wRHTk9el8KLTh9Q!2m2!1d36.82551718071267!2d-76.34864590837246!3f305.15097!4f0!5f0.7820865974627469"
@@ -213,7 +219,7 @@ const PropertyGallery = ({ id }) => {
         </div>
       </div>
       {/* End .row */}
-    </>
+    </div>
   );
 };
 

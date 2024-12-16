@@ -1,12 +1,23 @@
 "use client";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 
 const Location = () => {
+  const { location, loading } = useSelector((state) => state.location);
+
+  // Extracting city data dynamically from the Redux store
+  const locationOptions = location?.cities?.map((city) => ({
+    value: city.name,
+    label: city.name,
+  })) || [];
+
   const inqueryType = [
-    { value: "New York", label: "New York" },
-    { value: "Los Angeles", label: "Los Angeles" },
-    { value: "London", label: "London" },
-    { value: "Paris", label: "Paris" },
+    { value: "CHIKKAMAGALURU", label: "CHIKKAMAGALURU" },
+    { value: "BANGALORE", label: "BANGALORE" },
+    { value: "SAKLESHPURA", label: "SAKLESHPURA" },
+    { value: "MADIKERI", label: "MADIKERI" },
+    { value: "MANGALORE", label: "MANGALORE" },
+    { value: "UDUPI", label: "UDUPI" },
   ];
 
   const customStyles = {
@@ -16,26 +27,31 @@ const Location = () => {
         backgroundColor: isSelected
           ? "#eb6753"
           : isHovered
-          ? "#eb675312"
-          : isFocused
-          ? "#eb675312"
-          : undefined,
+            ? "#eb675312"
+            : isFocused
+              ? "#eb675312"
+              : undefined,
       };
     },
   };
   return (
-    <>
-      <Select
-        defaultValue={[inqueryType[0]]}
-        name="colors"
-        options={inqueryType}
-        styles={customStyles}
-        className="text-start select-borderless"
-        classNamePrefix="select"
-        required
-        isClearable={false}
-      />
-    </>
+    <div>
+      {loading ? (
+        // Show loading spinner or message
+        <p>Loading locations...</p>
+      ) : (
+        <Select
+          defaultValue={[locationOptions[0]]}
+          name="colors"
+          options={locationOptions}
+          styles={customStyles}
+          className="text-start select-borderless"
+          classNamePrefix="select"
+          required
+          isClearable={false}
+        />
+      )}
+    </div>
   );
 };
 

@@ -5,28 +5,48 @@ import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 import Amenities from "./Amenities";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const AdvanceFilterModal = () => {
   const router = useRouter();
-  const catOptions = [
-    { value: "Banking", label: "Apartments" },
-    { value: "Bungalow", label: "Bungalow" },
-    { value: "Houses", label: "Houses" },
-    { value: "Loft", label: "Loft" },
-    { value: "Office", label: "Office" },
-    { value: "Townhome", label: "Townhome" },
-    { value: "Villa", label: "Villa" },
+  const { location } = useSelector((state) => state.location);
+  const listingsData = useSelector((state) => state.listings?.listings);
+
+  // Extracting city data dynamically from the Redux store
+  const locationOptions = location?.cities?.map((city) => ({
+    value: city.name,
+    label: city.name,
+  })) || [];
+
+  const uniquePropertyTypes = [
+    ...new Set(listingsData?.map((item) => item.propertyType)),
   ];
-  const locationOptions = [
-    { value: "All Cities", label: "All Cities" },
-    { value: "California", label: "California" },
-    { value: "Los Angeles", label: "Los Angeles" },
-    { value: "New Jersey", label: "New Jersey" },
-    { value: "New York", label: "New York" },
-    { value: "San Diego", label: "San Diego" },
-    { value: "San Francisco", label: "San Francisco" },
-    { value: "Texas", label: "Texas" },
-  ];
+
+  // Transform unique property types to catOptions format
+  const catOptions = uniquePropertyTypes.map((type) => ({
+    value: type,
+    label: type,
+  }));
+
+  // const catOptions = [
+  //   { value: "Banking", label: "Apartments" },
+  //   { value: "Bungalow", label: "Bungalow" },
+  //   { value: "Houses", label: "Houses" },
+  //   { value: "Loft", label: "Loft" },
+  //   { value: "Office", label: "Office" },
+  //   { value: "Townhome", label: "Townhome" },
+  //   { value: "Villa", label: "Villa" },
+  // ];
+  // const locationOptions = [
+  //   { value: "All Cities", label: "All Cities" },
+  //   { value: "California", label: "California" },
+  //   { value: "Los Angeles", label: "Los Angeles" },
+  //   { value: "New Jersey", label: "New Jersey" },
+  //   { value: "New York", label: "New York" },
+  //   { value: "San Diego", label: "San Diego" },
+  //   { value: "San Francisco", label: "San Francisco" },
+  //   { value: "Texas", label: "Texas" },
+  // ];
 
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {
@@ -35,10 +55,10 @@ const AdvanceFilterModal = () => {
         backgroundColor: isSelected
           ? "#eb6753"
           : isHovered
-          ? "#eb675312"
-          : isFocused
-          ? "#eb675312"
-          : undefined,
+            ? "#eb675312"
+            : isFocused
+              ? "#eb675312"
+              : undefined,
       };
     },
   };
@@ -179,14 +199,16 @@ const AdvanceFilterModal = () => {
           </div>
           {/* End .row */}
 
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="widget-wrapper mb0">
-                <h6 className="list-title mb10">Amenities</h6>
+          {/*
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="widget-wrapper mb0">
+                  <h6 className="list-title mb10">Amenities</h6>
+                </div>
               </div>
+              <Amenities />
             </div>
-            <Amenities />
-          </div>
+            */}
         </div>
         {/* End modal body */}
 
@@ -196,7 +218,13 @@ const AdvanceFilterModal = () => {
             <u>Reset all filters</u>
           </button>
           <div className="btn-area">
-            <button data-bs-dismiss="modal" type="submit" className="ud-btn btn-thm" onClick={() => router.push("/map-v1")} >
+            <button 
+            data-bs-dismiss="modal" 
+            type="submit" 
+            className="ud-btn btn-thm" 
+            // onClick={() => router.push("/map-v1")}
+            onClick={() => router.push("/list-v1")}
+             >
               <span className="flaticon-search align-text-top pr10" />
               Search
             </button>

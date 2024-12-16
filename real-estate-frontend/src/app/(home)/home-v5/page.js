@@ -65,7 +65,7 @@ const Home_V5 = () => {
             </div>
             <div className="col-lg-3">
               <div className="text-start text-lg-end mb-3">
-                <Link className="ud-btn2" href="/grid-full-2-col">
+                <Link className="ud-btn2" href="/list-v1">
                   See All Properties
                   <i className="fal fa-arrow-right-long" />
                 </Link>
@@ -86,26 +86,26 @@ const Home_V5 = () => {
       {/* End Discover Our Featured Listings */}
 
       {/* Explore Apartment Types cities */}
-      <section className="pb90 pb30-md">
-        <div className="container">
-          <div className="row" data-aos="fade-up" data-aos-delay="0">
-            <div className="col-lg-6 mx-auto">
-              <div className="main-title2 text-center">
-                <h2 className="title">Explore Apartment Types</h2>
-                <p className="paragraph">
-                  Get some Inspirations from 1800+ skills
-                </p>
+      {/*
+        <section className="pb90 pb30-md">
+          <div className="container">
+            <div className="row" data-aos="fade-up" data-aos-delay="0">
+              <div className="col-lg-6 mx-auto">
+                <div className="main-title2 text-center">
+                  <h2 className="title">Explore Apartment Types</h2>
+                  <p className="paragraph">
+                    Get some Inspirations from 1800+ skills
+                  </p>
+                </div>
               </div>
             </div>
+  
+            <div className="row" data-aos="fade-up" data-aos-delay="300">
+              <ApartmentTypes />
+            </div>
           </div>
-          {/* End .row */}
-
-          <div className="row" data-aos="fade-up" data-aos-delay="300">
-            <ApartmentTypes />
-          </div>
-          {/* End .row */}
-        </div>
-      </section>
+        </section>
+      */}
       {/* End Explore Apartment Types cities */}
 
       {/* Explore Apartment */}
@@ -134,45 +134,43 @@ const Home_V5 = () => {
       {/* End Explore Apartment */}
 
       {/* Explore property-city */}
-      <section className="pb40-md pb90">
-        <div className="container">
-          <div
-            className="row align-items-center"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            <div className="col-lg-9">
-              <div className="main-title2">
-                <h2 className="title">Properties by Cities</h2>
-                <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
-                </p>
+      {/*
+        <section className="pb40-md pb90">
+          <div className="container">
+            <div
+              className="row align-items-center"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <div className="col-lg-9">
+                <div className="main-title2">
+                  <h2 className="title">Properties by Cities</h2>
+                  <p className="paragraph">
+                    Aliquam lacinia diam quis lacus euismod
+                  </p>
+                </div>
+              </div>
+  
+              <div className="col-lg-3">
+                <div className="text-start text-lg-end mb-3">
+                  <Link className="ud-btn2" href="/map-v4">
+                    See All Cities
+                    <i className="fal fa-arrow-right-long" />
+                  </Link>
+                </div>
               </div>
             </div>
-            {/* End col-lg-9 */}
-
-            <div className="col-lg-3">
-              <div className="text-start text-lg-end mb-3">
-                <Link className="ud-btn2" href="/map-v4">
-                  See All Cities
-                  <i className="fal fa-arrow-right-long" />
-                </Link>
+  
+            <div className="row">
+              <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
+                <div className="property-city-slider position-relative">
+                  <PropertiesByCities />
+                </div>
               </div>
             </div>
-            {/* End col-lg-3 */}
           </div>
-          {/* End .row */}
-
-          <div className="row">
-            <div className="col-lg-12" data-aos="fade-up" data-aos-delay="300">
-              <div className="property-city-slider position-relative">
-                <PropertiesByCities />
-              </div>
-            </div>
-          </div>
-          {/* End .row */}
-        </div>
-      </section>
+        </section>
+        */}
       {/* End Explore property-city */}
 
       {/* CTA */}

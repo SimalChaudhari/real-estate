@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // Default storage is localStorage
 import authReducer from "./features/authSlice";
 import listingsReducer from './features/listingsSlice';
+import locationsReducer from './features/locationsSlice';
 
 // Persist configuration
 const persistConfig = {
@@ -18,6 +19,7 @@ export const makeStore = () => {
     reducer: {
       auth: persistedAuthReducer, // Use the persisted reducer
       listings: listingsReducer,
+      location: locationsReducer,
     },
     devTools: true, // Enable Redux DevTools
   });

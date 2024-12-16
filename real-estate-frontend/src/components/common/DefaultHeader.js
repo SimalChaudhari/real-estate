@@ -6,9 +6,14 @@ import LoginSignupModal from "@/components/common/login-signup-modal";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { logout } from "@/app/features/authSlice";
 
 const DefaultHeader = () => {
   const [navbar, setNavbar] = useState(false);
+  const authState = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const changeBackground = () => {
     if (window.scrollY >= 10) {
@@ -25,12 +30,27 @@ const DefaultHeader = () => {
     };
   }, []);
 
+
+  const handleLogout = () => {
+    // Clear Redux state and local storage
+    dispatch(logout());
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
+    // Clear cookies
+    Cookies.remove("user");
+    Cookies.remove("token");
+
+    alert("You have been logged out.");
+  };
+
+
+
   return (
     <>
       <header
-        className={`header-nav nav-homepage-style light-header menu-home4 main-menu ${
-          navbar ? "sticky slideInDown animated" : ""
-        }`}
+        className={`header-nav nav-homepage-style light-header menu-home4 main-menu ${navbar ? "sticky slideInDown animated" : ""
+          }`}
       >
         <nav className="posr">
           <div className="container posr menu_bdrt1">
@@ -65,45 +85,73 @@ const DefaultHeader = () => {
 
               <div className="col-auto">
                 <div className="d-flex align-items-center">
-                  <a
-                    href="#"
-                    className="login-info d-flex align-items-cente"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginSignupModal"
-                    role="button"
-                  >
-                    <i className="far fa-user-circle fz16 me-2" />{" "}
-                    <span className="d-none d-xl-block">Login / Register</span>
-                  </a>
-                  <Link
-                    className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
-                    href="/dashboard-add-property"
-                  >
-                    Add Property
-                    <i className="fal fa-arrow-right-long" />
-                  </Link>
-                  <a
-                    className="sidemenu-btn filter-btn-right"
-                    href="#"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#SidebarPanel"
-                    aria-controls="SidebarPanelLabel"
-                  >
-                    <Image
-                      width={25}
-                      height={9}
-                      className="img-1"
-                      src="/images/dark-nav-icon.svg"
-                      alt="humberger menu"
-                    />
-                    <Image
-                      width={25}
-                      height={9}
-                      className="img-2"
-                      src="/images/dark-nav-icon.svg"
-                      alt="humberger menu"
-                    />
-                  </a>
+                  {authState.isAuthenticated ? (
+                    <a
+                      className="login-info d-flex align-items-center"
+                      role="button"
+                      onClick={handleLogout}
+                    >
+                      <i className="icon fz18 fa-sharp-duotone fa-solid fa-arrow-right-from-bracket fz16 me-2" />{" "}
+                      <span className="d-none d-xl-block">Logout</span>
+                    </a>
+                  ) : (
+
+                    <a
+                      href="#"
+                      className="login-info d-flex align-items-center"
+                      data-bs-toggle="modal"
+                      data-bs-target="#loginSignupModal"
+                      role="button"
+                    >
+                      <i className="far fa-user-circle fz16 me-2" />{" "}
+                      <span className="d-none d-xl-block">Login / Register</span>
+                    </a>
+                  )}
+                  {/*
+                    <a
+                      href="#"
+                      className="login-info d-flex align-items-cente"
+                      data-bs-toggle="modal"
+                      data-bs-target="#loginSignupModal"
+                      role="button"
+                    >
+                      <i className="far fa-user-circle fz16 me-2" />{" "}
+                      <span className="d-none d-xl-block">Login / Register</span>
+                    </a>
+                  */}
+                  {/*
+                    <Link
+                      className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
+                      href="/dashboard-add-property"
+                    >
+                      Add Property
+                      <i className="fal fa-arrow-right-long" />
+                    </Link>
+                    */}
+                  {/*
+                    <a
+                      className="sidemenu-btn filter-btn-right"
+                      href="#"
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#SidebarPanel"
+                      aria-controls="SidebarPanelLabel"
+                    >
+                      <Image
+                        width={25}
+                        height={9}
+                        className="img-1"
+                        src="/images/dark-nav-icon.svg"
+                        alt="humberger menu"
+                      />
+                      <Image
+                        width={25}
+                        height={9}
+                        className="img-2"
+                        src="/images/dark-nav-icon.svg"
+                        alt="humberger menu"
+                      />
+                    </a>
+                    */}
                 </div>
               </div>
               {/* End .col-auto */}

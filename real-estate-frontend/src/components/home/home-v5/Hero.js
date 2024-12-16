@@ -12,32 +12,32 @@ const Hero = () => {
   const sliderItems = [
     {
       image: "/images/home/home-5-1.jpg",
-      price: "$986,00",
+      price: "₹986,00",
       title: "Studio on Grand Avenue",
       description: "32 Beds - 91 Baths - 1500 sq ft",
     },
     {
       image: "/images/home/home-5-2.jpg",
-      price: "$986,00",
+      price: "₹986,00",
       title: "Studio on Grand Avenue",
       description: "32 Beds - 91 Baths - 1500 sq ft",
     },
     {
       image: "/images/home/home-5-3.jpg",
-      price: "$986,00",
+      price: "₹986,00",
       title: "Studio on Grand Avenue",
       description: "32 Beds - 91 Baths - 1500 sq ft",
     },
     {
       image: "/images/home/home-5-4.jpg",
-      price: "$986,00",
+      price: "₹986,00",
       title: "Studio on Grand Avenue",
       description: "32 Beds - 91 Baths - 1500 sq ft",
     },
   ];
 
   return (
-    <>
+    <div>
       <div className="hero-large-home5">
         <Swiper
           direction="vertical" // Set the direction to vertical
@@ -63,15 +63,19 @@ const Hero = () => {
                   <div className="container">
                     <div className="row">
                       <div className="col-lg-12 text-left position-relative">
+                        {/*
                         <h4 className="h1 slider-subtitle text-white">
                           {item.price}
                         </h4>
+                        */}
                         <h3 className="h6 slider-title text-white">
                           {item.title}
                         </h3>
-                        <p className="mb30 slider-text text-white">
-                          {item.description}
-                        </p>
+                        {/*
+                          <p className="mb30 slider-text text-white">
+                            {item.description}
+                          </p>
+                          */}
                         <div className="slider-btn-block">
                           <Link
                             // href="/map-v4"
@@ -115,7 +119,7 @@ const Hero = () => {
           ))}
         </Swiper>
       </div>
-    </>
+    </div>
   );
 };
 

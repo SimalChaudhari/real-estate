@@ -1,6 +1,17 @@
 
-import axiosInstance from '@/config/axiosInstance';
+// import axiosInstance from '@/config/axiosInstance';
+import axios from 'axios';
 import { toast } from 'react-toastify'; // Adjust the path if needed
+
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://real-estate-nine-livid.vercel.app';
+
+const axiosInstance = axios.create({
+    baseURL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
 
 /**
  * Register a new user by sending contact information.

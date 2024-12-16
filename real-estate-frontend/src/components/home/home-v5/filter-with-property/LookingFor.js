@@ -1,15 +1,28 @@
 "use client";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 
 const LookingFor = () => {
-  const inqueryType = [
-    { value: "Apartments", label: "Apartments" },
-    { value: "Bungalow", label: "Bungalow" },
-    { value: "Houses", label: "Houses" },
-    { value: "Office", label: "Office" },
-    { value: "TownHome", label: "TownHome" },
-    { value: "Villa", label: "Villa" },
+  const listingsData = useSelector((state) => state.listings?.listings);
+  
+  const uniquePropertyTypes = [
+    ...new Set(listingsData?.map((item) => item.propertyType)),
   ];
+
+  // Transform unique property types to catOptions format
+  const inqueryType = uniquePropertyTypes.map((type) => ({
+    value: type,
+    label: type,
+  }));
+
+  // const inqueryType = [
+  //   { value: "Apartments", label: "Apartments" },
+  //   { value: "Bungalow", label: "Bungalow" },
+  //   { value: "Houses", label: "Houses" },
+  //   { value: "Office", label: "Office" },
+  //   { value: "TownHome", label: "TownHome" },
+  //   { value: "Villa", label: "Villa" },
+  // ];
 
   const customStyles = {
     control: (provided) => ({
@@ -30,7 +43,7 @@ const LookingFor = () => {
     },
   };
   return (
-    <>
+    <div>
       <Select
         defaultValue={[inqueryType[0]]}
         name="colors"
@@ -41,7 +54,7 @@ const LookingFor = () => {
         required
         isClearable={false}
       />
-    </>
+    </div>
   );
 };
 
