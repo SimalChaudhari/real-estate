@@ -41,7 +41,7 @@ const Location = () => {
         <p>Loading locations...</p>
       ) : (
         <Select
-          defaultValue={[locationOptions[0]]}
+          defaultValue={[locationOptions[2]]}
           name="colors"
           options={locationOptions}
           styles={customStyles}

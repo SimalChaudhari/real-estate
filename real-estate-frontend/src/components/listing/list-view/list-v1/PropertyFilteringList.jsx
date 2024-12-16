@@ -12,7 +12,7 @@ import { GetList } from "@/services/listing/listingApi";
 
 export default function PropertyFilteringList() {
 
-  
+
   const [listings2, setListings2] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export default function PropertyFilteringList() {
       setSortedFilteredData(listingsData); // Sort the filtered data initially
     }
   }, [listingsData]); // Add listingsData as a dependency
-  
+
   useEffect(() => {
     const fetchListings = async () => {
       dispatch(fetchListingsStart());
@@ -45,11 +45,9 @@ export default function PropertyFilteringList() {
         setLoading(false);
       }
     };
-  
+
     fetchListings();
   }, [dispatch]);
-  
-
 
   const [filteredData, setFilteredData] = useState([]);
 
@@ -202,12 +200,12 @@ export default function PropertyFilteringList() {
       ...filteredArrays,
       refItems.filter(
         (el) =>
-          el.city
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.location
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
+          // el.city
+          //   .toLocaleLowerCase()
+          //   .includes(searchQuery.toLocaleLowerCase()) ||
+          // el.location
+          //   .toLocaleLowerCase()
+          //   .includes(searchQuery.toLocaleLowerCase()) ||
           el.title
             .toLocaleLowerCase()
             .includes(searchQuery.toLocaleLowerCase()) ||
@@ -223,8 +221,8 @@ export default function PropertyFilteringList() {
       !categories.length
         ? [...refItems]
         : refItems.filter((elm) =>
-            categories.every((elem) => elm.features.includes(elem))
-          ),
+          categories.every((elem) => elm.features.includes(elem))
+        ),
     ];
 
     if (location != "All Cities") {
@@ -237,9 +235,11 @@ export default function PropertyFilteringList() {
     if (priceRange.length > 0) {
       const filtered = refItems.filter(
         (elm) =>
-          Number(elm.price.split("₹")[1].split(",").join("")) >=
-            priceRange[0] &&
-          Number(elm.price.split("₹")[1].split(",").join("")) <= priceRange[1]
+          // Number(elm.price.split("₹")[1].split(",").join("")) >=
+          //   priceRange[0] &&
+          // Number(elm.price.split("₹")[1].split(",").join("")) <= priceRange[1]
+          Number(elm.price) >= priceRange[0] &&
+          Number(elm.price) <= priceRange[1]
       );
       filteredArrays = [...filteredArrays, filtered];
     }
@@ -275,31 +275,56 @@ export default function PropertyFilteringList() {
     searchQuery,
   ]);
 
+  // useEffect(() => {
+  //   setPageNumber(1);
+  //   if (currentSortingOption == "Newest") {
+  //     const sorted = [...filteredData].sort(
+  //       (a, b) => a.yearBuilding - b.yearBuilding
+  //     );
+  //     setSortedFilteredData(sorted);
+  //   } else if (currentSortingOption.trim() == "Price Low") {
+  //     const sorted = [...filteredData].sort(
+  //       (a, b) =>
+  //         a.price.split("₹")[1].split(",").join("") -
+  //         b.price.split("₹")[1].split(",").join("")
+  //     );
+  //     setSortedFilteredData(sorted);
+  //   } else if (currentSortingOption.trim() == "Price High") {
+  //     const sorted = [...filteredData].sort(
+  //       (a, b) =>
+  //         b.price.split("₹")[1].split(",").join("") -
+  //         a.price.split("₹")[1].split(",").join("")
+  //     );
+  //     setSortedFilteredData(sorted);
+  //   } else {
+  //     setSortedFilteredData(filteredData);
+  //   }
+  // }, [filteredData, currentSortingOption]);
+
   useEffect(() => {
     setPageNumber(1);
-    if (currentSortingOption == "Newest") {
+    
+    if (currentSortingOption === "Newest") {
       const sorted = [...filteredData].sort(
         (a, b) => a.yearBuilding - b.yearBuilding
       );
       setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price Low") {
+    } else if (currentSortingOption.trim() === "Price Low") {
       const sorted = [...filteredData].sort(
-        (a, b) =>
-          a.price.split("₹")[1].split(",").join("") -
-          b.price.split("₹")[1].split(",").join("")
+        (a, b) => Number(a.price.rent || 0) - Number(b.price.rent || 0)
       );
       setSortedFilteredData(sorted);
-    } else if (currentSortingOption.trim() == "Price High") {
+    } else if (currentSortingOption.trim() === "Price High") {
       const sorted = [...filteredData].sort(
-        (a, b) =>
-          b.price.split("₹")[1].split(",").join("") -
-          a.price.split("₹")[1].split(",").join("")
+        (a, b) => Number(b.price.sale || 0) - Number(a.price.sale || 0)
       );
       setSortedFilteredData(sorted);
     } else {
       setSortedFilteredData(filteredData);
     }
   }, [filteredData, currentSortingOption]);
+  
+  
   return (
     <div>
       <section className="pt0 pb90 bgc-f7">
@@ -351,12 +376,14 @@ export default function PropertyFilteringList() {
               {/* End .row */}
 
               <div className="row">
-                <PaginationTwo
-                  pageCapacity={6}
-                  data={sortedFilteredData}
-                  pageNumber={pageNumber}
-                  setPageNumber={setPageNumber}
-                />
+                {sortedFilteredData.length > 6 && (
+                  <PaginationTwo
+                    pageCapacity={6}
+                    data={sortedFilteredData}
+                    pageNumber={pageNumber}
+                    setPageNumber={setPageNumber}
+                  />
+                )}
               </div>
               {/* End .row */}
             </div>

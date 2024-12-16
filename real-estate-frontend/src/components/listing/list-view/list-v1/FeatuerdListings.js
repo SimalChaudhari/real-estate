@@ -19,26 +19,26 @@ const FeaturedListings = ({ data, colstyle }) => {
             }
           >
             <div className="list-thumb">
-            {listing.images && listing.images.length > 0 ? (
-              <Image
-                width={382}
-                height={248}
-                className="w-100 h-100 cover"
-                src={listing.images[0]} // Use the first image from the array
-                alt={listing.title || "listing"} // Add a fallback for the alt text
-              />
-            ) : (
-              <div
-                style={{
-                  width: "382px",
-                  height: "248px",
-                  background: "#ccc",
-                }}
-              >
-                No Image Available
-              </div>
-            )}
-            {/*
+              {listing.images && listing.images.length > 0 ? (
+                <Image
+                  width={382}
+                  height={248}
+                  className="w-100 h-100 cover"
+                  src={listing.images[0]} // Use the first image from the array
+                  alt={listing.title || "listing"} // Add a fallback for the alt text
+                />
+              ) : (
+                <div
+                  style={{
+                    width: "382px",
+                    height: "248px",
+                    background: "#ccc",
+                  }}
+                >
+                  No Image Available
+                </div>
+              )}
+              {/*
               <Image
                 width={382}
                 height={248}
@@ -58,17 +58,38 @@ const FeaturedListings = ({ data, colstyle }) => {
               </div>
 
               <div className="list-price">
+                {/*
                 {listing.price} / <span>mo</span>
+                */}
+                  {listing.price && (
+                    <div>
+                      <span>Rent: ₹{listing.price.rent}</span>
+                      <br />
+                      <span>Sale: ₹{listing.price.sale}</span>
+                    </div>
+                  )}
+
               </div>
             </div>
             <div className="list-content">
               <h6 className="list-title">
-              {/*
+                {/*
                 <Link href={`/single-v4/${listing.id}`}>{listing.title}</Link>
                 */}
-              <Link href={`/single-v6/${listing._id}`}>{listing.title}</Link>
+                <Link href={`/single-v6/${listing._id}`}>{listing.title}</Link>
               </h6>
-              <p className="list-text">{listing.location}</p>
+              <p className="list-text">
+              {listing.address && (
+                <div>
+                  <span>{listing.address.street_address} </span>
+                  <span>{listing.address.city} </span>
+                  <span>{listing.address.state} </span>
+                </div>
+              )}
+              </p>
+              {/*
+                <p className="list-text">{listing.location}</p>
+                */}
               <div className="list-meta d-flex align-items-center">
                 <a href="#">
                   <span className="flaticon-bed" /> {listing.bed} bed

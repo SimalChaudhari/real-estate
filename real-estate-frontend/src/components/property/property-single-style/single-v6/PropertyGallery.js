@@ -25,10 +25,6 @@ const PropertyGallery = ({ id }) => {
     listingsData.find((elm) => elm._id === id) ||
     listingsData[0];
 
-    console.log('====================================');
-    console.log("transformedListingsData :", transformedListingsData);
-    console.log('====================================')
-
     const addressDetails = {
       address: transformedListingsData?.address || "N/A",
       city: transformedListingsData?.city || "N/A",

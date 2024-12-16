@@ -9,10 +9,10 @@ import { useDispatch } from "react-redux";
 import { fetchLocationFailure, fetchLocationsStart, fetchLocationsSuccess } from "@/app/features/locationsSlice";
 import { GetLocationList } from "@/services/listing/locationApi";
 
-const FilterContent = () => {
+const   FilterContent = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("buy");
+  const [activeTab, setActiveTab] = useState("plot");
 
   useEffect(() => {
     // Fetch locations on component mount
@@ -33,6 +33,7 @@ const FilterContent = () => {
   };
 
   const tabs = [
+    { id: "plot", label: "Plot" },
     { id: "buy", label: "Buy" },
     { id: "rent", label: "Rent" },
     { id: "sold", label: "Sold" },
@@ -104,6 +105,8 @@ const FilterContent = () => {
                 </div>
                 {/* End col-md-4 */}
 
+                {/*
+                  */}
                 <div className="col-md-4 col-xl-2 bdrr1 bdrrn-sm px20 pl15-sm">
                   <div className="mt-3 mt-md-0">
                     <div className="dropdown-lists">

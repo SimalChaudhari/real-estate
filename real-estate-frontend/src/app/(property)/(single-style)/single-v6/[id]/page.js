@@ -56,6 +56,8 @@ const SingleV6 = ({ params }) => {
                 <h4 className="title fz17 mb30">Overview</h4>
                 <div className="row">
                   <OverView id={params.id} />
+                  {/*
+                  */}
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -275,7 +277,7 @@ const SingleV6 = ({ params }) => {
               </div>
             </div>
             */}
-          
+
           {/* End .row */}
         </div>
         {/* End .container */}

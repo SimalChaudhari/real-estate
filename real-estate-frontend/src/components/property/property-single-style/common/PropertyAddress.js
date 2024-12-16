@@ -34,14 +34,16 @@ const PropertyAddress = ({ id }) => {
   //   },
   // ];
 
-  const addressDetails = {
-    address: transformedListingsData.address || "N/A",
-    city: transformedListingsData.city || "N/A",
-    state: transformedListingsData.location || "N/A", // Assuming "location" represents state/county
-    zipCode: transformedListingsData.zip_code || "N/A",
-    country: "N/A", // Update this if a country field exists in your data
-  };
+  // const addressDetails = {
+  //   // address: transformedListingsData.address || "N/A",
+  //   address: transformedListingsData.street_address || "N/A",
+  //   city: transformedListingsData.city || "N/A",
+  //   state: transformedListingsData.location || "N/A", // Assuming "location" represents state/county
+  //   zipCode: transformedListingsData.zip_code || "N/A",
+  //   country: "N/A", // Update this if a country field exists in your data
+  // };
 
+  const addressDetails = transformedListingsData.address
   return (
     <div>
 
@@ -87,7 +89,7 @@ const PropertyAddress = ({ id }) => {
               <p className="fw600 mb10 ff-heading dark-color">Address</p>
             </div>
             <div className="pd-list">
-              <p className="text mb10">{addressDetails.address}</p>
+              <p className="text mb10">{addressDetails.street_address}</p>
             </div>
           </div>
 

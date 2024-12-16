@@ -20,13 +20,17 @@ const Location = ({ filterFunctions }) => {
   // ];
 
   // Dynamically generate locationOptions from listingsData
+  // Dynamically generate locationOptions from listingsData
   const locationOptions = [
     { value: "All Cities", label: "All Cities" }, // Default option
-    ...Array.from(new Set(listingsData?.map((item) => item.city))).map((city) => ({
-      value: city,
-      label: city,
-    })),
+    ...(listingsData
+      ? Array.from(new Set(listingsData.map((item) => item.address.city))).map((city) => ({
+        value: city,
+        label: city,
+      }))
+      : []),
   ];
+
 
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => {

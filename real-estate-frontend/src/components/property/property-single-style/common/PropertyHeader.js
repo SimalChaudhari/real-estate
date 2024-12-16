@@ -11,7 +11,7 @@ const PropertyHeader = ({ id }) => {
 
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const fetchListings = async () => {
       dispatch(fetchListingsStart());
@@ -40,13 +40,13 @@ const PropertyHeader = ({ id }) => {
   const data = listings.filter((elm) => elm.id == id)[0] || listings[0];
   // Check for static or dynamic data
   const transformedListingsData =
-      listingsData.find((elm) => elm._id === id) ||
-      listingsData[0];
+    listingsData.find((elm) => elm._id === id) ||
+    listingsData[0];
 
   if (loading) {
-    return <div><LoadingComponent/></div>; // Display loading state
+    return <div><LoadingComponent /></div>; // Display loading state
   }
-
+  
   if (!transformedListingsData) {
     return <div>No property found.</div>; // Handle case where no property matches
   }
@@ -58,7 +58,13 @@ const PropertyHeader = ({ id }) => {
           <h2 className="sp-lg-title">{transformedListingsData?.title}</h2>
           <div className="pd-meta mb15 d-md-flex align-items-center">
             <p className="text fz15 mb-0 bdrr1 pr10 bdrrn-sm">
-              {transformedListingsData?.location}
+              {/*
+            {transformedListingsData?.location}
+            */}
+              {transformedListingsData?.address?.street_address},{" "}
+              {transformedListingsData?.address?.city},{" "}
+              {transformedListingsData?.address?.state} {" "}
+
             </p>
             <a
               className="ff-heading text-thm fz15 bdrr1 pr10 ml0-sm ml10 bdrrn-sm"
@@ -116,13 +122,24 @@ const PropertyHeader = ({ id }) => {
                 <span className="flaticon-printer" />
               </a>
             </div>
-            <h3 className="price mb-0">{transformedListingsData?.price}</h3>
+            {/*
+              <h3 className="price mb-0">{transformedListingsData?.price}</h3>
+              */}
+            {/*
+            {(
+              Number(transformedListingsData?.price.split("₹")[1].split(",").join("")) / transformedListingsData?.sqft
+            ).toFixed(2)}
+            */}
             <p className="text space fz15">
-              ₹
-              {(
-                Number(transformedListingsData?.price.split("₹")[1].split(",").join("")) / transformedListingsData?.sqft
-              ).toFixed(2)}
-              /sq ft
+            {transformedListingsData.price && (
+              <div>
+                <span>Rent: ₹{transformedListingsData.price.rent}</span>
+                /sq ft
+                <br />
+                <span>Sale: ₹{transformedListingsData.price.sale}</span>
+                /sq ft
+              </div>
+            )}
             </p>
           </div>
         </div>

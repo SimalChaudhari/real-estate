@@ -14,7 +14,7 @@ const FeaturedListings = () => {
   const [listings2, setListings2] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  
+
   const listingsData = useSelector((state) => state.listings?.listings);
 
   useEffect(() => {
@@ -130,7 +130,16 @@ const FeaturedListings = () => {
 
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="list-price">
+                      {/*
                       {listing.price} / <span>mo</span>
+                      */}
+                      {listing.price && (
+                        <div>
+                          <span>Rent: ₹{listing.price.rent}</span>
+                          <br />
+                          <span>Sale: ₹{listing.price.sale}</span>
+                        </div>
+                      )}
                     </div>
                     <div className="list-meta2 d-flex align-items-center">
                       <a href="#" className="mr10">

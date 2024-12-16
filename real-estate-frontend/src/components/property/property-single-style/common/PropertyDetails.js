@@ -10,8 +10,6 @@ const PropertyDetails = ({ id }) => {
   const transformedListingsData =
     listingsData.find((elm) => elm._id === id) ||
     listingsData[0];
-
-    console.log("transformedListingsData :", transformedListingsData);
     
 
   const columns = [
@@ -20,10 +18,10 @@ const PropertyDetails = ({ id }) => {
       //   label: "Property ID",
       //   value: "RT48",
       // },
-      {
-        label: "Price",
-        value: transformedListingsData?.price || "N/A",
-      },
+      // {
+      //   label: "Price",
+      //   value: transformedListingsData?.price || "N/A",
+      // },
       {
         label: "Property Size",
         value: `${transformedListingsData?.sqft || "N/A"} Sq Ft`,
