@@ -86,7 +86,7 @@ const MainMenu = () => {
         <a className="list-item" href="#">
           <span className={topMenu == "listing" ? "title menuActive" : "title"}>
             <Link className={`${handleActive('/list-v1')}`} href="/list-v1">
-              Listing
+              Properties
             </Link>
           </span>
           {/*
@@ -121,8 +121,8 @@ const MainMenu = () => {
       <li className="visible_list dropitem">
         <a className="list-item" href="#">
           <span className={topMenu == "home" ? "title menuActive" : "title"}>
-            <Link className={`${handleActive('/about')}`} href="/about">
-              About
+            <Link className={`${handleActive('/add-property')}`} href="/add-property">
+              Post Property
             </Link>
           </span>
         </a>
@@ -133,7 +133,7 @@ const MainMenu = () => {
         <a className="list-item" href="#">
           <span className={topMenu == "home" ? "title menuActive" : "title"}>
             <Link className={`${handleActive('/contact')}`} href="/contact">
-              Contact Us
+              Post Requirement
             </Link>
           </span>
         </a>
@@ -143,7 +143,17 @@ const MainMenu = () => {
         <a className="list-item" href="#">
           <span className={topMenu == "home" ? "title menuActive" : "title"}>
             <Link className={`${handleActive('/faq')}`} href="/faq">
-              Faq
+              Our Service
+            </Link>
+          </span>
+        </a>
+      </li>
+
+      <li className="visible_list dropitem">
+        <a className="list-item" href="#">
+          <span className={topMenu == "home" ? "title menuActive" : "title"}>
+            <Link className={`${handleActive('/faq')}`} href="/faq">
+              Find Properties
             </Link>
           </span>
         </a>

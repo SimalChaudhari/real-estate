@@ -8,11 +8,12 @@ import Location from "./Location";
 import { useDispatch } from "react-redux";
 import { fetchLocationFailure, fetchLocationsStart, fetchLocationsSuccess } from "@/app/features/locationsSlice";
 import { GetLocationList } from "@/services/listing/locationApi";
+import Area from "./Area";
 
-const   FilterContent = () => {
+const FilterContent = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("plot");
+  const [activeTab, setActiveTab] = useState("buy");
 
   useEffect(() => {
     // Fetch locations on component mount
@@ -33,7 +34,7 @@ const   FilterContent = () => {
   };
 
   const tabs = [
-    { id: "plot", label: "Plot" },
+    // { id: "plot", label: "Plot" },
     { id: "buy", label: "Buy" },
     { id: "rent", label: "Rent" },
     { id: "sold", label: "Sold" },
@@ -98,50 +99,61 @@ const   FilterContent = () => {
                 <div className="col-md-4 col-xl-2 bdrr1 bdrrn-sm px20 pl15-sm">
                   <div className="mt-3 mt-md-0">
                     <div className="bootselect-multiselect">
-                      <label className="fz14">Location</label>
+                      <label className="fz14">City</label>
                       <Location />
                     </div>
                   </div>
                 </div>
                 {/* End col-md-4 */}
 
-                {/*
-                  */}
+                
                 <div className="col-md-4 col-xl-2 bdrr1 bdrrn-sm px20 pl15-sm">
                   <div className="mt-3 mt-md-0">
-                    <div className="dropdown-lists">
-                      <label className="fz14 mb-1">Price</label>
-                      <div
-                        className="btn open-btn text-start dropdown-toggle"
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        style={{ fontSize: "13px" }}
-                      >
-                        ₹{price[0]} - ₹{price[1]}{" "}
-                        <i className="fas fa-caret-down" />
-                      </div>
-                      <div className="dropdown-menu">
-                        <div className="widget-wrapper pb20 mb0 pl20 pr20">
-                          <div className="range-wrapper at-home10">
-                            <Slider
-                              range
-                              max={100000}
-                              min={0}
-                              defaultValue={price}
-                              onChange={(value) => handleOnChange(value)}
-                              id="slider"
-                            />
-                            <div className="d-flex align-items-center">
-                              <span id="slider-range-value1">₹{price[0]}</span>
-                              <i className="fa-sharp fa-solid fa-minus mx-2 dark-color icon" />
-                              <span id="slider-range-value2">₹{price[1]}</span>
+                    <div className="bootselect-multiselect">
+                      <label className="fz14">Area</label>
+                      <Area />
+                    </div>
+                  </div>
+                </div>
+                {/*
+                  */}
+                {/*
+                    <div className="col-md-4 col-xl-2 bdrr1 bdrrn-sm px20 pl15-sm">
+                      <div className="mt-3 mt-md-0">
+                        <div className="dropdown-lists">
+                          <label className="fz14 mb-1">Price</label>
+                          <div
+                            className="btn open-btn text-start dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
+                            style={{ fontSize: "13px" }}
+                          >
+                            ₹{price[0]} - ₹{price[1]}{" "}
+                            <i className="fas fa-caret-down" />
+                          </div>
+                          <div className="dropdown-menu">
+                            <div className="widget-wrapper pb20 mb0 pl20 pr20">
+                              <div className="range-wrapper at-home10">
+                                <Slider
+                                  range
+                                  max={100000}
+                                  min={0}
+                                  defaultValue={price}
+                                  onChange={(value) => handleOnChange(value)}
+                                  id="slider"
+                                />
+                                <div className="d-flex align-items-center">
+                                  <span id="slider-range-value1">₹{price[0]}</span>
+                                  <i className="fa-sharp fa-solid fa-minus mx-2 dark-color icon" />
+                                  <span id="slider-range-value2">₹{price[1]}</span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                    */}
                 {/* End col-md-4 */}
 
                 <div className="col-md-6 col-lg-4 col-xl-3">
