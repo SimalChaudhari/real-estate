@@ -95,3 +95,54 @@ export const GetById = async (id) => {
         };
     }
 };
+
+/**
+ * Create a new property listing.
+ * @param {Object} propertyData - The data of the property to be created.
+ * @returns {Object} - The response containing the created property or an error message.
+ */
+export const CreateProperty = async (propertyData) => {
+    try {
+        const response = await axiosInstance.post(
+            '/api/properties-listing/create',
+            propertyData
+        );
+
+        // Clear existing toasts
+        toast.dismiss();
+
+        // Show success toast notification
+        toast.success('Property listing created successfully!');
+
+        // Return success response
+        return {
+            success: true,
+            data: response?.data || {}, // Assuming `data` contains the created property
+            message:
+                response?.data?.message ||
+                'Property listing created successfully!',
+        };
+    } catch (error) {
+        // Extract error message
+        const errorMessage =
+            error?.response?.data?.message ||
+            error.message ||
+            'An error occurred while creating the property listing';
+
+        // Clear existing toasts
+        toast.dismiss();
+
+        // Show error toast notification
+        toast.error(errorMessage);
+
+        console.error('Error creating property listing:', errorMessage);
+
+        // Return error response
+        return {
+            success: false,
+            data: {},
+            message: errorMessage,
+        };
+    }
+};
+

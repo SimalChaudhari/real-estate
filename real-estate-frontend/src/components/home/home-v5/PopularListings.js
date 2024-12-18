@@ -69,7 +69,9 @@ const PopularListings = ({ data }) => {
                     )}
                   </div>
                   <div className="list-price">
+                  {/*
                     {listing.price} / <span>mo</span>
+                    */}
                   </div>
                 </div>
                 <div className="list-content">

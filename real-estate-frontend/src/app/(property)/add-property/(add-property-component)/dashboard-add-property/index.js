@@ -1,14 +1,56 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import Image from "next/image";
 import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLocationFailure, fetchLocationsStart, fetchLocationsSuccess } from "@/app/features/locationsSlice";
+import { GetLocationList } from "@/services/listing/locationApi";
 
 const AddPropertyTabContentCustomer = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
-  const [imageError, setImageError] = useState(null); 
+  const [imageError, setImageError] = useState(null);
   const fileInputRef = useRef(null);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    // Fetch locations on component mount
+    const fetchLocations = async () => {
+      dispatch(fetchLocationsStart());
+      const response = await GetLocationList();
+      if (response.success) {
+        dispatch(fetchLocationsSuccess(response.data));
+      } else {
+        dispatch(fetchLocationFailure(response.message));
+      }
+    };
+    fetchLocations();
+  }, [dispatch]);
+
+  const { location, loading } = useSelector((state) => state.location);
+
+  // Extracting city data dynamically from the Redux store
+  const citiesOptions = location?.cities?.map((city) => ({
+    value: city.id,
+    label: city.name,
+  })) || [];
+
+  // Extracting city data dynamically from the Redux store
+  const statessOptions = location?.cities
+    ?.reduce((uniqueStates, city) => {
+      if (!uniqueStates.some((state) => state.value === city.stateId)) {
+        uniqueStates.push({
+          value: city.stateId,
+          label: city.stateName || city.name, // Use appropriate key for state name
+        });
+      }
+      return uniqueStates;
+    }, []) || [];
+
+
+
 
   const {
     register,
@@ -149,6 +191,25 @@ const AddPropertyTabContentCustomer = () => {
       ...data,
       uploadedImages,
     });
+
+    const formattedData = {
+      title: data.title,
+      description: data.description,
+      street_address: data.address,
+      price: data.budget,
+      price: data.budget,
+      bed: data.bedroom,
+      bath: data.bathroom,
+      features: data.tag?.map((tag) => tag.value) || [],
+      uploadedImages: data.uploadedImages?.map((data) => data) || [],
+      city: data.city?.value || "",
+      state: data.state?.value || "",
+      lat: data.latitude,
+      long: data.longiTude,
+      yearBuilding: data.yearbuilding,
+    };
+
+    console.log("Formatted Data:", formattedData);
   };
 
   return (
@@ -337,7 +398,7 @@ const AddPropertyTabContentCustomer = () => {
                           control={control}
                           rules={{ required: "City is required" }}
                           render={({ field }) => (
-                            <Select {...field} options={Cities} styles={customStyles}
+                            <Select {...field} options={citiesOptions} styles={customStyles}
 
                               className={`select-custom pl-0 ${errors.city ? "is-invalid" : ""}`}
                               classNamePrefix="select"
@@ -362,7 +423,7 @@ const AddPropertyTabContentCustomer = () => {
                           control={control}
                           rules={{ required: "State is required" }}
                           render={({ field }) => (
-                            <Select {...field} options={States} styles={customStyles}
+                            <Select {...field} options={statessOptions} styles={customStyles}
 
                               className={`select-custom pl-0 ${errors.state ? "is-invalid" : ""}`}
                               classNamePrefix="select"

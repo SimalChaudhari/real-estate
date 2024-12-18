@@ -132,7 +132,7 @@ const MainMenu = () => {
       <li className="visible_list dropitem">
         <a className="list-item" href="#">
           <span className={topMenu == "home" ? "title menuActive" : "title"}>
-            <Link className={`${handleActive('/contact')}`} href="/contact">
+            <Link className={`${handleActive('/requirement-property')}`} href="/requirement-property">
               Post Requirement
             </Link>
           </span>
