@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { AUTH_DATA,LOGOUT } from "../constants/actionsType";
 
 const initialState = {
     authenticated: !!Cookies.get("token"), // Check token presence in cookies
@@ -7,14 +8,14 @@ const initialState = {
 
 const authReducer = (state = initialState, { type, payload } = {}) => {
     switch (type) {
-        case "AUTH_DATA":
+        case AUTH_DATA:
             return {
                 ...state,
                 authenticated: payload.authenticated, // Update authenticated state
                 authUser: payload.authUser,           // Update user data
             };
 
-        case "LOGOUT":
+        case LOGOUT:
             // Clear cookies and reset state
             Cookies.remove("token");
             Cookies.remove("user");

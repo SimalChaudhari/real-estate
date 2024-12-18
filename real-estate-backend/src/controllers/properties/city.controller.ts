@@ -45,7 +45,11 @@ export const createCity = async (req: Request, res: Response, next: NextFunction
 
 export const getCities = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const cities = await City.find().select('name stateId'); // Fetch cities and include only required fields
+        const cities = await City.find()  .select('name stateId') // Fetch only city name and stateId
+        .populate({
+            path: 'stateId', // Reference field in the City schema
+            select: 'name',  // Fetch only the state name from the State collection
+        });
         const citiesArray = cities.map(city => ({
             id: city._id,
             name: city.name,
