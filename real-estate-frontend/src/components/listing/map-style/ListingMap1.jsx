@@ -196,19 +196,9 @@ export default function ListingMap1({ id }) {
 
   const listingsData = useSelector((state) => state.listings?.listings);
   // Check for static or dynamic data
-  const transformedListingsData =
-    listingsData.find((elm) => elm._id === id) ||
-    listingsData[0];
-  const addressDetails = {
-    address: transformedListingsData?.address || "N/A",
-    city: transformedListingsData?.city || "N/A",
-    state: transformedListingsData?.location || "N/A", // Assuming "location" represents state/county
-    zipCode: transformedListingsData?.zip_code || "N/A",
-    country: "N/A", // Update this if a country field exists in your data
-  };
 
   const [getLocation, setLocation] = useState(null);
-
+  
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM",
   });
@@ -242,10 +232,10 @@ export default function ListingMap1({ id }) {
             {(clusterer) =>
               listingsData.slice(0, 6).map((marker) => (
                 <Marker
-                  key={marker.id}
+                  key={marker._id}
                   position={{
-                    lat: marker.lat,
-                    lng: marker.long,
+                    lat: marker.location.lat,
+                    lng: marker.location.log,
                   }}
                   clusterer={clusterer}
                   onClick={() => locationHandler(marker)}
@@ -256,8 +246,8 @@ export default function ListingMap1({ id }) {
           {getLocation !== null && (
             <InfoWindow
               position={{
-                lat: getLocation.lat,
-                lng: getLocation.long,
+                lat: getLocation.location.lat,
+                lng: getLocation.location.log,
               }}
               onCloseClick={closeCardHandler}
             >
@@ -303,7 +293,16 @@ export default function ListingMap1({ id }) {
                     </div>
 
                     <div className="list-price">
+                      {getLocation.price && (
+                        <div>
+                          <span>Rent: ₹{getLocation.price.rent}</span>
+                          <br />
+                          <span>Sale: ₹{getLocation.price.sale}</span>
+                        </div>
+                      )}
+                      {/*
                       {getLocation.price} / <span>mo</span>
+                       */}
                     </div>
                   </div>
                   <div className="list-content">
@@ -316,7 +315,14 @@ export default function ListingMap1({ id }) {
                       {/*
                           */}
                     </h6>
-                    <p className="list-text">{getLocation.location}</p>
+                    <p className="list-text">
+                      {getLocation?.address?.street_address},{" "}
+                      {getLocation?.address?.city},{" "}
+                      {getLocation?.address?.state} {" "}
+                    </p>
+                    {/*
+                      <p className="list-text">{getLocation.location}</p>
+                      */}
                     <div className="list-meta d-flex align-items-center">
                       <a href="#">
                         <span className="flaticon-bed" /> {getLocation.bed} bed

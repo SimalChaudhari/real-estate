@@ -39,7 +39,7 @@ const ListingSidebar = ({ filterFunctions }) => {
       {/* End .widget-wrapper */}
 
       <div className="widget-wrapper">
-        <h6 className="list-title">Price Range</h6>
+        <h6 className="list-title">Rent Price Range</h6>
         {/* Range Slider Desktop Version */}
         <div className="range-slider-style1">
           <PriceSlider filterFunctions={filterFunctions} />
@@ -117,14 +117,16 @@ const ListingSidebar = ({ filterFunctions }) => {
         */}
       {/* End .widget-wrapper */}
 
-      <div className="widget-wrapper mb20">
-        <div className="btn-area d-grid align-items-center">
-          <button className="ud-btn btn-thm">
-            <span className="flaticon-search align-text-top pr10" />
-            Search
-          </button>
+      {/*
+        <div className="widget-wrapper mb20">
+          <div className="btn-area d-grid align-items-center">
+            <button className="ud-btn btn-thm">
+              <span className="flaticon-search align-text-top pr10" />
+              Search
+            </button>
+          </div>
         </div>
-      </div>
+        */}
       {/* End .widget-wrapper */}
 
       <div className="reset-area d-flex align-items-center justify-content-between">

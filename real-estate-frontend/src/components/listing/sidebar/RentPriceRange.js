@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Slider, { Range } from "rc-slider";
 
-const PriceRange = ({ filterFunctions }) => {
+const RentPriceRange = ({ filterFunctions }) => {
   const [price, setPrice] = useState([20, 70987]);
 
   // price range handler
@@ -11,11 +11,11 @@ const PriceRange = ({ filterFunctions }) => {
   const handleOnChange = (value) => {
     setPrice(value);
 
-    filterFunctions?.handlepriceRange([value[0] || 0, value[1]]);
+    filterFunctions?.handleRentpriceRange([value[0] || 0, value[1]]);
   };
 
   return (
-    <div>
+    <>
       <div className="range-wrapper">
         <Slider
           range
@@ -23,8 +23,8 @@ const PriceRange = ({ filterFunctions }) => {
           max={100000}
           min={0}
           defaultValue={[
-            filterFunctions?.priceRange[0],
-            filterFunctions?.priceRange[1],
+            filterFunctions?.rantPriceRange[0],
+            filterFunctions?.rantPriceRange[1],
           ]}
           onChange={(value) => handleOnChange(value)}
           id="slider"
@@ -35,8 +35,8 @@ const PriceRange = ({ filterFunctions }) => {
           <span id="slider-range-value2">₹{price[1]}</span>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default PriceRange;
+export default RentPriceRange;
