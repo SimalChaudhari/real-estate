@@ -2,15 +2,13 @@
 // import axiosInstance from '@/config/axiosInstance';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Cookies from "js-cookie";
+import axiosInstance from '../config';
 
-const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://real-estate-nine-livid.vercel.app';
+// const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://real-estate-nine-livid.vercel.app';
+const baseURL =  'http://localhost:5000';
 
-const axiosInstance = axios.create({
-    baseURL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
+const token = Cookies.get("token");
 
 
 /**
@@ -96,23 +94,29 @@ export const GetById = async (id) => {
     }
 };
 
+
 /**
  * Create a new property listing.
- * @param {Object} propertyData - The data of the property to be created.
+ * @param {Object} propertyData - The data of the property to be created, including files (images).
  * @returns {Object} - The response containing the created property or an error message.
  */
 export const CreateProperty = async (propertyData) => {
     try {
-        const response = await axiosInstance.post(
-            '/api/properties-listing/create',
-            propertyData
+        // Update headers for FormData
+        const response = await axiosInstance.post('/api/properties-listing/create',
+            propertyData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}`,
+                },
+            }
         );
-
         // Clear existing toasts
         toast.dismiss();
-
         // Show success toast notification
-        toast.success('Property listing created successfully!');
+        if(response?.data?.message){
+            toast.success('Property listing created successfully!');
+        }
 
         // Return success response
         return {
@@ -135,7 +139,6 @@ export const CreateProperty = async (propertyData) => {
         // Show error toast notification
         toast.error(errorMessage);
 
-        console.error('Error creating property listing:', errorMessage);
 
         // Return error response
         return {
@@ -145,4 +148,5 @@ export const CreateProperty = async (propertyData) => {
         };
     }
 };
+
 

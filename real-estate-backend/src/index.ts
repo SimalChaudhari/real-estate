@@ -22,6 +22,9 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.json({ limit: '50mb' })); // JSON body ke liye 50MB ka limit set karein
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // URL encoded data ke liye bhi limit set karein
+
 
 app.use(express.json());
 

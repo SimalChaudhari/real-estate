@@ -7,13 +7,20 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLocationFailure, fetchLocationsStart, fetchLocationsSuccess } from "@/app/features/locationsSlice";
 import { GetLocationList } from "@/services/listing/locationApi";
+import { CreateProperty } from "@/services/listing/listingApi";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const AddPropertyTabContentCustomer = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [uploadedImagesForData, setUploadedImagesForData] = useState([]);
   const [imageError, setImageError] = useState(null);
+  const [filteredCities, setFilteredCities] = useState([]);
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
 
+  // Fetch token from cookies
+  const token = Cookies.get("token");
 
   useEffect(() => {
     // Fetch locations on component mount
@@ -32,33 +39,52 @@ const AddPropertyTabContentCustomer = () => {
   const { location, loading } = useSelector((state) => state.location);
 
   // Extracting city data dynamically from the Redux store
-  const citiesOptions = location?.cities?.map((city) => ({
-    value: city.id,
-    label: city.name,
-  })) || [];
+  // const citiesOptions = location?.cities?.map((city) => ({
+  //   value: city.id,
+  //   label: city.name,
+  // })) || [];
 
   // Extracting city data dynamically from the Redux store
   const statessOptions = location?.cities
     ?.reduce((uniqueStates, city) => {
-      if (!uniqueStates.some((state) => state.value === city.stateId)) {
+      if (!uniqueStates.some((state) => state.value === city.stateId._id)) {
         uniqueStates.push({
-          value: city.stateId,
-          label: city.stateName || city.name, // Use appropriate key for state name
+          value: city.stateId._id, // Ensure unique identifier
+          label: city.stateId.name, // State name
         });
       }
       return uniqueStates;
     }, []) || [];
 
-
-
-
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     control,
     formState: { errors },
+    reset, // Include reset here
   } = useForm({ mode: "onSubmit" });
+
+
+  // Watch state selection
+  const selectedState = watch("state");
+
+  useEffect(() => {
+    // Filter cities based on selected state
+    if (selectedState) {
+      const cities = location?.cities?.filter(
+        (city) => city.stateId._id === selectedState.value
+      );
+      const citiesOptions = cities.map((city) => ({
+        value: city.id,
+        label: city.name,
+      }));
+      setFilteredCities(citiesOptions);
+    } else {
+      setFilteredCities([]);
+    }
+  }, [selectedState, location]);
 
   const categoryOptions = [
     { value: "Apartments", label: "Apartments" },
@@ -69,7 +95,17 @@ const AddPropertyTabContentCustomer = () => {
     { value: "Townhome", label: "Townhome" },
     { value: "Villa", label: "Villa" },
   ];
+  const tagsOptions = [
+    { value: "apartments", label: "apartments" },
+    { value: "bungalow", label: "bungalow" },
+    { value: "houses", label: "houses" },
+    { value: "loft", label: "loft" },
+    { value: "office", label: "office" },
+    { value: "townhome", label: "townhome" },
+    { value: "villa", label: "villa" },
+  ];
   const listedIn = [
+    { value: "Buy", label: "Buy" },
     { value: "Rent", label: "Rent" },
     { value: "Sold", label: "Sold" },
   ];
@@ -83,19 +119,6 @@ const AddPropertyTabContentCustomer = () => {
 
   const Countries = [
     { value: "India", label: "India" },
-  ];
-
-  const Cities = [
-    { value: "CHIKKAMAGALURU", label: "CHIKKAMAGALURU" },
-    { value: "BANGALORE", label: "BANGALORE" },
-    { value: "SAKLESHPURA", label: "SAKLESHPURA" },
-    { value: "MADIKERI", label: "MADIKERI" },
-    { value: "MANGALORE", label: "MANGALORE" },
-    { value: "UDUPI", label: "UDUPI" }
-  ];
-
-  const States = [
-    { value: "Karnataka", label: "Karnataka" }
   ];
 
   const AmenitiesData = [
@@ -144,21 +167,30 @@ const AddPropertyTabContentCustomer = () => {
     setImageError(null); // Reset error
 
     const validFormats = ["image/jpeg", "image/png"];
-    const newImages = [...uploadedImages];
+    const newImages = [];
+
+    const newImagesView = [...uploadedImages];
+
+    for (const file of files) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        newImagesView.push(e.target.result);
+        setUploadedImages(newImagesView);
+      };
+      reader.readAsDataURL(file);
+    }
 
     for (const file of files) {
       if (!validFormats.includes(file.type)) {
         setImageError("Only JPEG and PNG formats are allowed.");
         continue;
       }
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        newImages.push(e.target.result);
-        setUploadedImages(newImages);
-      };
-      reader.readAsDataURL(file);
+      // Store only the File object
+      newImages.push(file);
     }
+    setUploadedImagesForData((prevImages) => [...prevImages, ...newImages]);
   };
+
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -176,41 +208,86 @@ const AddPropertyTabContentCustomer = () => {
   };
 
   const handleDelete = (index) => {
-    const newImages = [...uploadedImages];
+    const newImages = [...uploadedImagesForData];
     newImages.splice(index, 1);
-    setUploadedImages(newImages);
+    setUploadedImagesForData(newImages);
+
+    const newImagesView = [...uploadedImages];
+    newImagesView.splice(index, 1);
+    setUploadedImages(newImagesView);
   };
 
-  const handleFormSubmit = (data) => {
-    if (uploadedImages.length === 0) {
+  const handleFormSubmit = async (data) => {
+    if (uploadedImagesForData.length === 0) {
       setImageError("At least one image is required.");
       return;
     }
+    // Ensure start_date is properly formatted
+    const currentDate = new Date("2024-01-01T00:00:00.000Z");
+    const formattedDate = currentDate.toISOString(); // Converts to 'YYYY-MM-DDTHH:mm:ss.sssZ'
 
-    console.log("Form Data Submitted:", {
-      ...data,
-      uploadedImages,
+
+    const formData = new FormData();
+
+    // Convert uploaded images to base64 or pass File objects directly
+    uploadedImagesForData.forEach((file) => {
+      formData.append("images", file); // Append File objects
     });
 
-    const formattedData = {
-      title: data.title,
-      description: data.description,
-      street_address: data.address,
-      price: data.budget,
-      price: data.budget,
-      bed: data.bedroom,
-      bath: data.bathroom,
-      features: data.tag?.map((tag) => tag.value) || [],
-      uploadedImages: data.uploadedImages?.map((data) => data) || [],
-      city: data.city?.value || "",
-      state: data.state?.value || "",
-      lat: data.latitude,
-      long: data.longiTude,
-      yearBuilding: data.yearbuilding,
-    };
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("status", "Buy");
+    formData.append("rent_price", data.price);
+    formData.append("sale_price", data.price);
+    formData.append("street_address", data.address);
+    formData.append("city", data.city?.value || "");
+    formData.append("state", data.state?.value || "");
+    formData.append("zip_code", data.zipcode || "");
+    formData.append("lat", Number(data.latitude)); // Convert to number
+    formData.append("long", Number(data.longiTude)); // Convert to number
+    formData.append("bed", Number(data.bedroom)); // Convert to number
+    formData.append("bath", Number(data.bathroom)); // Convert to number
+    formData.append("sqft", Number(data.square)); // Convert to number
+    formData.append("propertyType", data.category?.value);
+    formData.append("yearBuilding", Number(data.yearbuilding)); // Convert to number
+    formData.append("forRent", true);
+    formData.append("featured", true);
+    formData.append("start_date", formattedDate);
+    // formData.append("images", JSON.stringify(dummyImages));
 
-    console.log("Formatted Data:", formattedData);
+    // Append features individually
+    data.features?.forEach((feature) => {
+      formData.append("features", feature.value);
+    });
+
+    // Append tags individually
+    data.tags?.forEach((tag) => {
+      formData.append("tags", tag.value);
+    });
+
+
+    if (!token) {
+      toast.error("Please log in to upload property.");
+      return;
+    }
+
+    try {
+      const response = await dispatch(CreateProperty(formData));
+
+      if (response.success) {
+        toast.success(response.message);
+
+        reset(); // Clear all fields in the form
+        setUploadedImages([]); // Clear uploaded image previews
+        setUploadedImagesForData([]); // Clear uploaded image data
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred.");
+    }
   };
+
 
   return (
     <div>
@@ -386,32 +463,6 @@ const AddPropertyTabContentCustomer = () => {
                   </div>
                   {/* End .col-6 */}
 
-
-                  <div className="col-sm-6 col-xl-4">
-                    <div className="mb20">
-                      <label className="heading-color ff-heading fw600 mb10">
-                        Cities
-                      </label>
-                      <div className="location-area">
-                        <Controller
-                          name="city"
-                          control={control}
-                          rules={{ required: "City is required" }}
-                          render={({ field }) => (
-                            <Select {...field} options={citiesOptions} styles={customStyles}
-
-                              className={`select-custom pl-0 ${errors.city ? "is-invalid" : ""}`}
-                              classNamePrefix="select"
-                            />
-                          )}
-                        />
-                        {errors.city && <p className="text-danger">{errors.city.message}</p>}
-
-                      </div>
-                    </div>
-                  </div>
-                  {/* End .col-6 */}
-
                   <div className="col-sm-6 col-xl-4">
                     <div className="mb20">
                       <label className="heading-color ff-heading fw600 mb10">
@@ -431,6 +482,31 @@ const AddPropertyTabContentCustomer = () => {
                           )}
                         />
                         {errors.state && <p className="text-danger">{errors.state.message}</p>}
+
+                      </div>
+                    </div>
+                  </div>
+                  {/* End .col-6 */}
+
+                  <div className="col-sm-6 col-xl-4">
+                    <div className="mb20">
+                      <label className="heading-color ff-heading fw600 mb10">
+                        Cities
+                      </label>
+                      <div className="location-area">
+                        <Controller
+                          name="city"
+                          control={control}
+                          rules={{ required: "City is required" }}
+                          render={({ field }) => (
+                            <Select {...field} options={filteredCities} styles={customStyles}
+
+                              className={`select-custom pl-0 ${errors.city ? "is-invalid" : ""}`}
+                              classNamePrefix="select"
+                            />
+                          )}
+                        />
+                        {errors.city && <p className="text-danger">{errors.city.message}</p>}
 
                       </div>
                     </div>
@@ -463,23 +539,49 @@ const AddPropertyTabContentCustomer = () => {
                   <div className="col-sm-6 col-xl-4">
                     <div className="mb20">
                       <label className="heading-color ff-heading fw600 mb10">
+                        Features
+                      </label>
+                      <div className="location-area">
+
+                        <Controller
+                          name="features"
+                          control={control}
+                          rules={{ required: "Features Are required" }}
+                          render={({ field }) => (
+                            <Select {...field} options={AmenitiesData} styles={customStyles}
+                              isMulti
+                              className={`select-custom pl-0 ${errors.features ? "is-invalid" : ""}`}
+                              classNamePrefix="select"
+                            />
+                          )}
+                        />
+                        {errors.features && <p className="text-danger">{errors.features.message}</p>}
+
+                      </div>
+                    </div>
+                  </div>
+                  {/* End .col-6 */}
+
+                  <div className="col-sm-6 col-xl-4">
+                    <div className="mb20">
+                      <label className="heading-color ff-heading fw600 mb10">
                         Tags
                       </label>
                       <div className="location-area">
 
                         <Controller
-                          name="tag"
+                          name="tags"
                           control={control}
                           rules={{ required: "Tags Are required" }}
                           render={({ field }) => (
-                            <Select {...field} options={AmenitiesData} styles={customStyles}
+                            <Select {...field} options={tagsOptions} styles={customStyles}
                               isMulti
-                              className={`select-custom pl-0 ${errors.tag ? "is-invalid" : ""}`}
+                              className={`select-custom pl-0 ${errors.tags ? "is-invalid" : ""}`}
                               classNamePrefix="select"
                             />
                           )}
                         />
-                        {errors.tag && <p className="text-danger">{errors.tag.message}</p>}
+                        {errors.tags && <p className="text-danger">{errors.tags.message}</p>}
 
                       </div>
                     </div>
@@ -599,7 +701,7 @@ const AddPropertyTabContentCustomer = () => {
                                 />
                                 <button
                                   style={{ border: "none" }}
-                                  className="tag-del"
+                                  className="features-del"
                                   title="Delete Image"
                                   onClick={() => handleDelete(index)}
                                   type="button"

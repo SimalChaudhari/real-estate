@@ -81,7 +81,7 @@ const ProSidebarContent = () => {
             <a className="list-item" href="#">
               <span className={topMenu == "home" ? "title menuActive" : "title"}>
                 <Link className={`${handleActive('/list-v1')}`} href="/list-v1">
-                  Listing
+                  Properties
                 </Link>
               </span>
             </a>
@@ -90,8 +90,8 @@ const ProSidebarContent = () => {
           <li className="visible_list dropitem py-2 active">
             <a className="list-item" href="#">
               <span className={topMenu == "home" ? "title menuActive" : "title"}>
-                <Link className={`${handleActive('/about')}`} href="/about">
-                  About
+                <Link className={`${handleActive('/add-property')}`} href="/add-property">
+                  Post Properties
                 </Link>
               </span>
             </a>
@@ -100,8 +100,8 @@ const ProSidebarContent = () => {
           <li className="visible_list dropitem py-2 active">
             <a className="list-item" href="#">
               <span className={topMenu == "home" ? "title menuActive" : "title"}>
-                <Link className={`${handleActive('/contact')}`} href="/contact">
-                  Contact Us
+                <Link className={`${handleActive('/requirement-property')}`} href="/requirement-property">
+                  Post Requirement
                 </Link>
               </span>
             </a>
@@ -111,7 +111,17 @@ const ProSidebarContent = () => {
             <a className="list-item" href="#">
               <span className={topMenu == "home" ? "title menuActive" : "title"}>
                 <Link className={`${handleActive('/faq')}`} href="/faq">
-                  Faq
+                  Our Services
+                </Link>
+              </span>
+            </a>
+          </li>
+
+          <li className="visible_list dropitem py-2 active">
+            <a className="list-item" href="#">
+              <span className={topMenu == "home" ? "title menuActive" : "title"}>
+                <Link className={`${handleActive('/faq')}`} href="/faq">
+                Find Properties
                 </Link>
               </span>
             </a>

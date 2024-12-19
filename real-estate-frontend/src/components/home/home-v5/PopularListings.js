@@ -72,6 +72,18 @@ const PopularListings = ({ data }) => {
                   {/*
                     {listing.price} / <span>mo</span>
                     */}
+                    {
+                      listing.availability.forRent ? (
+                        <>
+                          ₹{listing.price.rent} <span>mo</span>
+                        </>
+                      ) : (
+                        <>
+                          ₹{listing.price.sale} <span>mo</span>
+                        </>
+                      )
+                    }
+                    
                   </div>
                 </div>
                 <div className="list-content">
@@ -81,7 +93,11 @@ const PopularListings = ({ data }) => {
                     <Link href="/map-v3">{listing.title}</Link>
                     */}
                   </h6>
-                  <p className="list-text">{listing.location}</p>
+                  {/*
+                    <p className="list-text">{listing.location}</p>
+                    */}
+                    
+                    <p className="list-text">{listing.address.street_address}, {listing.address.city}, {listing.address.state} </p>
                   <div className="list-meta d-flex align-items-center">
                     <a href="#">
                       <span className="flaticon-bed" /> {listing.bed} bed

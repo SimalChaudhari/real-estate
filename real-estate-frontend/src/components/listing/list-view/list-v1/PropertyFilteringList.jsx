@@ -33,7 +33,7 @@ export default function PropertyFilteringList() {
         const data = await GetList(); // Call the GetList function
         if (data.success) {
           setListings2(data.data || []); // Update local state
-          console.log('Fetched Listings:', data.data); // Debugging
+          // console.log('Fetched Listings:', data.data); // Debugging
           dispatch(fetchListingsSuccess(data.data || [])); // Dispatch to Redux
         } else {
           console.error("Error in fetching data:", data.message);

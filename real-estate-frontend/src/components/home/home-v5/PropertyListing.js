@@ -11,16 +11,15 @@ export default function PropertyListing() {
 
   const listingsData = useSelector((state) => state.listings?.listings);
 
-
   const [pageData, setPageData] = useState([])
   const [currentType, setCurrentType] = useState('rent')
   useEffect(() => {
     if (currentType == 'rent') {
-      const filtered = listingsData.filter((elm) => elm.forRent)
+      const filtered = listingsData.filter((elm) => elm.availability.forRent)
       setPageData(filtered)
 
     } else {
-      const filtered = listingsData.filter((elm) => !elm.forRent)
+      const filtered = listingsData.filter((elm) => !elm.availability.forRent)
       setPageData(filtered)
 
     }

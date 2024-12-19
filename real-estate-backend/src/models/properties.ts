@@ -2,40 +2,57 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 // Enum for Features
 export enum Features {
+  ATTIC = "Attic",
+  BASKETBALL_COURT = "Basketball court",
   AIR_CONDITIONING = "Air Conditioning",
   LAWN = "Lawn",
+  SWIMMING_POOL = "Swimming Pool",
+  BARBEQUE = "Barbeque",
+  MICROWAVE = "Microwave",
   TV_CABLE = "TV Cable",
   DRYER = "Dryer",
   OUTDOOR_SHOWER = "Outdoor Shower",
   WASHER = "Washer",
+  GYM = "Gym",
+  OCEAN_VIEW = "Ocean view",
+  PRIVATE_SPACE = "Private space",
   LAKE_VIEW = "Lake view",
   WINE_CELLAR = "Wine cellar",
   FRONT_YARD = "Front yard",
   REFRIGERATOR = "Refrigerator",
-  ATTIC = "Attic",
-  BASKETBALL_COURT = "Basketball court",
+  WIFI = "WiFi",
+  LAUNDRY = "Laundry",
+  SAUNA = "Sauna",
 }
 
 // Enum for Tags
 export enum Tags {
-  HOUSE = "house",
-  VILLA = "villa",
   APARTMENTS = "apartments",
+  BUNGALOW = "bungalow",
+  HOUSES = "houses",
+  LOFT = "loft",
   OFFICE = "office",
+  TOWNHOME = "townhome",
+  VILLA = "villa",
 }
 
 // Enum for Property Types
 export enum PropertyType {
-  HOUSES = "Houses",
-  VILLA = "Villa",
   APARTMENTS = "Apartments",
+  BUNGALOW = "Bungalow",
+  HOUSES = "Houses",
+  LOFT = "Loft",
   OFFICE = "Office",
+  TOWNHOME = "Townhome",
+  VILLA = "Villa",
 }
 
 
 // Property Status Enum
 export enum Status {
   AVAILABLE = "Available",
+  BUY = "Buy",
+  RENT = "Rent",
   SOLD = "Sold",
   PENDING = "Pending"
 }
