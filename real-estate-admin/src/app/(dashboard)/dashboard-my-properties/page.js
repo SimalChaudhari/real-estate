@@ -1,17 +1,19 @@
+"use client"
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
-import Pagination from "@/components/property/Pagination";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
-
 import PropertyDataTable from "@/components/property/dashboard/dashboard-my-properties/PropertyDataTable";
-import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
+import { useRouter } from "next/navigation";
 
-export const metadata = {
-  title: "Dashboard Properties || Homez - Real Estate NextJS Template",
-};
 
 const DashboardMyProperties = () => {
+
+  const router = useRouter();
+
+  const navigateToNewUser = () => {
+    router.push("/dashboard-property-create");
+  };
   return (
     <div>
       {/* Main Header Nav */}
@@ -29,37 +31,34 @@ const DashboardMyProperties = () => {
           {/* End .dashboard__sidebar */}
 
           <div className="dashboard__main pl0-md">
-            <div className="dashboard__content bgc-f7">
-              <div className="row pb40">
-                <div className="col-lg-12">
-                  <DboardMobileNavigation />
+          <div className="dashboard__content bgc-f7">
+            <div className="row">
+              <div className="col-xl-12">
+                <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+        
+                  <div className="d-flex justify-content-end pb10 mb10">
+                  <div className="d-flex justify-content-end pb10 mb10">
+                  <button 
+                    className="btn btn-warning d-flex align-items-center ud-btn btn-dark" 
+                    style={{ backgroundColor: "black", color: "white", border: "none" }}
+                    onClick={navigateToNewUser}
+                  >
+                  Create
+                  <i className="fal fa-arrow-right-long" />
+                </button>
                 </div>
-                {/* End .col-12 */}
-              </div>
-              {/* End .row */}
-
-    
-              {/* End .row */}
-
-              <div className="row">
-                <div className="col-xl-12">
-                  <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                    <div className="packages_table table-responsive">
-                      <PropertyDataTable />
-
-                      <div className="mt30">
-                        <Pagination />
-                      </div>
-                    </div>
+                
+                  </div>
+        
+                  <div className="packages_table table-responsive">
+                    <PropertyDataTable />
                   </div>
                 </div>
               </div>
-              {/* End .row */}
             </div>
-            {/* End .dashboard__content */}
-
-            <Footer />
           </div>
+          <Footer />
+        </div>
           {/* End .dashboard__main */}
         </div>
       </div>

@@ -35,7 +35,7 @@ connectToMongoDB();
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/location', locationRoutes);
-app.use('/api/properties-listing', propertyListingRoutes);
+app.use('/api/properties', propertyListingRoutes);
 app.use('/api/agent', agentRoutes);
 
 app.use(errorHandler);

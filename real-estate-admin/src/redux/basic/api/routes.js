@@ -13,6 +13,10 @@ const API_ROUTES = {
     PROPERTIES: {
       LIST: "/properties",
       CREATE: "/properties/create",
+      UPDATE:  (id) => `/properties/update/${id}`,
+      DELETE : (id) => `/properties/delete/${id}`,
+      GET_ID : (id) => `/properties/${id}`
+
     },
     // Add other routes here
   };

@@ -22,7 +22,7 @@ const LocationField = () => {
 
         <SelectMulitField />
 
-        <div className="col-sm-6 col-xl-4">
+        <div className="col-sm-6 col-xl-3">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">Zip</label>
             <input type="text" className="form-control" />
@@ -30,18 +30,7 @@ const LocationField = () => {
         </div>
         {/* End col-4 */}
 
-        <div className="col-sm-6 col-xl-4">
-          <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">
-              Neighborhood
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Neighborhood"
-            />
-          </div>
-        </div>
+      
         {/* End col-4 */}
 
         <div className="col-sm-12">

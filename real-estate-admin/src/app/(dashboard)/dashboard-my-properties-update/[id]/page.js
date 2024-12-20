@@ -1,15 +1,15 @@
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
+import PropertyEditForm from "@/components/property/dashboard/dashboard-property/UpdatePropertyData";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
-import AddPropertyTabContent from "@/components/property/dashboard/dashboard-add-property";
 
 export const metadata = {
   title: "Dashboard Add Property || Homez - Real Estate NextJS Template",
 };
 
-const DashboardAddProperty = () => {
+const DashboardPropertyCreate = () => {
   return (
     <>
       {/* Main Header Nav */}
@@ -36,10 +36,10 @@ const DashboardAddProperty = () => {
               </div>
               {/* End .row */}
 
-              <div className="row align-items-center pb10">
+              <div className="row align-items-center pb40">
                 <div className="col-lg-12">
                   <div className="dashboard_title_area">
-                    <h2>Add New Property</h2>
+                    <h2>Edit Property</h2>
                     <p className="text">We are glad to see you again!</p>
                   </div>
                 </div>
@@ -50,7 +50,8 @@ const DashboardAddProperty = () => {
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30 mb30 overflow-hidden position-relative">
                     <div className="navtab-style1">
-                      <AddPropertyTabContent />
+                      <PropertyEditForm/>
+                       {/*<EditPropertyForm Property={Property} /> */}
                     </div>
                   </div>
                 </div>
@@ -69,4 +70,4 @@ const DashboardAddProperty = () => {
   );
 };
 
-export default DashboardAddProperty;
+export default DashboardPropertyCreate;

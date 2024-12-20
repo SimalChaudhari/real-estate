@@ -72,7 +72,7 @@ const PropertyDescription = () => {
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Select Category
+            Property Type
             </label>
             <div className="location-area">
               <Select
@@ -93,7 +93,7 @@ const PropertyDescription = () => {
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Listed in
+             Tags
             </label>
             <div className="location-area">
               <Select
@@ -132,10 +132,10 @@ const PropertyDescription = () => {
         </div>
         {/* End .col-6 */}
 
-        <div className="col-sm-6 col-xl-4">
+        <div className="col-sm-6 col-xl-6">
           <div className="mb30">
             <label className="heading-color ff-heading fw600 mb10">
-              Price in $
+              Salling Price 
             </label>
             <input
               type="text"
@@ -146,10 +146,10 @@ const PropertyDescription = () => {
         </div>
         {/* End .col-6 */}
 
-        <div className="col-sm-6 col-xl-4">
+        <div className="col-sm-6 col-xl-6">
           <div className="mb30">
             <label className="heading-color ff-heading fw600 mb10">
-              Yearly Tax Rate
+           Rent Price
             </label>
             <input
               type="text"
@@ -160,18 +160,6 @@ const PropertyDescription = () => {
         </div>
         {/* End .col-6 */}
 
-        <div className="col-sm-6 col-xl-4">
-          <div className="mb30">
-            <label className="heading-color ff-heading fw600 mb10">
-              After Price Label
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Your Name"
-            />
-          </div>
-        </div>
         {/* End .col-6 */}
       </div>
     </form>

@@ -2,10 +2,11 @@ import Cookies from "js-cookie";
 import { toast } from 'react-toastify'; // Adjust the path if needed
 import axiosInstance from "../basic/config/axiosInstance";
 import { handleApiError } from "../basic/errorHandling/errorhandler";
+import API_ROUTES from "../basic/api/routes";
 
 export const authLogin = (data) => async (dispatch) => {
   try {
-    const response = await axiosInstance.post("/auth/login", data);
+    const response = await axiosInstance.post(API_ROUTES.AUTH.LOGIN, data);
     // Validate response structure
     const token = response?.data?.access_token;
     const user = response?.data?.user;

@@ -5,7 +5,7 @@ import { createListing, deleteListing, getListingById, getListings, updateListin
 
 const router = express.Router();
 
-router.get('/get', getListings);
+router.get('/', getListings);
 router.get('/:id', getListingById);
 router.post('/create', upload, authenticateUser, createListing);
 router.put('/update/:id', upload, updateListing);
