@@ -113,3 +113,10 @@ export const pageItems = [
   { href: "/not-found", label: "404" },
   { href: "/invoice", label: "Invoice" },
 ];
+
+export const OurServiceItems = [
+  { href: "/real-estate-agent", label: "Real Estate Agent" },
+  { href: "/buying-property", label: "Buying Property" },
+  { href: "/sell-property", label: "Sell Property" },
+  { href: "/rental-property", label: "Rental Property" },
+];

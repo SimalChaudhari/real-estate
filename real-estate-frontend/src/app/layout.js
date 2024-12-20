@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import StoreProvider from "./StoreProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import store from "@/redux/store";
+import { Provider } from "react-redux";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -45,14 +47,12 @@ export default function RootLayout({ children }) {
         cz-shortcut-listen="false"
       >
         <div className="wrapper ovh">
-          <ScrollToTop />
           <StoreProvider>
             <ToastContainer />
             {children}
           </StoreProvider>
-          <ScrollToTop />
         </div>
-
+        <ScrollToTop />
       </body>
     </html>
   );

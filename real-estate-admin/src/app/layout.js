@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
-}import { Provider } from 'react-redux';
+} import { Provider } from 'react-redux';
 import store from "@/redux/store";
 import { ToastContainer } from "react-toastify";
 
@@ -44,10 +44,10 @@ export default function RootLayout({ children }) {
         className={`body  ${poppins.variable} ${dmSans.variable}`}
         cz-shortcut-listen="false"
       >
-        <div className="wrapper ovh">  
-        <Provider store={store}>
-              <ToastContainer />
-              {children}
+        <div className="wrapper ovh">
+          <Provider store={store}>
+            <ToastContainer />
+            {children}
           </Provider>
         </div>
         <ScrollToTop />

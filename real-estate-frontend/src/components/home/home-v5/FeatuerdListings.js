@@ -1,4 +1,5 @@
 "use client";
+import { useFetchData } from "@/app/api/fetch-list";
 import { fetchListingsFailure, fetchListingsStart, fetchListingsSuccess } from "@/app/features/listingsSlice";
 import { GetList } from "@/services/listing/listingApi";
 // import listings from "@/data/listings";
@@ -35,6 +36,13 @@ const FeaturedListings = () => {
 
     fetchListings();
   }, []);
+
+
+  const { fetchData } = useFetchData()
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   if (loading) {
     return <div>Loading featured listings...</div>;

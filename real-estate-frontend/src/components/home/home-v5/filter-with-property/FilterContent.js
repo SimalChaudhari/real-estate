@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { fetchLocationFailure, fetchLocationsStart, fetchLocationsSuccess } from "@/app/features/locationsSlice";
 import { GetLocationList } from "@/services/listing/locationApi";
 import Area from "./Area";
+import { useFetchLocationData } from "@/app/api/fetch-location";
 
 const FilterContent = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,13 @@ const FilterContent = () => {
     };
     fetchLocations();
   }, [dispatch]);
+
+  
+  const { fetchLocationData } = useFetchLocationData()
+
+  useEffect(() => {
+    fetchLocationData()
+  }, [])
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);

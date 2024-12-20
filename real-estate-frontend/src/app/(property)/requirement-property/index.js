@@ -1,4 +1,5 @@
 "use client";
+import { useFetchLocationData } from "@/app/api/fetch-location";
 import { fetchLocationFailure, fetchLocationsStart, fetchLocationsSuccess } from "@/app/features/locationsSlice";
 import { GetLocationList } from "@/services/listing/locationApi";
 import { useEffect } from "react";
@@ -34,34 +35,31 @@ const RequirementPropertyTabContentCustomer = () => {
         fetchLocations();
     }, [dispatch]);
 
+    
+      const { fetchLocationData } = useFetchLocationData()
+    
+      useEffect(() => {
+        fetchLocationData()
+      }, [])
+    
+
     const { location, loading } = useSelector((state) => state.location);
 
-    // console.log('====================================');
-    // console.log("location :", location);
-    // console.log('====================================');
-    // Extracting city data dynamically from the Redux store
     const citiesOptions = location?.cities?.map((city) => ({
         value: city.id,
         label: city.name,
     })) || [];
 
-    // console.log('====================================');
-    // console.log("citiesOptions :", citiesOptions);
-    // console.log('====================================');
-    // Extracting city data dynamically from the Redux store
     const statessOptions = location?.cities
         ?.reduce((uniqueStates, city) => {
             if (!uniqueStates.some((state) => state.value === city.stateId)) {
                 uniqueStates.push({
                     value: city.stateId,
-                    label: city.stateName || city.name, // Use appropriate key for state name
+                    label: city.stateName || city.name, 
                 });
             }
             return uniqueStates;
         }, []) || [];
-        // console.log('====================================');
-        // console.log("statessOptions :", statessOptions);
-        // console.log('====================================');
 
     const categoryOptions = [
         { value: "Apartments", label: "Apartments" },

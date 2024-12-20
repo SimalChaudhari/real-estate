@@ -11,6 +11,7 @@ import {
   listingItems,
   propertyItems,
   pageItems,
+  OurServiceItems,
 } from "@/data/navItems";
 
 const ProSidebarContent = () => {
@@ -21,9 +22,14 @@ const ProSidebarContent = () => {
   const [activeLink, setActiveLink] = useState("");
 
   useEffect(() => {
-    homeItems.forEach((elm) => {
+    // homeItems.forEach((elm) => {
+    //   if (elm.href.split("/")[1] == pathname.split("/")[1]) {
+    //     setTopMenu("home");
+    //   }
+    // });
+    OurServiceItems.forEach((elm) => {
       if (elm.href.split("/")[1] == pathname.split("/")[1]) {
-        setTopMenu("home");
+        setTopMenu("home2");
       }
     });
     blogItems.forEach((elm) => {
@@ -130,53 +136,53 @@ const ProSidebarContent = () => {
         </ul>
 
 
-
+        
+        {mobileMenuItems.map((item, index) => (
+          <SubMenu
+            key={index}
+            className={isParentActive(item.subMenu, path) ? "active" : ""}
+            label={item.label}
+          >
+            {item.subMenu.map((subItem, subIndex) =>
+              subItem.subMenu ? (
+                <SubMenu
+                  key={subIndex}
+                  label={subItem.label}
+                  className={
+                    isParentActive(subItem.subMenu, path) ? "active" : ""
+                  }
+                >
+                  {subItem.subMenu.map((nestedItem, nestedIndex) => (
+                    <MenuItem
+                      key={nestedIndex}
+                      component={
+                        <Link
+                          className={nestedItem.path == path ? "active" : ""}
+                          href={nestedItem.path}
+                        />
+                      }
+                    >
+                      {nestedItem.label}
+                    </MenuItem>
+                  ))}
+                </SubMenu>
+              ) : (
+                <MenuItem
+                  key={subIndex}
+                  component={
+                    <Link
+                      className={subItem.path == path ? "active" : ""}
+                      href={subItem.path}
+                    />
+                  }
+                >
+                  {subItem.label}
+                </MenuItem>
+              )
+            )}
+          </SubMenu>
+        ))}
         {/*
-          {mobileMenuItems.map((item, index) => (
-            <SubMenu
-              key={index}
-              className={isParentActive(item.subMenu, path) ? "active" : ""}
-              label={item.label}
-            >
-              {item.subMenu.map((subItem, subIndex) =>
-                subItem.subMenu ? (
-                  <SubMenu
-                    key={subIndex}
-                    label={subItem.label}
-                    className={
-                      isParentActive(subItem.subMenu, path) ? "active" : ""
-                    }
-                  >
-                    {subItem.subMenu.map((nestedItem, nestedIndex) => (
-                      <MenuItem
-                        key={nestedIndex}
-                        component={
-                          <Link
-                            className={nestedItem.path == path ? "active" : ""}
-                            href={nestedItem.path}
-                          />
-                        }
-                      >
-                        {nestedItem.label}
-                      </MenuItem>
-                    ))}
-                  </SubMenu>
-                ) : (
-                  <MenuItem
-                    key={subIndex}
-                    component={
-                      <Link
-                        className={subItem.path == path ? "active" : ""}
-                        href={subItem.path}
-                      />
-                    }
-                  >
-                    {subItem.label}
-                  </MenuItem>
-                )
-              )}
-            </SubMenu>
-          ))}
           */}
       </Menu>
     </Sidebar>
