@@ -4,6 +4,7 @@ import {
   listingItems,
   propertyItems,
   pageItems,
+  OurServiceItems,
 } from "@/data/navItems";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -141,12 +142,20 @@ const MainMenu = () => {
 
       <li className="visible_list dropitem">
         <a className="list-item" href="#">
-          <span className={topMenu == "home" ? "title menuActive" : "title"}>
-            <Link className={`${handleActive('/faq')}`} href="/faq">
-              Our Service
-            </Link>
+          <span className={topMenu == "pages" ? "title menuActive" : "title"}>
+            Our Service
           </span>
+          <span className="arrow"></span>
         </a>
+        <ul className="sub-menu">
+          {OurServiceItems.map((item, index) => (
+            <li key={index}>
+              <Link className={`${handleActive(item.href)}`} href={item.href}>
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </li>
 
       <li className="visible_list dropitem">

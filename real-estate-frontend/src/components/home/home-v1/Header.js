@@ -8,6 +8,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/app/features/authSlice";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -40,6 +41,11 @@ const Header = () => {
     dispatch(logout());
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+
+
+    // Clear cookies
+    Cookies.remove("user");
+    Cookies.remove("token");
     alert("You have been logged out.");
   };
 

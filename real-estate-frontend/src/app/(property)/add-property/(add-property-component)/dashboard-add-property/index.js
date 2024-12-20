@@ -10,6 +10,7 @@ import { GetLocationList } from "@/services/listing/locationApi";
 import { CreateProperty } from "@/services/listing/listingApi";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { useFetchLocationData } from "@/app/api/fetch-location";
 
 const AddPropertyTabContentCustomer = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
@@ -35,6 +36,14 @@ const AddPropertyTabContentCustomer = () => {
     };
     fetchLocations();
   }, [dispatch]);
+
+  
+    const { fetchLocationData } = useFetchLocationData()
+  
+    useEffect(() => {
+      fetchLocationData()
+    }, [])
+  
 
   const { location, loading } = useSelector((state) => state.location);
 

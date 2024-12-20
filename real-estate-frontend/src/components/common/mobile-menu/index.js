@@ -6,6 +6,7 @@ import Social from "./Social";
 import ProSidebarContent from "./ProSidebarContent";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/app/features/authSlice";
+import Cookies from "js-cookie";
 
 const MobileMenu = () => {
   const authState = useSelector((state) => state.auth);
@@ -16,6 +17,11 @@ const MobileMenu = () => {
     dispatch(logout());
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+
+    // Clear cookies
+    Cookies.remove("user");
+    Cookies.remove("token");
+
     alert("You have been logged out.");
   };
   return (
