@@ -1,20 +1,42 @@
-import React from "react";
-import MultiSelectField from "./MultiSelectField";
-import StructureType from "./StructureType";
+"use client";
+import React, { useEffect, useState } from "react";
 
-const DetailsFiled = () => {
+const DetailsFiled = ({ data = {}, onUpdate }) => {
+  const [formData, setFormData] = useState({
+    sqft: "",
+    bed: "",
+    bath: "",
+    yearBuilding: "",
+    start_date: "",
+    ...data
+  });
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      ...data, // Update local state when parent data changes
+    }));
+  }, [data]);
+
+  const handleInputChange = (key, value) => {
+    const updatedData = { ...formData, [key]: value };
+    setFormData(updatedData);
+    onUpdate(updatedData); // Notify parent of changes
+  }
   return (
     <form className="form-style1">
       <div className="row">
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Size in Sqft (only numbers)
+              sqft in Sqft (only numbers)
             </label>
             <input
-              type="text"
+              type="number"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Enter sqft in Sqft"
+              value={formData.sqft}
+              onChange={(e) => handleInputChange("sqft", e.target.value)}
             />
           </div>
         </div>
@@ -22,26 +44,29 @@ const DetailsFiled = () => {
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Bedrooms
+              bed
             </label>
             <input
-              type="text"
+              type="number"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Enter number of bed"
+              value={formData.bed}
+              onChange={(e) => handleInputChange("bed", e.target.value)}
             />
           </div>
         </div>
-        {/* End .col-4 */}
 
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Bathrooms
+              bath
             </label>
             <input
-              type="text"
+              type="number"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Enter number of bath"
+              value={formData.bath}
+              onChange={(e) => handleInputChange("bath", e.target.value)}
             />
           </div>
         </div>
@@ -51,10 +76,15 @@ const DetailsFiled = () => {
             <label className="heading-color ff-heading fw600 mb10">
               Year built (numeric)
             </label>
-            <input type="text" className="form-control" />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Enter year built"
+              value={formData.yearBuilding}
+              onChange={(e) => handleInputChange("yearBuilding", e.target.value)}
+            />
           </div>
         </div>
-        {/* End .col-4 */}
 
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
@@ -62,9 +92,10 @@ const DetailsFiled = () => {
               Available from (date)
             </label>
             <input
-              type="text"
+              type="date"
               className="form-control"
-              placeholder="99.aa.yyyy"
+              value={formData.start_date}
+              onChange={(e) => handleInputChange("start_date", e.target.value)}
             />
           </div>
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 
 const options = {
@@ -53,7 +53,19 @@ const customStyles = {
   },
 };
 
-const SelectMultiField = () => {
+const SelectMultiField = ({ onUpdate }) => {
+  const [selectedData, setSelectedData] = useState({
+    countries: [],
+    cities: [],
+    additionalCountries: [],
+  });
+
+  const handleSelectChange = (key, selected) => {
+    const updatedData = { ...selectedData, [key]: selected };
+    setSelectedData(updatedData);
+    onUpdate(updatedData);
+  };
+
   const fieldTitles = ["Country / State", "City", "Country"];
   return (
     <>
@@ -74,6 +86,8 @@ const SelectMultiField = () => {
                   value: item,
                   label: item,
                 }))}
+                value={selectedData[key]}
+                onChange={(selected) => handleSelectChange(key, selected)}
               />
             </div>
           </div>

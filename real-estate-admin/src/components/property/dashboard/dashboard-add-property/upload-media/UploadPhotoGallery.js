@@ -1,11 +1,15 @@
 "use client";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
-const UploadPhotoGallery = () => {
-  const [uploadedImages, setUploadedImages] = useState([]);
+const UploadPhotoGallery = ({ data = [], onUpdate }) => {
+  const [uploadedImages, setUploadedImages] = useState(data);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    setUploadedImages(data); // Initialize with parent-provided data
+  }, [data]);
 
   const handleUpload = (files) => {
     const newImages = [...uploadedImages];
@@ -15,6 +19,7 @@ const UploadPhotoGallery = () => {
       reader.onload = (e) => {
         newImages.push(e.target.result);
         setUploadedImages(newImages);
+        onUpdate(newImages); // Notify parent of changes
       };
       reader.readAsDataURL(file);
     }
@@ -31,14 +36,14 @@ const UploadPhotoGallery = () => {
   };
 
   const handleButtonClick = () => {
-    // Programmatically trigger the hidden file input
-    fileInputRef.current.click();
+    fileInputRef.current.click(); // Programmatically trigger the hidden file input
   };
 
   const handleDelete = (index) => {
     const newImages = [...uploadedImages];
     newImages.splice(index, 1);
     setUploadedImages(newImages);
+    onUpdate(newImages); // Notify parent of changes
   };
 
   return (
@@ -55,18 +60,22 @@ const UploadPhotoGallery = () => {
         <p className="text mb25">
           Photos must be JPEG or PNG format and at least 2048x768
         </p>
-        <label className="ud-btn btn-white">
+        <button
+          type="button"
+          className="ud-btn btn-white"
+          onClick={handleButtonClick}
+        >
           Browse Files
-          <input
-            ref={fileInputRef}
-            id="fileInput"
-            type="file"
-            multiple
-            className="ud-btn btn-white"
-            onChange={(e) => handleUpload(e.target.files)}
-            style={{ display: "none" }}
-          />
-        </label>
+        </button>
+        <input
+          ref={fileInputRef}
+          id="fileInput"
+          type="file"
+          multiple
+          accept="image/jpeg, image/png"
+          className="d-none"
+          onChange={(e) => handleUpload(e.target.files)}
+        />
       </div>
 
       {/* Display uploaded images */}
@@ -91,7 +100,6 @@ const UploadPhotoGallery = () => {
               >
                 <span className="fas fa-trash-can" />
               </button>
-
               <ReactTooltip
                 id={`delete-${index}`}
                 place="right"

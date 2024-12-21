@@ -27,13 +27,10 @@ export enum Features {
 
 // Enum for Tags
 export enum Tags {
-  APARTMENTS = "apartments",
-  BUNGALOW = "bungalow",
-  HOUSES = "houses",
-  LOFT = "loft",
-  OFFICE = "office",
-  TOWNHOME = "townhome",
-  VILLA = "villa",
+  ALL_LISTING = "All Listing",
+  ACTIVE = "Active",
+  SOLD = "Sold",
+  PROCESSING = "Processing",
 }
 
 // Enum for Property Types
@@ -72,6 +69,7 @@ export interface IListing extends Document {
   // city: mongoose.Types.ObjectId; // Reference to City
   // location: mongoose.Types.ObjectId; // Reference to State
   street_address: string;
+  country: string;
   city: mongoose.Types.ObjectId | { name: string }; // Include the populated type
   state: mongoose.Types.ObjectId | { name: string }; // Include the populated type
   zip_code: string;
@@ -104,6 +102,7 @@ const ListingSchema: Schema = new Schema({
   images: [{ type: String }],
   // address
   street_address: { type: String, required: true },
+  country: { type: String, required: true },
   city: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: true },
   state: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true },
   zip_code: { type: String, required: true },

@@ -1,30 +1,62 @@
 import axios from 'axios';
-const baseURL =  'http://localhost:5000/api';
-// const baseURL = 'https://real-estate-nine-livid.vercel.app/api'
+import Cookies from "js-cookie";
 
+const API_URL = 'http://localhost:5000/api';
+
+// Create an axios instance with a base URL
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || baseURL,
-  headers: {
-    "Content-Type": "application/json"
-  },
+  baseURL: API_URL,
 });
 
-// Optional: Interceptors for requests or responses
+// Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Modify config (e.g., add auth headers) before the request is sent
-    return config;
+  
+     const token = Cookies.get("token") 
+
+     console.log(token)
+
+    if (token) {
+      // Set the Authorization header with the token
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // Set Content-Type dynamically based on the request data
+    if (config.data instanceof FormData) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    } else {
+      config.headers['Content-Type'] = 'application/json';
+    }
+
+    return config; // Return the modified config
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error) // Reject the promise on request error
 );
 
+// Response interceptor
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => response, // Pass the response as is if no error
   (error) => {
-    // Handle global response errors
-    return Promise.reject(error);
+    if (error.response?.status === 401) {
+      let countdown = 5; // Countdown starts at 5 seconds
+
+      // Show initial toast message
+      const toastId = toast.error(`Session expired. Logging out in ${countdown} seconds.`);
+
+      // Update the toast message every second
+      const interval = setInterval(() => {
+        countdown -= 1;
+        toast.error(`Session expired. Logging out in ${countdown} seconds.`, { id: toastId });
+      }, 1000);
+
+      // Logout after the countdown ends
+      setTimeout(() => {
+        clearInterval(interval); // Stop the countdown
+        logoutHandler(); // Perform logout
+      }, 5000);
+    }
+
+    return Promise.reject(error); // Reject the promise with the error
   }
 );
 

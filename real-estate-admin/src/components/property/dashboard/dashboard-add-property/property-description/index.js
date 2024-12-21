@@ -1,8 +1,19 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 
-const PropertyDescription = () => {
-  const catergoryOptions = [
+const PropertyDescription = ({ data = {}, onUpdate }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    propertyType: [],
+    tags: [],
+    status: "",
+    sale_price: "",
+    rent_price: "",
+    ...data, // Initialize with data from parent
+  });
+  const categoryOptions = [
     { value: "Apartments", label: "Apartments" },
     { value: "Bungalow", label: "Bungalow" },
     { value: "Houses", label: "Houses" },
@@ -11,34 +22,51 @@ const PropertyDescription = () => {
     { value: "Townhome", label: "Townhome" },
     { value: "Villa", label: "Villa" },
   ];
-  const listedIn = [
+  const tagsOptions = [
     { value: "All Listing", label: "All Listing" },
     { value: "Active", label: "Active" },
     { value: "Sold", label: "Sold" },
     { value: "Processing", label: "Processing" },
   ];
-  const PropertyStatus = [
+  const propertyStatusOptions = [
     { value: "All Cities", label: "All Cities" },
+    { value: "Available", label: "Available" },
+    { value: "Buy", label: "Buy" },
+    { value: "Rent", label: "Rent" },
+    { value: "Sold", label: "Sold" },
     { value: "Pending", label: "Pending" },
-    { value: "Processing", label: "Processing" },
-    { value: "Published", label: "Published" },
   ];
 
   const customStyles = {
-    option: (styles, { isFocused, isSelected, isHovered }) => {
-      return {
-        ...styles,
-        backgroundColor: isSelected
-          ? "#eb6753"
-          : isHovered
-          ? "#eb675312"
-          : isFocused
-          ? "#eb675312"
-          : undefined,
-      };
-    },
+    option: (styles, { isFocused, isSelected, isHovered }) => ({
+      ...styles,
+      backgroundColor: isSelected
+        ? "#eb6753"
+        : isHovered
+        ? "#eb675312"
+        : isFocused
+        ? "#eb675312"
+        : undefined,
+    }),
   };
 
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      ...data, // Update local state when parent data changes
+    }));
+  }, [data]);
+
+  const handleInputChange = (key, value) => {
+    const updatedData = { ...formData, [key]: value };
+    setFormData(updatedData);
+    onUpdate(updatedData); // Notify parent of changes
+  };
+
+  const handleMultiSelectChange = (key, selectedOptions) => {
+    const selectedValues = selectedOptions.map((option) => option.value);
+    handleInputChange(key, selectedValues);
+  };
   return (
     <form className="form-style1">
       <div className="row">
@@ -48,11 +76,12 @@ const PropertyDescription = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Property Title"
+              value={formData.title}
+              onChange={(e) => handleInputChange("title", e.target.value)}
             />
           </div>
         </div>
-        {/* End .col-12 */}
 
         <div className="col-sm-12">
           <div className="mb20">
@@ -62,105 +91,110 @@ const PropertyDescription = () => {
             <textarea
               cols={30}
               rows={5}
-              placeholder="There are many variations of passages."
-              defaultValue={""}
+              placeholder="Enter property description"
+              className="form-control"
+              value={formData.description}
+              onChange={(e) => handleInputChange("description", e.target.value)}
             />
           </div>
         </div>
-        {/* End .col-6 */}
 
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-            Property Type
+              Property Type
             </label>
             <div className="location-area">
               <Select
-                defaultValue={[catergoryOptions[1]]}
-                name="colors"
-                options={catergoryOptions}
+                options={categoryOptions}
                 styles={customStyles}
                 className="select-custom pl-0"
                 classNamePrefix="select"
-                required
                 isMulti
+                value={categoryOptions.filter((option) =>
+                  formData.propertyType.includes(option.value)
+                )}
+                onChange={(selected) =>
+                  handleMultiSelectChange("propertyType", selected)
+                }
               />
             </div>
           </div>
         </div>
-        {/* End .col-6 */}
 
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">
-             Tags
-            </label>
+            <label className="heading-color ff-heading fw600 mb10">Tags</label>
             <div className="location-area">
               <Select
-                defaultValue={[listedIn[1]]}
-                name="colors"
-                options={listedIn}
+                options={tagsOptions}
                 styles={customStyles}
                 className="select-custom pl-0"
                 classNamePrefix="select"
-                required
                 isMulti
+                value={tagsOptions.filter((option) =>
+                  formData.tags.includes(option.value)
+                )}
+                onChange={(selected) =>
+                  handleMultiSelectChange("tags", selected)
+                }
               />
             </div>
           </div>
         </div>
-        {/* End .col-6 */}
-
         <div className="col-sm-6 col-xl-4">
-          <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">
-              Property Status
-            </label>
-            <div className="location-area">
-              <Select
-                defaultValue={[PropertyStatus[1]]}
-                name="colors"
-                options={PropertyStatus}
-                styles={customStyles}
-                className="select-custom pl-0"
-                classNamePrefix="select"
-                required
-                isMulti
-              />
-            </div>
+        <div className="mb20">
+          <label className="heading-color ff-heading fw600 mb10">
+            Property Status
+          </label>
+          <div className="location-area">
+            <Select
+              options={propertyStatusOptions}
+              styles={customStyles}
+              className="select-custom pl-0"
+              classNamePrefix="select"
+              value={propertyStatusOptions.find(
+                (option) => option.value === formData.status
+              )} // Match the selected value
+              onChange={(selected) =>
+                handleInputChange("status", selected?.value || "")
+              } // Save only the value
+            />
           </div>
         </div>
-        {/* End .col-6 */}
+      </div>
+      
+      
 
         <div className="col-sm-6 col-xl-6">
           <div className="mb30">
             <label className="heading-color ff-heading fw600 mb10">
-              Salling Price 
+              Selling Price
             </label>
             <input
-              type="text"
+              type="number"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Selling Price"
+              value={formData.sale_price}
+              onChange={(e) => handleInputChange("sale_price", e.target.value)}
             />
           </div>
         </div>
-        {/* End .col-6 */}
 
         <div className="col-sm-6 col-xl-6">
           <div className="mb30">
             <label className="heading-color ff-heading fw600 mb10">
-           Rent Price
+              Rent Price
             </label>
             <input
-              type="text"
+              type="number"
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Rent Price"
+              value={formData.rent_price}
+              onChange={(e) => handleInputChange("rent_price", e.target.value)}
             />
           </div>
         </div>
-        {/* End .col-6 */}
-
-        {/* End .col-6 */}
       </div>
     </form>
   );
