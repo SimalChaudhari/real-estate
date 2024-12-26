@@ -185,7 +185,7 @@ const PropertyDataTable = () => {
                     style={{ border: "none" }}
                     data-tooltip-id={`view-${property._id}`}
                   >
-                    <Link href={`/dashboard-property-view/${property._id}`}>
+                    <Link href={`/dashboard-view-property/${property._id}`}>
                       <span className="fas fa-eye fa" />
                     </Link>
                   </button>
