@@ -18,6 +18,15 @@ export const propertyList = () => async (dispatch) => {
 };
 }
 
+export const cityStateList = () => async (dispatch) => {
+    try {
+        const response = await axiosInstance.get(API_ROUTES.LOC.GET_LOC);
+        return response.data;
+    } catch (error) {
+        return handleApiError(error);
+};
+}
+
 export const propertyByList = (id) => async (dispatch) => {
     try {
         const response = await axiosInstance.get(API_ROUTES.PROPERTIES.GET_ID(id));

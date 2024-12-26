@@ -8,6 +8,7 @@ const DetailsFiled = ({ data = {}, onUpdate }) => {
     bath: "",
     yearBuilding: "",
     start_date: "",
+    forRent: false, // New field for rent
     ...data
   });
 
@@ -71,7 +72,7 @@ const DetailsFiled = ({ data = {}, onUpdate }) => {
           </div>
         </div>
 
-        <div className="col-sm-6 col-xl-4">
+        <div className="col-sm-6 col-xl-6">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
               Year built (numeric)
@@ -86,7 +87,7 @@ const DetailsFiled = ({ data = {}, onUpdate }) => {
           </div>
         </div>
 
-        <div className="col-sm-6 col-xl-4">
+        <div className="col-sm-6 col-xl-6">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
               Available from (date)
@@ -100,6 +101,30 @@ const DetailsFiled = ({ data = {}, onUpdate }) => {
           </div>
         </div>
       </div>
+
+      <div className="col-sm-6 col-xl-4">
+          <div className="mb20">
+            <label className="heading-color ff-heading fw600 mb10">
+              For Rent
+            </label>
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="forRentToggle"
+                checked={formData.forRent}
+                onChange={(e) => handleInputChange("forRent", e.target.checked)}
+              />
+              <label
+                className="form-check-label"
+                htmlFor="forRentToggle"
+              >
+                {formData.forRent ? "Yes" : "No"}
+              </label>
+            </div>
+          </div>
+        </div>
+      
     </form>
   );
 };

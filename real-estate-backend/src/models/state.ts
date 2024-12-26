@@ -1,14 +1,13 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 
-// Interface for State
 export interface IState extends Document {
   name: string;
+  cities: Types.ObjectId[]; // Explicitly specify ObjectId[]
 }
 
-// State Schema
 const StateSchema: Schema = new Schema({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  cities: [{ type: Schema.Types.ObjectId, ref: 'City' }], // Cities reference
 });
 
-// Export State Model
 export default mongoose.model<IState>('State', StateSchema);

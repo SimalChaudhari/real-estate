@@ -12,7 +12,7 @@ const DashboardMyProperties = () => {
   const router = useRouter();
 
   const navigateToNewUser = () => {
-    router.push("/dashboard-property-create");
+    router.push("/dashboard-add-property");
   };
   return (
     <div>
