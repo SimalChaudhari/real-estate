@@ -5,11 +5,19 @@ import Select from "react-select";
 const Location = () => {
   const { location, loading } = useSelector((state) => state.location);
 
-  // Extracting city data dynamically from the Redux store
-  const locationOptions = location?.cities?.map((city) => ({
-    value: city.name,
-    label: city.name,
-  })) || [];
+  // Extract unique cities based on `_id`
+  const locationOptions = location
+    ?.map((state) =>
+      state.cities.map((city) => ({
+        id: city._id, // Include `_id` for uniqueness
+        value: city.name,
+        label: city.name,
+      }))
+    )
+    .flat() // Flatten the array
+    .filter((city, index, self) =>
+      index === self.findIndex((c) => c.id === city.id) // Keep only unique `_id`
+    ) || [];
 
   const inqueryType = [
     { value: "CHIKKAMAGALURU", label: "CHIKKAMAGALURU" },
@@ -41,7 +49,7 @@ const Location = () => {
         <p>Loading locations...</p>
       ) : (
         <Select
-          defaultValue={[locationOptions[2]]}
+          // defaultValue={[locationOptions[2]]}
           name="colors"
           options={locationOptions}
           styles={customStyles}

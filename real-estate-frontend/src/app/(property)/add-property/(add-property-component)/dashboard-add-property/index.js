@@ -353,7 +353,7 @@ const AddPropertyTabContentCustomer = () => {
                         // rows={5}
                         rows={1}
                         placeholder="There are many variations of passages."
-                        {...register("description", { required: "Title is required" })}
+                        {...register("description", { required: "Description is required" })}
                         className={`form-control ${errors.description ? "is-invalid" : ""}`}
                         defaultValue={""}
                       />
