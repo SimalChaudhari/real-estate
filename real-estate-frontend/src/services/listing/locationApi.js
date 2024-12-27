@@ -22,7 +22,7 @@ import axiosInstance from '../config';
  */
 export const GetLocationList = async () => {
     try {
-        const response = await axiosInstance.get('/api/location/city/list');
+        const response = await axiosInstance.get('/api/location/get');
 
         // Clear existing toasts
         // toast.dismiss();

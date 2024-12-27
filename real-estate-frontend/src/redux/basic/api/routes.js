@@ -11,12 +11,12 @@ const API_ROUTES = {
       LOGIN: "/auth/login",
     },
     PROPERTIES: {
-      LIST: "/properties-listing/get",
-      CREATE: "/properties-listing/create",
+      LIST: "/properties",
+      CREATE: "/properties/create",
       GET_BY_ID: (id) => `/properties-listing/${id}`,
     },
     CITIES: {
-      GET: "/location/city/list",
+      GET: "/location/get",
     },
     // Add other routes here
   };
