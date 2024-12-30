@@ -1,6 +1,6 @@
 const Bedroom = () => {
   const bedOptions = [
-    { id: "xany", label: "any" },
+    { id: "xany", label: "Any" },
     { id: "xoneplus", label: "1+" },
     { id: "xtwoplus", label: "2+" },
     { id: "xthreeplus", label: "3+" },
@@ -14,9 +14,9 @@ const Bedroom = () => {
         <div className="selection" key={option.id}>
           <input
             id={option.id}
-            name="xbeds"
+            name="bedrooms"
             type="radio"
-            defaultChecked // Set the first option as defaultChecked
+            defaultChecked={index === 0} // Only first option is defaultChecked
           />
           <label htmlFor={option.id}>{option.label}</label>
         </div>

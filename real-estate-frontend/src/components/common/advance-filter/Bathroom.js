@@ -1,6 +1,6 @@
 const Bathroom = () => {
   const bathOptions = [
-    { id: "yany", label: "any" },
+    { id: "yany", label: "Any" },
     { id: "yoneplus", label: "1+" },
     { id: "ytwoplus", label: "2+" },
     { id: "ythreeplus", label: "3+" },
@@ -14,9 +14,9 @@ const Bathroom = () => {
         <div className="selection" key={option.id}>
           <input
             id={option.id}
-            name="ybath"
+            name="bathrooms"
             type="radio"
-            defaultChecked // Set the first option as defaultChecked
+            defaultChecked={index === 0} // Only first option is defaultChecked
           />
           <label htmlFor={option.id}>{option.label}</label>
         </div>

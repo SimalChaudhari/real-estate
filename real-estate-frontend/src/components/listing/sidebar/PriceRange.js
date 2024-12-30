@@ -1,17 +1,20 @@
 "use client";
-import React, { useState } from "react";
-import Slider, { Range } from "rc-slider";
 
-const PriceRange = ({ filterFunctions }) => {
-  const [price, setPrice] = useState([20, 70987]);
+import React, { useState, useEffect } from "react";
+import Slider from "rc-slider";
 
-  // price range handler
+const PriceRange = ({ filterFunctions, filterData }) => {
+  const [price, setPrice] = useState(filterData?.priceRange || [20, 70987]);
 
-  // price range handler
+  useEffect(() => {
+    if (filterFunctions?.priceRange) {
+      setPrice(filterFunctions.priceRange);
+    }
+  }, [filterFunctions?.priceRange]);
+
   const handleOnChange = (value) => {
     setPrice(value);
-
-    filterFunctions?.handlepriceRange([value[0] || 0, value[1]]);
+    filterFunctions?.setPriceRange([value[0] || 0, value[1] || 100000]);
   };
 
   return (
@@ -19,17 +22,13 @@ const PriceRange = ({ filterFunctions }) => {
       <div className="range-wrapper">
         <Slider
           range
-          formatLabel={() => ``}
           max={100000}
           min={0}
-          defaultValue={[
-            filterFunctions?.priceRange[0],
-            filterFunctions?.priceRange[1],
-          ]}
-          onChange={(value) => handleOnChange(value)}
+          value={price}
+          onChange={handleOnChange}
           id="slider"
         />
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center mt-2">
           <span id="slider-range-value1">₹{price[0]}</span>
           <i className="fa-sharp fa-solid fa-minus mx-2 dark-color icon" />
           <span id="slider-range-value2">₹{price[1]}</span>

@@ -1,17 +1,15 @@
 "use client";
 import ScrollToTop from "@/components/common/ScrollTop";
 import Aos from "aos";
-import "../../node_modules/react-modal-video/scss/modal-video.scss";
+import "react-modal-video/scss/modal-video.scss";
 import "aos/dist/aos.css";
 import "../../public/scss/main.scss";
 import "rc-slider/assets/index.css";
 import { DM_Sans, Poppins } from "next/font/google";
 import { useEffect } from "react";
 import StoreProvider from "./StoreProvider";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import store from "@/redux/store";
-import { Provider } from "react-redux";
 
 if (typeof window !== "undefined") {
   import("bootstrap");
@@ -31,7 +29,6 @@ const poppins = Poppins({
   variable: "--title-font-family",
 });
 
-
 export default function RootLayout({ children }) {
   useEffect(() => {
     Aos.init({
@@ -43,12 +40,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`body  ${poppins.variable} ${dmSans.variable}`}
+        className={`body ${poppins.variable} ${dmSans.variable}`}
         cz-shortcut-listen="false"
       >
         <div className="wrapper ovh">
           <StoreProvider>
-            <ToastContainer />
+            <ToastContainer autoClose={3000} />
             {children}
           </StoreProvider>
         </div>
