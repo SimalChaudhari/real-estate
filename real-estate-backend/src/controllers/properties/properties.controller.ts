@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Listing from '../../models/properties';
 import { deleteImage, uploadFile } from '../../services/firebase.service';
+import { Types } from "mongoose";
 
 export const createListing = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -213,11 +214,12 @@ export const getListingById = async (req: Request, res: Response, next: NextFunc
         const listing = await Listing.findById(req.params.id)
             .populate({
                 path: 'city',
-                select: 'name -_id', // Include `name` and exclude `_id`
+                select: 'name _id',
+
             })
             .populate({
                 path: 'state',
-                select: 'name -_id', // Include `name` and exclude `_id`
+                select: 'name _id',
             });
 
         if (!listing) {
@@ -231,20 +233,20 @@ export const getListingById = async (req: Request, res: Response, next: NextFunc
             ...listingObj,
 
             price: {
-                rent: listingObj.rent_price,
-                sale: listingObj.sale_price,
+                rent_price: listingObj.rent_price,
+                sale_price: listingObj.sale_price,
             },
 
             address: {
                 street_address: listingObj.street_address || null,
-                city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
-                state: typeof listingObj.state === 'object' && 'name' in listingObj.state ? listingObj.state.name : null,
+                city: listingObj.city || null,
+                state: listingObj.state || null,
                 zip_code: listingObj.zip_code || null,
             },
 
             location: {
                 lat: listingObj.lat,
-                log: listingObj.long,
+                long: listingObj.long,
             },
 
             availability: {

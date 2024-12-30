@@ -1,15 +1,17 @@
+"use client"
+
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
-import PropertyEditForm from "@/components/property/dashboard/dashboard-property/UpdatePropertyData";
+import UpdatePropertyTabContent from "@/components/property/dashboard/dashboard-my-properties/update-property";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
+import { useParams } from 'next/navigation'
 
-export const metadata = {
-  title: "Dashboard Add Property || Homez - Real Estate NextJS Template",
-};
+const DashboardPropertyUpdate = () => {
 
-const DashboardPropertyCreate = () => {
+  const { id } = useParams()
+
   return (
     <>
       {/* Main Header Nav */}
@@ -50,7 +52,7 @@ const DashboardPropertyCreate = () => {
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30 mb30 overflow-hidden position-relative">
                     <div className="navtab-style1">
-                      <PropertyEditForm/>
+                      <UpdatePropertyTabContent id={id}/>
                        {/*<EditPropertyForm Property={Property} /> */}
                     </div>
                   </div>
@@ -70,4 +72,4 @@ const DashboardPropertyCreate = () => {
   );
 };
 
-export default DashboardPropertyCreate;
+export default DashboardPropertyUpdate;

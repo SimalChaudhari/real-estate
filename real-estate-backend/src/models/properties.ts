@@ -35,14 +35,23 @@ export enum Tags {
 
 // Enum for Property Types
 export enum PropertyType {
-  APARTMENTS = "Apartments",
-  BUNGALOW = "Bungalow",
-  HOUSES = "Houses",
-  LOFT = "Loft",
-  OFFICE = "Office",
-  TOWNHOME = "Townhome",
   VILLA = "Villa",
+  PENTHOUSE = "Penthouse",
+  DUPLEX = "Duplex",
+  STUDIO_APARTMENT = "Studio Apartment",
+  ROW_HOUSE = "Row House",
+  FARMHOUSE = "Farmhouse",
+  COMMERCIAL_OFFICE = "Commercial Office",
+  RETAIL_SHOP = "Retail Shop",
+  INDUSTRIAL_SHED = "Industrial Shed",
+  SERVICED_APARTMENT = "Serviced Apartment",
+  TOWNHOUSE = "Townhouse",
+  CONDOMINIUM = "Condominium (Condo)",
+  WAREHOUSE = "Warehouse",
+  LAND_PLOT = "Land/Plot",
+  INDEPENDENT_HOUSE = "Independent House",
 }
+
 
 
 // Property Status Enum

@@ -38,22 +38,7 @@ axiosInstance.interceptors.response.use(
   (response) => response, // Pass the response as is if no error
   (error) => {
     if (error.response?.status === 401) {
-      let countdown = 5; // Countdown starts at 5 seconds
-
-      // Show initial toast message
-      const toastId = toast.error(`Session expired. Logging out in ${countdown} seconds.`);
-
-      // Update the toast message every second
-      const interval = setInterval(() => {
-        countdown -= 1;
-        toast.error(`Session expired. Logging out in ${countdown} seconds.`, { id: toastId });
-      }, 1000);
-
-      // Logout after the countdown ends
-      setTimeout(() => {
-        clearInterval(interval); // Stop the countdown
-        logoutHandler(); // Perform logout
-      }, 5000);
+   console.log("heello")
     }
 
     return Promise.reject(error); // Reject the promise with the error

@@ -3,7 +3,7 @@ import MobileMenu from "@/components/common/mobile-menu";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
-import AddPropertyTabContent from "@/components/property/dashboard/dashboard-my-properties";
+import AddPropertyTabContent from "@/components/property/dashboard/dashboard-my-properties/add-property";
 import UserCreateForm from "@/components/property/dashboard/dashboard-user/CreateUserData";
 
 export const metadata = {

@@ -7,6 +7,7 @@ export interface ICity extends Document {
 
 const CitySchema: Schema = new Schema({
   name: { type: String, required: true },
+  areas: { type: [String], default: [] }, // Array of strings for areas
   state: { type: Schema.Types.ObjectId, ref: 'State', required: true },
 });
 

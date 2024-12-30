@@ -56,7 +56,7 @@ const DashboardUserView = () => {
               {/* End .row */}
 
               <div className="row wrap">
-                <div className="col-lg-8">
+                <div className="col-lg-6">
                   <PropertyGallery id={id} />
                   
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
@@ -65,6 +65,10 @@ const DashboardUserView = () => {
                       <OverView id={id} />
                     </div>
                   </div>
+
+                  </div>
+
+                  <div className="col-lg-6">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <h4 className="title fz17 mb30">Property Description</h4>
                     <ProperytyDescriptions id={id} />
@@ -80,6 +84,8 @@ const DashboardUserView = () => {
                   <div className="row">
                     <PropertyAddress id={id} />
                   </div>
+                  </div>
+
                 </div>
                 {/* End .ps-widget */}
   
@@ -90,7 +96,7 @@ const DashboardUserView = () => {
                   </div>
                 </div>
 
-                </div>
+             
 
 
 
