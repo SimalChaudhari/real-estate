@@ -35,31 +35,44 @@ const RequirementPropertyTabContentCustomer = () => {
         fetchLocations();
     }, [dispatch]);
 
-    
-      const { fetchLocationData } = useFetchLocationData()
-    
-      useEffect(() => {
+
+    const { fetchLocationData } = useFetchLocationData()
+
+    useEffect(() => {
         fetchLocationData()
-      }, [])
-    
+    }, [])
+
 
     const { location, loading } = useSelector((state) => state.location);
 
-    const citiesOptions = location?.cities?.map((city) => ({
-        value: city.id,
-        label: city.name,
-    })) || [];
+    // const citiesOptions = location?.cities?.map((city) => ({
+    //     value: city.id,
+    //     label: city.name,
+    // })) || [];
+    
+    const citiesOptions = location
+        ?.map((state) =>
+            state.cities.map((city) => ({
+                id: city._id, // Include `_id` for uniqueness
+                value: city.name,
+                label: city.name,
+            }))
+        )
+        .flat() // Flatten the array
+        .filter((city, index, self) =>
+            index === self.findIndex((c) => c.id === city.id) // Keep only unique `_id`
+        ) || [];
 
-    const statessOptions = location?.cities
-        ?.reduce((uniqueStates, city) => {
-            if (!uniqueStates.some((state) => state.value === city.stateId)) {
-                uniqueStates.push({
-                    value: city.stateId,
-                    label: city.stateName || city.name, 
-                });
-            }
-            return uniqueStates;
-        }, []) || [];
+    // Extract unique states
+    const statessOptions = location?.reduce((uniqueStates, state) => {
+        if (!uniqueStates.some((unique) => unique.value === state._id)) {
+            uniqueStates.push({
+                value: state.name,
+                label: state.name,
+            });
+        }
+        return uniqueStates;
+    }, []) || [];
 
     const categoryOptions = [
         { value: "Apartments", label: "Apartments" },
@@ -287,7 +300,7 @@ const RequirementPropertyTabContentCustomer = () => {
                                                 // rows={5}
                                                 rows={1}
                                                 placeholder="There are many variations of passages."
-                                                {...register("description", { required: "Title is required" })}
+                                                {...register("description", { required: "Description is required" })}
                                                 className={`form-control ${errors.description ? "is-invalid" : ""}`}
                                                 defaultValue={""}
                                             />
@@ -360,6 +373,7 @@ const RequirementPropertyTabContentCustomer = () => {
                                             </label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 {...register("latitude", { required: "Latitude is required" })}
                                                 className={`form-control ${errors.latitude ? "is-invalid" : ""}`}
                                                 placeholder="Latitude"
@@ -376,6 +390,7 @@ const RequirementPropertyTabContentCustomer = () => {
                                             </label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 {...register("longiTude", { required: "Latitude is required" })}
                                                 className={`form-control ${errors.longiTude ? "is-invalid" : ""}`}
                                                 placeholder="LongiTude"

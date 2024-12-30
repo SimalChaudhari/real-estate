@@ -37,13 +37,13 @@ const AddPropertyTabContentCustomer = () => {
     fetchLocations();
   }, [dispatch]);
 
-  
-    const { fetchLocationData } = useFetchLocationData()
-  
-    useEffect(() => {
-      fetchLocationData()
-    }, [])
-  
+
+  const { fetchLocationData } = useFetchLocationData()
+
+  useEffect(() => {
+    fetchLocationData()
+  }, [])
+
 
   const { location, loading } = useSelector((state) => state.location);
 
@@ -54,16 +54,17 @@ const AddPropertyTabContentCustomer = () => {
   // })) || [];
 
   // Extracting city data dynamically from the Redux store
-  const statessOptions = location?.cities
+  const statessOptions = location
     ?.reduce((uniqueStates, city) => {
-      if (!uniqueStates.some((state) => state.value === city.stateId._id)) {
+      if (!uniqueStates.some((state) => state.value === city._id)) {
         uniqueStates.push({
-          value: city.stateId._id, // Ensure unique identifier
-          label: city.stateId.name, // State name
+          value: city._id, // Ensure unique identifier
+          label: city.name, // State name
         });
       }
       return uniqueStates;
     }, []) || [];
+
 
   const {
     register,
@@ -80,16 +81,20 @@ const AddPropertyTabContentCustomer = () => {
   const selectedState = watch("state");
 
   useEffect(() => {
-    // Filter cities based on selected state
     if (selectedState) {
-      const cities = location?.cities?.filter(
-        (city) => city.stateId._id === selectedState.value
-      );
-      const citiesOptions = cities.map((city) => ({
-        value: city.id,
-        label: city.name,
-      }));
-      setFilteredCities(citiesOptions);
+      // Find the state in the location data
+      const selectedStateData = location?.find(state => state._id === selectedState.value);
+
+      if (selectedStateData) {
+        // Extract cities based on selected state
+        const citiesOptions = selectedStateData.cities?.map((city) => ({
+          value: city._id,
+          label: city.name,
+        })) || [];
+        setFilteredCities(citiesOptions);
+      } else {
+        setFilteredCities([]);
+      }
     } else {
       setFilteredCities([]);
     }
@@ -105,13 +110,17 @@ const AddPropertyTabContentCustomer = () => {
     { value: "Villa", label: "Villa" },
   ];
   const tagsOptions = [
-    { value: "apartments", label: "apartments" },
-    { value: "bungalow", label: "bungalow" },
-    { value: "houses", label: "houses" },
-    { value: "loft", label: "loft" },
-    { value: "office", label: "office" },
-    { value: "townhome", label: "townhome" },
-    { value: "villa", label: "villa" },
+    // { value: "apartments", label: "apartments" },
+    // { value: "bungalow", label: "bungalow" },
+    // { value: "houses", label: "houses" },
+    // { value: "loft", label: "loft" },
+    // { value: "office", label: "office" },
+    // { value: "townhome", label: "townhome" },
+    // { value: "villa", label: "villa" },
+    { value: "All Listing", label: "All Listing" },
+    { value: "Active", label: "Active" },
+    { value: "Sold", label: "Sold" },
+    { value: "Processing", label: "Processing" },
   ];
   const listedIn = [
     { value: "Buy", label: "Buy" },
@@ -263,6 +272,7 @@ const AddPropertyTabContentCustomer = () => {
     formData.append("featured", true);
     formData.append("start_date", formattedDate);
     // formData.append("images", JSON.stringify(dummyImages));
+    formData.append("country", "India");
 
     // Append features individually
     data.features?.forEach((feature) => {
@@ -343,7 +353,7 @@ const AddPropertyTabContentCustomer = () => {
                         // rows={5}
                         rows={1}
                         placeholder="There are many variations of passages."
-                        {...register("description", { required: "Title is required" })}
+                        {...register("description", { required: "Description is required" })}
                         className={`form-control ${errors.description ? "is-invalid" : ""}`}
                         defaultValue={""}
                       />
@@ -447,6 +457,7 @@ const AddPropertyTabContentCustomer = () => {
                       </label>
                       <input
                         type="number"
+                        step="any"
                         {...register("latitude", { required: "Latitude is required" })}
                         className={`form-control ${errors.latitude ? "is-invalid" : ""}`}
                         placeholder="Latitude"
@@ -463,6 +474,7 @@ const AddPropertyTabContentCustomer = () => {
                       </label>
                       <input
                         type="number"
+                        step="any"
                         {...register("longiTude", { required: "Latitude is required" })}
                         className={`form-control ${errors.longiTude ? "is-invalid" : ""}`}
                         placeholder="LongiTude"
@@ -471,6 +483,20 @@ const AddPropertyTabContentCustomer = () => {
                     </div>
                   </div>
                   {/* End .col-6 */}
+
+                  <div className="col-sm-6 col-xl-4">
+                    <div className="mb20">
+                      <label className="heading-color ff-heading fw600 mb10">
+                        Country
+                      </label>
+                      <input
+                        type="text"
+                        value="India" // Set "India" as the default value
+                        className="form-control"
+                        readOnly // Make the input non-editable
+                      />
+                    </div>
+                  </div>
 
                   <div className="col-sm-6 col-xl-4">
                     <div className="mb20">

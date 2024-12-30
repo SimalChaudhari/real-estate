@@ -5,9 +5,6 @@ import { toast } from 'react-toastify';
 import Cookies from "js-cookie";
 import axiosInstance from '../config';
 
-// const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://real-estate-nine-livid.vercel.app';
-const baseURL =  'http://localhost:5000';
-
 const token = Cookies.get("token");
 
 
@@ -17,7 +14,7 @@ const token = Cookies.get("token");
  */
 export const GetList = async () => {
     try {
-        const response = await axiosInstance.get('/api/properties-listing/get');
+        const response = await axiosInstance.get('/api/properties');
 
         // Clear existing toasts
         // toast.dismiss();
@@ -100,10 +97,10 @@ export const GetById = async (id) => {
  * @param {Object} propertyData - The data of the property to be created, including files (images).
  * @returns {Object} - The response containing the created property or an error message.
  */
-export const CreateProperty = async (propertyData) => {
+export const    CreateProperty = async (propertyData) => {
     try {
         // Update headers for FormData
-        const response = await axiosInstance.post('/api/properties-listing/create',
+        const response = await axiosInstance.post('/api/properties/create',
             propertyData,
             {
                 headers: {

@@ -4,25 +4,13 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import axiosInstance from '../config';
 
-
-// const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://real-estate-nine-livid.vercel.app';
-// const baseURL =  'http://localhost:5000';
-
-// const axiosInstance = axios.create({
-//     baseURL,
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-// });
-
-
 /**
  * Fetch the properties Location.
  * @returns {Object} - The response containing properties Location or an error message.
  */
 export const GetLocationList = async () => {
     try {
-        const response = await axiosInstance.get('/api/location/city/list');
+        const response = await axiosInstance.get('/api/location/get');
 
         // Clear existing toasts
         // toast.dismiss();
