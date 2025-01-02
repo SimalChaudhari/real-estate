@@ -1,29 +1,29 @@
+"use client";
+import React from "react";
 import AdvanceFilterModal from "@/components/common/advance-filter";
 import FilterContent from "./FilterContent";
 
-const Hero = () => {
+const index = () => {
   return (
     <div>
       <div className="inner-banner-style1 text-center">
         <FilterContent />
       </div>
-      {/* End Hero content */}
 
-      {/* <!-- Advance Feature Modal Start --> */}
+      {/* Advance Feature Modal */}
       <div className="advance-feature-modal">
         <div
           className="modal fade"
-          id="advanceSeachModal"
+          id="advanceSearchModal"
           tabIndex={-1}
-          aria-labelledby="advanceSeachModalLabel"
+          aria-labelledby="advanceSearchModalLabel"
           aria-hidden="true"
         >
           <AdvanceFilterModal />
         </div>
       </div>
-      {/* <!-- Advance Feature Modal End --> */}
     </div>
   );
 };
 
-export default Hero;
+export default index;

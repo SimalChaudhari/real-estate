@@ -1,13 +1,16 @@
 "use client";
+import React from "react";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 
-const LookingFor = () => {
+const LookingFor = ({ onPropertyTypeChange }) => {
   const listingsData = useSelector((state) => state.listings?.listings);
-  
-  const uniquePropertyTypes = [
-    ...new Set(listingsData?.map((item) => item.propertyType)),
-  ];
+
+  // Ensure data is safely handled
+  const uniquePropertyTypes =
+    listingsData && listingsData.length
+      ? [...new Set(listingsData.map((item) => item.propertyType))]
+      : [];
 
   // Transform unique property types to catOptions format
   const inqueryType = uniquePropertyTypes.map((type) => ({
@@ -15,44 +18,39 @@ const LookingFor = () => {
     label: type,
   }));
 
-  // const inqueryType = [
-  //   { value: "Apartments", label: "Apartments" },
-  //   { value: "Bungalow", label: "Bungalow" },
-  //   { value: "Houses", label: "Houses" },
-  //   { value: "Office", label: "Office" },
-  //   { value: "TownHome", label: "TownHome" },
-  //   { value: "Villa", label: "Villa" },
-  // ];
-
   const customStyles = {
     control: (provided) => ({
       ...provided,
       background: "none",
     }),
-    option: (styles, { isFocused, isSelected, isHovered }) => {
-      return {
-        ...styles,
-        backgroundColor: isSelected
-          ? "#eb6753"
-          : isHovered
-          ? "#eb675312"
-          : isFocused
-          ? "#eb675312"
-          : undefined,
-      };
-    },
+    option: (styles, { isFocused, isSelected, isHovered }) => ({
+      ...styles,
+      backgroundColor: isSelected
+        ? "#eb6753"
+        : isHovered || isFocused
+        ? "#eb675312"
+        : undefined,
+    }),
   };
+
+  // Handle property type change
+  const handleChange = (selectedOption) => {
+    if (onPropertyTypeChange) {
+      onPropertyTypeChange(selectedOption);
+    }
+  };
+
   return (
     <div>
       <Select
-        defaultValue={[inqueryType[0]]}
-        name="colors"
         options={inqueryType}
         styles={customStyles}
         className="text-start select-borderless"
         classNamePrefix="select"
         required
-        isClearable={false}
+        isClearable
+        placeholder="Property Type"
+        onChange={handleChange}
       />
     </div>
   );

@@ -14,14 +14,13 @@ const locationsSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchLocationsSuccess: (state, action) => {
-        // console.log('Reducer Payload:', action.payload);
+    fetchLocationsSuccess(state, action) {
       state.loading = false;
-      state.location = action.payload;
+      state.location = action.payload || []; // Ensure payload is always an array
     },
     fetchLocationFailure(state, action) {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload || 'An error occurred'; // Provide a default error message
     },
   },
 });

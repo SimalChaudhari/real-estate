@@ -1,46 +1,37 @@
-
-// import axiosInstance from '@/config/axiosInstance';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import axiosInstance from '../config';
+import { toast } from 'react-toastify';
 
 /**
- * Fetch the properties Location.
- * @returns {Object} - The response containing properties Location or an error message.
+ * Fetch the properties location.
+ * @returns {Object} - The response containing location data or an error message.
  */
 export const GetLocationList = async () => {
-    try {
-        const response = await axiosInstance.get('/api/location/get');
+  try {
+    const response = await axiosInstance.get('/api/location/get');
 
-        // Clear existing toasts
-        // toast.dismiss();
+    // Return success response
+    return {
+      success: true,
+      data: response?.data || [], // Assuming `data` contains the location array
+      message: response?.data?.message || 'Locations fetched successfully!',
+    };
+  } catch (error) {
+    // Extract error message
+    const errorMessage =
+      error?.response?.data?.message ||
+      error.message ||
+      'An error occurred while fetching the locations';
 
-        // Show success toast notification
-        // toast.success("Properties Location fetched successfully!");
+    // Show error toast notification
+    toast.error(errorMessage);
 
-        // Return success response
-        return {
-            success: true,
-            data: response?.data || [], // Assuming `data` contains the Location array
-            message: response?.data?.message || 'Location fetched successfully!',
-        };
-    } catch (error) {
-        // Extract error message
-        const errorMessage = error?.response?.data?.message || error.message || 'An error occurred while fetching the Location';
+    console.error('Error fetching properties location:', errorMessage);
 
-        // Clear existing toasts
-        toast.dismiss();
-
-        // Show error toast notification
-        toast.error(errorMessage);
-
-        console.error('Error fetching properties Location:', errorMessage);
-
-        // Return error response
-        return {
-            success: false,
-            data: [],
-            message: errorMessage,
-        };
-    }
+    // Return error response
+    return {
+      success: false,
+      data: [],
+      message: errorMessage,
+    };
+  }
 };
