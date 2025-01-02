@@ -30,6 +30,7 @@ const AddPropertyTabContent = () => {
       street_address: "",
       city: "",
       state: "",
+      area: "",
       country: "India",
       zip_code: "",
       lat: "",
@@ -64,6 +65,8 @@ const AddPropertyTabContent = () => {
     if (!formData.location.street_address) errors.push({ tab: 2, field: "Street address is required" });
     if (!formData.location.city) errors.push({ tab: 2, field: "City is required" });
     if (!formData.location.state) errors.push({ tab: 2, field: "State is required" });
+    if (!formData.location.area) errors.push({ tab: 2, field: "Area is required" });
+
     if (!formData.location.zip_code) errors.push({ tab: 2, field: "Zip code is required" });
     if (!formData.location.lat) errors.push({ tab: 2, field: "Latitude is required" });
     if (!formData.location.long) errors.push({ tab: 2, field: "Longitude is required" });
@@ -123,6 +126,7 @@ const AddPropertyTabContent = () => {
       payload.append("street_address", formData.location.street_address);
       payload.append("city", formData.location.city);
       payload.append("state", formData.location.state);
+      payload.append("area", formData.location.area);
       payload.append("zip_code", formData.location.zip_code);
       payload.append("lat", formData.location.lat);
       payload.append("long", formData.location.long);

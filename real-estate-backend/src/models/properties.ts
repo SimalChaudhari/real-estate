@@ -81,6 +81,7 @@ export interface IListing extends Document {
   country: string;
   city: mongoose.Types.ObjectId | { name: string }; // Include the populated type
   state: mongoose.Types.ObjectId | { name: string }; // Include the populated type
+  area: mongoose.Types.ObjectId | { name: string }; // Include the populated type
   zip_code: string;
 
   lat: number;
@@ -114,6 +115,7 @@ const ListingSchema: Schema = new Schema({
   country: { type: String, required: true },
   city: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: true },
   state: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true },
+  area: { type: mongoose.Schema.Types.ObjectId, required: true }, // Reference to City.areas._id
   zip_code: { type: String, required: true },
   lat: { type: Number, required: true },
   long: { type: Number, required: true },

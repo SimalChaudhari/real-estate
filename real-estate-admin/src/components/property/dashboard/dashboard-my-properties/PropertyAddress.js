@@ -89,10 +89,19 @@ const PropertyAddress = ({ id }) => {
         <div className="d-flex flex-column justify-content-between">
           <div className="d-flex justify-content-between gap-5">
             <div className="pd-list">
-              <p className="fw600 mb10 ff-heading dark-color">Address</p>
+              <p className="fw600 mb10 ff-heading dark-color">Street Address</p>
             </div>
             <div className="pd-list">
               <p className="text mb10">{addressDetails?.street_address}</p>
+            </div>
+          </div>
+
+            <div className="d-flex justify-content-between gap-5">
+            <div className="pd-list">
+              <p className="fw600 mb10 ff-heading dark-color">Area</p>
+            </div>
+            <div className="pd-list">
+              <p className="text mb10">{addressDetails?.area}</p>
             </div>
           </div>
 
@@ -107,12 +116,22 @@ const PropertyAddress = ({ id }) => {
 
           <div className="d-flex justify-content-between gap-5">
             <div className="pd-list">
-              <p className="fw600 mb10 ff-heading dark-color">State/county</p>
+              <p className="fw600 mb10 ff-heading dark-color">State</p>
             </div>
             <div className="pd-list">
               <p className="text mb10">{addressDetails?.state}</p>
             </div>
           </div>
+
+          <div className="d-flex justify-content-between gap-5">
+          <div className="pd-list">
+            <p className="fw600 mb10 ff-heading dark-color">Country</p>
+          </div>
+          <div className="pd-list">
+            <p className="text mb10">{transformedListingsData.country}</p>
+          </div>
+        </div>
+
         </div>
       </div>
 

@@ -34,6 +34,7 @@ const PropertyHeader = ({ id }) => {
               {transformedListingsData?.address?.street_address},{" "}
               {transformedListingsData?.address?.city},{" "}
               {transformedListingsData?.address?.state} {" "}
+                  {transformedListingsData?.address?.area}
 
             </p>
             <a

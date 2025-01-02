@@ -154,45 +154,56 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
         const listings = await Listing.find()
             .populate({
                 path: 'city',
-                select: 'name -_id',
+                select: 'name -_id areas',
             })
             .populate({
                 path: 'state',
                 select: 'name -_id',
-            });
+            })
+        
+           
 
         // Transform the data to include the desired address and location structure
         const transformedListings = listings.map((listing) => {
             const listingObj = listing.toObject();
-
+        
+            const matchedArea =
+                listingObj.city &&
+                typeof listingObj.city === 'object' &&
+                'areas' in listingObj.city &&
+                Array.isArray(listingObj.city.areas)
+                    ? listingObj.city.areas.find((area) => area._id.toString() === listingObj.area.toString())
+                    : null;
+        
             return {
                 ...listingObj,
-
+        
                 price: {
                     rent: listingObj.rent_price,
-                    sale: listingObj.sale_price
+                    sale: listingObj.sale_price,
                 },
-
+        
                 address: {
                     street_address: listingObj.street_address || null,
-                    city: typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
-                    state: typeof listingObj.state === 'object' && 'name' in listingObj.state ? listingObj.state.name : null,
+                    city: listingObj.city && typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
+                    state: listingObj.state && typeof listingObj.state === 'object' && 'name' in listingObj.state ? listingObj.state.name : null,
+                    area: matchedArea ? matchedArea.name : null, // Use matched area's name
                     zip_code: listingObj.zip_code || null,
                 },
                 location: {
                     lat: listingObj.lat,
-                    log: listingObj.long
-                }, // Combine lat and long into a location array
-
+                    log: listingObj.long,
+                },
+        
                 availability: {
                     forRent: listingObj.forRent,
-                    start_date: listingObj.start_date
+                    start_date: listingObj.start_date,
                 },
                 rent_price: undefined,
                 sale_price: undefined,
                 start_date: undefined,
                 forRent: undefined,
-                street_address: undefined, // Remove redundant top-level fields
+                street_address: undefined,
                 city: undefined,
                 state: undefined,
                 zip_code: undefined,
@@ -200,6 +211,7 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
                 long: undefined,
             };
         });
+        
 
         res.status(200).json(transformedListings);
     } catch (error) {
@@ -212,16 +224,15 @@ export const getListings = async (req: Request, res: Response, next: NextFunctio
 export const getListingById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const listing = await Listing.findById(req.params.id)
-            .populate({
-                path: 'city',
-                select: 'name _id',
-
-            })
-            .populate({
-                path: 'state',
-                select: 'name _id',
-            });
-
+        .populate({
+            path: 'city',
+            select: 'name -_id areas',
+        })
+        .populate({
+            path: 'state',
+            select: 'name -_id',
+        })
+      
         if (!listing) {
             res.status(404).json({ message: 'Listing not found' });
             return;
@@ -229,6 +240,14 @@ export const getListingById = async (req: Request, res: Response, next: NextFunc
 
         // Transform the response to include logical groupings
         const listingObj = listing.toObject();
+        const matchedArea =
+        listingObj.city &&
+        typeof listingObj.city === 'object' &&
+        'areas' in listingObj.city &&
+        Array.isArray(listingObj.city.areas)
+            ? listingObj.city.areas.find((area) => area._id.toString() === listingObj.area.toString())
+            : null;
+
         const transformedListing = {
             ...listingObj,
 
@@ -239,8 +258,9 @@ export const getListingById = async (req: Request, res: Response, next: NextFunc
 
             address: {
                 street_address: listingObj.street_address || null,
-                city: listingObj.city || null,
-                state: listingObj.state || null,
+                city: listingObj.city && typeof listingObj.city === 'object' && 'name' in listingObj.city ? listingObj.city.name : null,
+                state: listingObj.state && typeof listingObj.state === 'object' && 'name' in listingObj.state ? listingObj.state.name : null,
+                area: matchedArea ? matchedArea.name : null, // Use matched area's name
                 zip_code: listingObj.zip_code || null,
             },
 

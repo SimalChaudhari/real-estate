@@ -14,11 +14,14 @@ const LocationField = ({ data = {}, onUpdate }) => {
     country: "India",
     state: "",
     city: "",
+    area: "",
     ...data,
   });
 
   const [states, setStates] = useState([]); // To store state data
   const [cities, setCities] = useState([]); // To store cities for the selected state
+  const [areas, setAreas] = useState([]); // To store areas for the selected city
+  
 
   // Fetch states and cities on component load
   useEffect(() => {
@@ -45,12 +48,29 @@ const LocationField = ({ data = {}, onUpdate }) => {
     }
   }, [formData.state, states]);
 
+  // Update areas when the selected city changes
+  useEffect(() => {
+    if (formData.city) {
+      const selectedCity = cities.find((city) => city._id === formData.city);
+      setAreas(selectedCity?.areas || []); // Update areas for the selected city
+    } else {
+      setAreas([]);
+    }
+  }, [formData.city, cities]);
+
+
   const handleInputChange = (key, value) => {
     const updatedFormData = { ...formData, [key]: value };
 
-    // Reset city if state changes
+    // Reset city and area if state changes
     if (key === "state") {
       updatedFormData.city = "";
+      updatedFormData.area = "";
+    }
+
+    // Reset area if city changes
+    if (key === "city") {
+      updatedFormData.area = "";
     }
 
     setFormData(updatedFormData);
@@ -122,6 +142,25 @@ const LocationField = ({ data = {}, onUpdate }) => {
             </select>
           </div>
         </div>
+
+        <div className="col-sm-6 col-xl-2">
+        <div className="mb20">
+          <label className="heading-color ff-heading fw600 mb10">Area</label>
+          <select
+            className="form-control"
+            value={formData.area}
+            onChange={(e) => handleInputChange("area", e.target.value)}
+            disabled={!areas.length}
+          >
+            <option value="">Select Area</option>
+            {areas.map((area) => (
+              <option key={area._id} value={area._id}>
+                {area.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
 
 
 

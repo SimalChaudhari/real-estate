@@ -14,14 +14,23 @@ const PropertyDescription = ({ data = {}, onUpdate }) => {
     ...data, // Initialize with data from parent
   });
   const categoryOptions = [
-    { value: "Apartments", label: "Apartments" },
-    { value: "Bungalow", label: "Bungalow" },
-    { value: "Houses", label: "Houses" },
-    { value: "Loft", label: "Loft" },
-    { value: "Office", label: "Office" },
-    { value: "Townhome", label: "Townhome" },
     { value: "Villa", label: "Villa" },
+    { value: "Penthouse", label: "Penthouse" },
+    { value: "Duplex", label: "Duplex" },
+    { value: "Studio Apartment", label: "Studio Apartment" },
+    { value: "Row House", label: "Row House" },
+    { value: "Farmhouse", label: "Farmhouse" },
+    { value: "Commercial Office", label: "Commercial Office" },
+    { value: "Retail Shop", label: "Retail Shop" },
+    { value: "Industrial Shed", label: "Industrial Shed" },
+    { value: "Serviced Apartment", label: "Serviced Apartment" },
+    { value: "Townhouse", label: "Townhouse" },
+    { value: "Condominium", label: "Condominium (Condo)" },
+    { value: "Warehouse", label: "Warehouse" },
+    { value: "Land/Plot", label: "Land/Plot" },
+    { value: "Independent House", label: "Independent House" },
   ];
+    
   const tagsOptions = [
     { value: "All Listing", label: "All Listing" },
     { value: "Active", label: "Active" },
@@ -36,7 +45,6 @@ const PropertyDescription = ({ data = {}, onUpdate }) => {
     { value: "Sold", label: "Sold" },
     { value: "Pending", label: "Pending" },
   ];
-
   const customStyles = {
     option: (styles, { isFocused, isSelected, isHovered }) => ({
       ...styles,

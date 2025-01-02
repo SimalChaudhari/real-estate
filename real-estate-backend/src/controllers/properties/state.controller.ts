@@ -24,8 +24,8 @@ export const createStateWithCities = async (
     // Create cities with nested areas
     const cityDocs = cities.map((city) => ({
       name: city.name,
-      areas: city.areas || [], // Default to an empty array if areas are not provided
-      state: savedState._id,
+      areas: city.areas?.map((area: string) => ({ name: area })) || [], // Add area names with auto-generated IDs
+     state: savedState._id,
     }));
 
     const savedCities = await City.insertMany(cityDocs);
@@ -48,10 +48,14 @@ export const createStateWithCities = async (
 export const getStatesWithCities = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const states = await State.find()
-      .populate({ 
-        path: 'cities', 
-        select: 'name areas', // Include city name and areas
-      })
+    .populate({
+      path: 'cities',
+      select: 'name areas', // Include city name and areas
+      populate: {
+        path: 'areas',
+        select: '_id name', // Include area IDs and names
+      },
+    })
       .select('name cities'); // Fetch state name and populated cities
 
     res.status(200).json(states);

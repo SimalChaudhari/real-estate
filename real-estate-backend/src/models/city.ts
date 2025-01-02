@@ -7,7 +7,12 @@ export interface ICity extends Document {
 
 const CitySchema: Schema = new Schema({
   name: { type: String, required: true },
-  areas: { type: [String], default: [] }, // Array of strings for areas
+  areas: [
+    {
+      _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Auto-generated unique ID for each area
+      name: { type: String, required: true }, // Name of the area
+    },
+  ],
   state: { type: Schema.Types.ObjectId, ref: 'State', required: true },
 });
 
