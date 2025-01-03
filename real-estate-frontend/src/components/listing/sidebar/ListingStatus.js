@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 
 const ListingStatus = ({ filterFunctions, filterData }) => {
   const options = [
-    { id: "all", label: "All" },
-    { id: "buy", label: "Buy" },
-    { id: "rent", label: "Rent" },
-    { id: "sold", label: "Sold" },
+    { id: "All", label: "All" },
+    { id: "Buy", label: "Buy" },
+    { id: "Rent", label: "Rent" },
+    { id: "Sold", label: "Sold" },
   ];
 
   // Ensure the selected status is updated correctly
-  const [selectedStatus, setSelectedStatus] = useState(filterData?.listingStatus || "all");
+  const [selectedStatus, setSelectedStatus] = useState(filterData?.listingStatus || "All");
 
   // Update local state when filterFunctions.listingStatus changes
   useEffect(() => {

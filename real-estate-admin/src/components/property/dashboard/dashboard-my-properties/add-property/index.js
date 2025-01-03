@@ -147,8 +147,9 @@ const AddPropertyTabContent = () => {
       formData.amenities.forEach((amenity) => payload.append("features[]", amenity));
       try {
         await dispatch(createProperty(payload));
-        // router.push("/dashboard-my-properties");
         resetForm(); // Reset form fields
+        router.push("/dashboard-my-properties");
+
       } catch (error) {
         console.error("Submission failed:", error);
       }

@@ -9,7 +9,7 @@ const FeaturedListings = ({ data, colstyle }) => {
       {/* Check if data is empty */}
       {data.length === 0 ? (
         <div className="text-center py-5">
-          <h3>Data not available</h3>
+          <h3>Data Not Available</h3>
         </div>
       ) : (
         data.map((listing) => (
@@ -87,9 +87,11 @@ const FeaturedListings = ({ data, colstyle }) => {
                 <p className="list-text">
                   {listing.address && (
                     <div>
-                      <span>{listing.address.street_address} </span>
-                      <span>{listing.address.city} </span>
-                      <span>{listing.address.state} </span>
+                      <span>{listing.address.street_address}{", "}</span>
+                      <span>{listing.address.city}{", "}</span>
+                      <span>{listing.address.area}{", "}</span>
+                      <span>{listing.address.state}</span>
+
                     </div>
                   )}
                 </p>

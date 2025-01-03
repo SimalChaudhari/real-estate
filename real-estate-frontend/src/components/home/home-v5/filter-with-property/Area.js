@@ -2,18 +2,21 @@
 import React from "react";
 import Select from "react-select";
 
-const Area = ({ areas }) => {
-  const areaOptions = areas?.map((area) => ({
-    value: area,
-    label: area,
-  })) || [];
+const Area = ({ areas = [], onAreaChange }) => {
+  // Transform areas into options for the select dropdown
+  const areaOptions =
+    areas.map((area) => ({
+      id: area._id, // Include `_id` for uniqueness
+      value: area.name,
+      label: area.name,
+    })) || [];
 
   const customStyles = {
-    option: (styles, { isFocused, isSelected, isHovered }) => ({
+    option: (styles, { isFocused, isSelected }) => ({
       ...styles,
       backgroundColor: isSelected
         ? "#eb6753"
-        : isHovered || isFocused
+        : isFocused
         ? "#eb675312"
         : undefined,
     }),
@@ -28,6 +31,7 @@ const Area = ({ areas }) => {
         classNamePrefix="select"
         placeholder="Select Area"
         isClearable
+        onChange={onAreaChange} // Pass the selected area to the parent
       />
     </div>
   );

@@ -56,7 +56,7 @@ const FilterContent = () => {
 
     if (selectedPropertyType) queryParams.append("propertyType", selectedPropertyType.value);
     if (selectedCity) queryParams.append("city", selectedCity.value);
-    if (selectedArea) queryParams.append("area", selectedArea);
+    if (selectedArea) queryParams.append("area", selectedArea.value);
     if (searchKeyword) queryParams.append("keyword", searchKeyword);
 
     router.push(`/list-v1?${queryParams.toString()}`);

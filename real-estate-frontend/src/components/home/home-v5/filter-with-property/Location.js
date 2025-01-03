@@ -4,6 +4,7 @@ import Select from "react-select";
 
 const Location = ({ onCityChange }) => {
   const { location, loading } = useSelector((state) => state.location);
+  console.log("🚀 ~ Location ~ location:", location)
 
   // Extract unique cities based on `_id`
   const locationOptions = location

@@ -23,7 +23,7 @@ const getStatusStyle = (status) => {
 const PropertyDataTable = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2); // Adjust items per page as needed
+  const [itemsPerPage] = useState(6); // Adjust items per page as needed
   const { fetchData, fetchDeleteData } = useFetchData()
 
   const propertyData = useSelector((state) => state.property?.propertyData || []);

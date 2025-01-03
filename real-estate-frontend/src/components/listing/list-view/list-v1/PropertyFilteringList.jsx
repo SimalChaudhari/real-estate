@@ -31,9 +31,11 @@ export default function PropertyFilteringList() {
   const initialPriceMax = parseInt(searchParams.get("priceMax")) || 100000;
   const initialPropertyType = searchParams.get("propertyType") || null;
   const initialCity = searchParams.get("city") || "All Cities";
+  const initialArea = searchParams.get("area") || "All Areas"; // Added `area` extraction
+
 
   // Filter states
-  const [listingStatus, setListingStatus] = useState(initialTab);
+  const [listingStatus, setListingStatus] = useState("All");
   const [propertyTypes, setPropertyTypes] = useState(
     initialPropertyType ? [initialPropertyType] : []
   );
@@ -41,6 +43,7 @@ export default function PropertyFilteringList() {
   const [bedrooms, setBedrooms] = useState(0);
   const [bathrooms, setBathrooms] = useState(0);
   const [location, setLocation] = useState(initialCity);
+  const [area, setArea] = useState(initialArea); // Added area state
   const [sqftRange, setSqftRange] = useState([]);
   const [yearBuild, setYearBuild] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -85,6 +88,9 @@ export default function PropertyFilteringList() {
       const matchesLocation =
         location === "All Cities" || item.address.city === location;
 
+        const matchesArea =
+        area === "All Areas" || item.address.area === area; // Area matching logic
+
       const matchesSqft =
         sqftRange.length === 0 ||
         (item.sqft >= sqftRange[0] && item.sqft <= sqftRange[1]);
@@ -106,6 +112,7 @@ export default function PropertyFilteringList() {
         matchesBedrooms &&
         matchesBathrooms &&
         matchesLocation &&
+        matchesArea && // Include area matching
         matchesSqft &&
         matchesYearBuild &&
         matchesSearchQuery
@@ -121,6 +128,7 @@ export default function PropertyFilteringList() {
     bedrooms,
     bathrooms,
     location,
+    area, // Add area to dependency array
     sqftRange,
     yearBuild,
     searchQuery,
@@ -159,6 +167,7 @@ export default function PropertyFilteringList() {
     setBedrooms(0);
     setBathrooms(0);
     setLocation("All Cities");
+    setArea("All Areas"); // Reset area
     setSqftRange([]);
     setYearBuild([]);
     setCategories([]);
@@ -180,6 +189,7 @@ export default function PropertyFilteringList() {
                   setBedrooms,
                   setBathrooms,
                   setLocation,
+                  setArea, // Added setArea
                   setSqftRange,
                   setYearBuild,
                   setCategories,
@@ -193,6 +203,7 @@ export default function PropertyFilteringList() {
                   bedrooms,
                   bathrooms,
                   location,
+                  area, // Added area
                   sqftRange,
                   yearBuild,
                   categories,

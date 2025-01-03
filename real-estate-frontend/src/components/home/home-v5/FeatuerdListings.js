@@ -85,7 +85,7 @@ const FeaturedListings = () => {
                     <Image
                       width={382}
                       height={248}
-                      className="w-100 h-100 cover"
+                      // className="w-100 h-100"
                       src={listing.images[0]} // Use the first image from the array
                       alt={listing.title || "listing"} // Add a fallback for the alt text
                     />

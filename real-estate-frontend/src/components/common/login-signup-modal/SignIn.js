@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "@/app/features/authSlice";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 
 const SignIn = () => {
   const router = useRouter(); 
