@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://real-estate-nine-livid.vercel.app/api/';
 
 // Create an axios instance with a base URL
 const axiosInstance = axios.create({
