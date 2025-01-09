@@ -1,8 +1,7 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
-import { URL } from './Env';
 
-const API_URL = URL
+const API_URL = 'http://localhost:5000/api';
 
 // Create an axios instance with a base URL
 const axiosInstance = axios.create({
