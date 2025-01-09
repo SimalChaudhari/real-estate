@@ -9,8 +9,6 @@ import PropertyFeaturesAminites from "@/components/property/dashboard/dashboard-
 import PropertyGallery from "@/components/property/dashboard/dashboard-my-properties/PropertyGallery";
 import PropertyHeader from "@/components/property/dashboard/dashboard-my-properties/PropertyHeader";
 import ProperytyDescriptions from "@/components/property/dashboard/dashboard-my-properties/ProperytyDescriptions";
-import UserEditForm from "@/components/property/dashboard/dashboard-user/UpdateUserData";
-import ViewUserData from "@/components/property/dashboard/dashboard-user/ViewUserData";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
